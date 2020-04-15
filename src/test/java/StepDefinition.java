@@ -11,11 +11,14 @@ public class StepDefinition {
 	private String email;
 	private boolean bool;
 	private ClientList clientList = new ClientList();
+	
+	
+	
 	// REGISTER CLIENT
 	@Given("information about a client; name {string}, address {string}, contactperson with name {string}, email of contactperson {string}")
 	public void information_about_a_client_name_address_contactperson_with_name_email_of_contactperson(String clientName, String clientAddress, String contactPerson, String email) {
 	    this.clientName = clientName;
-	    this.address = address;
+	    this.address = clientAddress;
 	    this.contactPerson = contactPerson;
 	    this.email = email;
 	}
