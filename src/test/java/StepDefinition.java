@@ -9,8 +9,8 @@ public class StepDefinition {
 	private String address;
 	private String contactPerson;
 	private String email;
-	private boolean bool;
-	private ClientList clientList = new ClientList();
+	private Exception exception;
+	private ContainerApp containerApp = new ContainerApp();
 	
 	
 	
@@ -24,24 +24,27 @@ public class StepDefinition {
 	}
 	
 	@Given("a list of clients with attributes; name: {string}, address: {string}, contactperson name {string}, contactperson email {string} and name: {string}, address: {string}, contactperson name: {string}, contactperson email: {string}")
-	public void a_list_of_clients_with_attributes_name_address_contactperson_name_contactperson_email_and_name_address_contactperson_name_contactperson_email(String clientName1, String clientAddress1, String contactPerson1, String email1, String clientName2, String clientAddress2, String contactPerson2, String email2) {
-	    clientList.addUniqueClient(clientName1, clientAddress1, contactPerson1, email1);
-	    clientList.addUniqueClient(clientName2, clientAddress2, contactPerson2, email2);
+	public void a_list_of_clients_with_attributes_name_address_contactperson_name_contactperson_email_and_name_address_contactperson_name_contactperson_email(String clientName1, String clientAddress1, String contactPerson1, String email1, String clientName2, String clientAddress2, String contactPerson2, String email2) throws Exception {
+	    containerApp.registerClient(clientName1, clientAddress1, contactPerson1, email1);
+	    containerApp.registerClient(clientName2, clientAddress2, contactPerson2, email2);
 	}
 
-	@When("registering a new client")
-	public void registering_a_new_client() {
-	    this.bool = clientList.addUniqueClient(this.clientName, this.address, this.contactPerson, this.email);
+	@When("registering the client")
+	public void registering_the_client() {
+	    try {
+			containerApp.registerClient(clientName, address, contactPerson, email);
+		} catch (Exception e) {
+			exception = e;
+		}
 	}
 
 	@Then("Client is registered")
 	public void client_is_registered() {
-	    assertTrue(bool);
+	    assertTrue(containerApp.isClientRegistered(clientName));
 	}
 
-	@Then("Client is not registered")
-	public void client_is_not_registered() {
-	    assertFalse(bool);
-
+	@Then("Client registration failed")
+	public void client_registration_failed() {
+	    assertNotNull(exception);
 	}
 }
