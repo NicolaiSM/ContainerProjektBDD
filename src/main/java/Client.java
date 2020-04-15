@@ -14,5 +14,13 @@ public class Client {
 	public String getClientName() {
 		return this.clientName;
 	}
+
+	public boolean hasKeyword(String keyword) {
+		if (keyword.equals(clientName) | keyword.equals(address) |keyword.equals(contactPerson) |keyword.equals(email)) {
+			return true;
+		}
+		return false;
+	}
+
 	
 }
