@@ -3,7 +3,8 @@ import java.util.stream.*;
 
 public class ContainerApp {
 	List<Client> clients = new ArrayList<Client>();
-	List<Port> ports = new ArrayList<Port>();
+	Set<Port> ports = new HashSet<Port>();
+	List<Container> containers = new ArrayList<Container>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email) throws Exception {
 		if (isClientRegistered(clientName)) {
@@ -81,4 +82,19 @@ public class ContainerApp {
 	
 	
 	
+	
+	public Port findPort(String port){
+		return ports.stream().filter((Port)->Port.getPort().equals(port)).findFirst().get();
+		
+	}
+	
+	public void createContainer(String port) throws Exception {
+		if (!portIsRegistered(port)) {
+			throw new Exception("Port is not registered");
+		} 
+		Container container = new Container(port);
+		containers.add(container);
+		findPort(port).addContainer(container);
+		
+	}
 }
