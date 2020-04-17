@@ -12,9 +12,7 @@ public class StepDefinition {
 	private String contactPerson;
 	private String email;
 	private Exception exception;
-	private ContainerApp containerApp = new ContainerApp();
-	
-	
+	private ContainerApp containerApp = new ContainerApp();	
 	
 	// REGISTER CLIENT
 	
@@ -84,5 +82,44 @@ public class StepDefinition {
 	public void check_that_no_result_is_found() {
 	    assertNotNull(exception);
 
+	}
+	
+	//
+	//
+	//
+	
+	// UPDATE CLIENT INFORMATION
+	private Client client;
+	
+	@Given("a client with; name: {string}, address: {string}, contactperson name: {string} and contactperson email: {string}")
+	public void a_client_with_name_address_contactperson_name_and_contactperson_email(String clientName, String address, String contactPerson, String email) {
+	    client = new Client(clientName,address,contactPerson,email);
+	}
+
+	@Given("Client wants to update client name to {string}, address to {string}, contact person to {string} and email to {string}")
+	public void client_wants_to_update_client_name_to_address_to_contact_person_to_and_email_to(String clientName, String clientAddress, String contactPerson, String email) {
+	    this.clientName = clientName;
+	    this.address = clientAddress;
+	    this.contactPerson = contactPerson;
+	    this.email = email;
+	}
+
+	@When("Change previous client information to the given information")
+	public void change_previous_client_information_to_the_given_information() {
+		try {
+			containerApp.updateClient(client,clientName,address,contactPerson,email);
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+
+	@Then("Client has been updated")
+	public void client_has_been_updated() {
+	    assertNull(exception);
+	}
+	
+	@Then("Client has not been updated")
+	public void client_has_not_been_updated() {
+	    assertNotNull(exception);
 	}
 }

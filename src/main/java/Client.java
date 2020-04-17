@@ -11,16 +11,30 @@ public class Client {
 	    this.contactPerson = contactPerson;
 	    this.email = email;
 	}
+
+	public boolean hasKeyword(String keyword) {
+		return (keyword.equals(clientName) || keyword.equals(address) || keyword.equals(contactPerson) || keyword.equals(email));
+	}
+	
+	//Setters
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
+	
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	//Getters
 	public String getClientName() {
 		return this.clientName;
 	}
-
-	public boolean hasKeyword(String keyword) {
-		if (keyword.equals(clientName) | keyword.equals(address) |keyword.equals(contactPerson) |keyword.equals(email)) {
-			return true;
-		}
-		return false;
-	}
-
-	
 }
