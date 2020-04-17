@@ -57,4 +57,28 @@ public class ContainerApp {
 	private boolean portIsRegistered(String port) {
 		return ports.stream().anyMatch((Port)->Port.getPort().equals(port));
 	}
+	
+	private Port isPort(String port) {
+		return ports.stream().filter((Port)->Port.getPort().equals(port)).findFirst().orElse(null);
+	}
+
+	public Journey createJourney(Client client, String portOfOrigin, String destination, String content) {
+		Port portOfOriginNew = isPort(portOfOrigin);
+		Port destinationNew = isPort(destination);
+				
+		if (!(portOfOriginNew == null) && !(destinationNew == null)) {
+			return new Journey(client, portOfOriginNew, destinationNew, content);
+		}
+		
+		return null;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
