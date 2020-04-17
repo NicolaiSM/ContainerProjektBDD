@@ -59,13 +59,13 @@ public class ContainerApp {
 		return ports.stream().anyMatch((Port)->Port.getPort().equals(port));
 	}
 	
-	private Port isPort(String port) {
+	private Port findPort(String port) {
 		return ports.stream().filter((Port)->Port.getPort().equals(port)).findFirst().orElse(null);
 	}
 
 	public Journey createJourney(Client client, String portOfOrigin, String destination, String content) {
-		Port portOfOriginNew = isPort(portOfOrigin);
-		Port destinationNew = isPort(destination);
+		Port portOfOriginNew = findPort(portOfOrigin);
+		Port destinationNew = findPort(destination);
 				
 		if (!(portOfOriginNew == null) && !(destinationNew == null)) {
 			return new Journey(client, portOfOriginNew, destinationNew, content);
@@ -74,20 +74,7 @@ public class ContainerApp {
 		return null;
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public Port findPort(String port){
-		return ports.stream().filter((Port)->Port.getPort().equals(port)).findFirst().get();
-		
-	}
-	
+
 	public void createContainer(String port) throws Exception {
 		if (!portIsRegistered(port)) {
 			throw new Exception("Port is not registered");
