@@ -27,13 +27,9 @@ public class ContainerApp {
 	private boolean clientHasKeyword(List<String> keywords, Client client) {
 		return keywords.stream().anyMatch((keyword)->client.hasKeyword(keyword));
 	}
-	
-	private boolean hasClient(String clientName) {
-		return clients.stream().anyMatch((client)->client.getClientName().equals(clientName));
-	}
 
 	public void updateClient(Client client, String clientName, String address, String contactPerson, String email) throws Exception {
-		if (changeInClientName(client, clientName) & hasClient(clientName)) {
+		if (changeInClientName(client, clientName) & isClientRegistered(clientName)) {
 			throw new Exception("New client name already exists");
 		}
 		setClientInformation(client, clientName, address, contactPerson, email);
