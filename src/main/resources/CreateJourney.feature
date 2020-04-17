@@ -1,9 +1,8 @@
 
 Feature: Create new journey
-  I want to use this template for my feature file
 
   Scenario: Succesful creation of journey
-    Given Port Of Origin "Stockholm", Destination "Copenhagen", Content "Milk" and a Client 
+    Given information of new journey with Port Of Origin "Stockholm", Destination "Copenhagen", Content "Milk" and a Client
     And list of all ports "Stockholm" and "Copenhagen"
     When Creating a Journey
     Then Check that new journey is created
