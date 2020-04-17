@@ -12,7 +12,7 @@ public class ContainerApp {
 	}
 	
 	public boolean isClientRegistered(String clientName) {
-		return clients.stream().anyMatch((Client)->Client.getClientName().equals(clientName));
+		return clients.stream().anyMatch((client)->client.getClientName().equals(clientName));
 	}
 	
 	public List<Client> findClient(List<String> keywords) throws Exception {
