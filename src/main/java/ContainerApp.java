@@ -3,6 +3,7 @@ import java.util.stream.*;
 
 public class ContainerApp {
 	List<Client> clients = new ArrayList<Client>();
+	List<Port> ports = new ArrayList<Port>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email) throws Exception {
 		if (isClientRegistered(clientName)) {
@@ -44,5 +45,16 @@ public class ContainerApp {
 
 	private boolean changeInClientName(Client client, String clientName) {
 		return !client.getClientName().equals(clientName);
+	}
+
+	public void registerPort(String port) throws Exception {
+		if (portIsRegistered(port)) {
+			throw new Exception("Port is already registered");
+		} 
+		ports.add(new Port(port));
+	}
+
+	private boolean portIsRegistered(String port) {
+		return ports.stream().anyMatch((Port)->Port.getPort().equals(port));
 	}
 }

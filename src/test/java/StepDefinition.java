@@ -122,4 +122,92 @@ public class StepDefinition {
 	public void client_has_not_been_updated() {
 	    assertNotNull(exception);
 	}
+	
+	//
+	//
+	//
+	
+	// Register Port
+	
+	String port;
+	
+	@Given("a list of ports containing {string}")
+	public void a_list_of_ports_containing(String port) {
+		try {
+			containerApp.registerPort(port);
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+
+	@Given("a port to be registered {string}")
+	public void a_port_to_be_registered(String port) {
+	    this.port = port;
+	}
+
+	@When("Registering the port")
+	public void registering_the_port() {
+		try {
+			containerApp.registerPort(port);
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+
+	@Then("Port is registered")
+	public void port_is_registered() {
+	    assertNull(exception);
+	}
+
+	@Then("Port is not registered")
+	public void port_is_not_registered() {
+	    assertNotNull(exception);
+	}
+	
+	
+	//
+	//
+	//
+	
+	// Create Container
+	
+//	String port;
+//	
+//	@Given("a port of origin {string}")
+//	public void a_port_of_origin(String port) {
+//	    this.port = port;
+//	}
+//
+////	@Given("a list of ports containing the port {string}")
+////	public void a_list_of_ports_containing_the_port(String port) {
+////	    containerApp.registerPort(port);
+////	}
+//
+//	@Given("a list of existing containers containing a container in port {string} and in port {string}")
+//	public void a_list_of_existing_containers_containing_a_container_in_port_and_in_port(String string, String string2) {
+//	    // Write code here that turns the phrase above into concrete actions
+//	    throw new io.cucumber.java.PendingException();
+//	}
+//
+//	@When("creating a new container")
+//	public void creating_a_new_container() {
+//	    // Write code here that turns the phrase above into concrete actions
+//	    throw new io.cucumber.java.PendingException();
+//	}
+//
+//	@Then("a new container has been added to the existing containers")
+//	public void a_new_container_has_been_added_to_the_existing_containers() {
+//	    // Write code here that turns the phrase above into concrete actions
+//	    throw new io.cucumber.java.PendingException();
+//	}
+//
+//	@Then("the container could not be created since the port was not a validport")
+//	public void the_container_could_not_be_created_since_the_port_was_not_a_validport() {
+//	    // Write code here that turns the phrase above into concrete actions
+//	    throw new io.cucumber.java.PendingException();
+//	}
+	
+	
+	
+	
 }
