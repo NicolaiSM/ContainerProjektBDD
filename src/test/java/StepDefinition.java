@@ -54,18 +54,17 @@ public class StepDefinition {
 	//
 	
 	// FIND CLIENT
-
-	@Given("a name for a client {string} and a contactperson name {string}")
-	public void a_name_for_a_client_and_a_contactperson_name(String clientName, String contactPerson) {
-		this.clientName = clientName;
-		this.contactPerson = contactPerson;
+	List<String> keywords = new ArrayList<String>();
+	
+	@Given("a keyword {string} and a keyword {string}")
+	public void a_keyword_and_a_keyword(String keyword1, String keyword2) {
+		keywords.add(keyword1);
+		keywords.add(keyword2);
 	}
 
 	@When("Finding clients that matches keyword")
 	public void finding_clients_that_matches_keyword() {
-		List<String> keywords = new ArrayList<String>();
-		keywords.add(clientName);
-		keywords.add(contactPerson);
+
 		try {
 			containerApp.findClient(keywords);
 		} catch (Exception e) {
@@ -196,6 +195,76 @@ public class StepDefinition {
 	@Then("the container could not be created since the port was not a validport")
 	public void the_container_could_not_be_created_since_the_port_was_not_a_validport() {
 		assertNotNull(exception);
+	}
+	
+	
+	//
+	//
+	//
+	
+	// Register Container
+	
+	String portOfOrigin;
+	String destination;
+	String content;
+
+	@Given("a list of existing containers: port {string}, port {string}")
+	public void a_list_of_existing_containers_port_port(String port1, String port2) throws Exception {
+		containerApp.registerPort(port1);
+		containerApp.registerPort(port2);
+		containerApp.createContainer(port1);
+		containerApp.createContainer(port2);
+
+	}
+
+	@Given("information about the journey: port of origin {string}, destination {string}, content {string}")
+	public void information_about_the_journey_port_of_origin_destination_content(String portOfOrigin, String destination, String content) {
+		this.portOfOrigin = portOfOrigin;
+		this.destination = destination;
+		this.content = content;
+	}
+
+	@Given("a list of existing containers: port {string}, port {string} with journey port of origin {string}, destination {string}, content {string} with the client in the system")
+	public void a_list_of_existing_containers_port_port_with_journey_port_of_origin_destination_content_with_the_client_in_the_system(String port1, String port2, String portOfOrigin, String destination, String content) throws Exception {
+		containerApp.registerPort(port1);
+		containerApp.registerPort(port2);
+		containerApp.createContainer(port1);
+		containerApp.createContainer(port2);
+		containerApp.registerContainer(portOfOrigin, destination, content, client);
+	}
+	
+	@Given("a client: name {string}, address {string}, contact person {string}, email {string}")
+	public void a_client_name_address_contact_person_email(String name, String address, String contactPerson, String email) {
+		client  = new Client(name, address, contactPerson, email); 
+		
+		
+	}
+
+	@Given("a list of existing containers: port {string}")
+	public void a_list_of_existing_containers_port(String port) throws Exception {
+		containerApp.registerPort(port);
+		containerApp.createContainer(port);
+	}
+
+	@When("registrering a container")
+	public void registrering_a_container() {
+		try {
+			containerApp.registerContainer(portOfOrigin, destination, content, client);
+		} catch (Exception e) {
+			exception = e;
+		}
+		
+	}
+
+	@Then("container is not registred")
+	public void container_is_not_registred() {
+	    assertNotNull(exception);
+	}
+
+	@Then("container is registred")
+	public void container_is_registred() {
+	    assertNull(exception);
+
 	}
 	
 	

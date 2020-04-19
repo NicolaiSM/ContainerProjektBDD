@@ -5,6 +5,7 @@ public class ContainerApp {
 	List<Client> clients = new ArrayList<Client>();
 	Set<Port> ports = new HashSet<Port>();
 	List<Container> containers = new ArrayList<Container>();
+	List<Journey> journeys = new ArrayList<Journey>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email) throws Exception {
 		if (isClientRegistered(clientName)) {
@@ -61,17 +62,42 @@ public class ContainerApp {
 	
 
 	public Port findPort(String port){
-		return ports.stream().filter((Port)->Port.getPort().equals(port)).findFirst().get();
+		
+		return ports.stream().filter((Port)->Port.getPort().equals(port)).findFirst().orElse(null);
 		
 	}
 	
 	public void createContainer(String port) throws Exception {
 		if (!portIsRegistered(port)) {
 			throw new Exception("Port is not registered");
-		} 
-		Container container = new Container(port);
+		}
+		Port p = findPort(port);
+		Container container = new Container(p);
 		containers.add(container);
-		findPort(port).addContainer(container);
+		p.addContainer(container);
 		
+	}
+
+	public void registerContainer(String portOfOrigin, String destination, String content, Client client) throws Exception {
+		Port startport = findPort(portOfOrigin);
+		Port finalport = findPort(destination);
+		
+		if (startport == null || finalport == null) {
+			throw new Exception ("No valid ports");
+		}
+		List <Container> availableContainers = getAvailableContainers(startport);
+		if(availableContainers.isEmpty()) {
+			throw new Exception ("No available containers in port");
+		}
+		Journey journey = new Journey (portOfOrigin, destination, content, client);
+		journeys.add(journey);
+		availableContainers.get(0).setJourney(journey);
+		
+				
+	}
+
+	private List<Container> getAvailableContainers(Port startport) {
+		
+		return containers.stream().filter((container)->container.isContainerAvailable(startport)).collect(Collectors.toList());
 	}
 }
