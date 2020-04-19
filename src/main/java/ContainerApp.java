@@ -128,5 +128,24 @@ public class ContainerApp {
 		return keywords.stream().anyMatch((keyword)->journey.hasKeyword(keyword));
 	}
 
+	public void updateJourney(Container container, List<String> times, List<String> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) throws Exception {
+		if (isLocationNotValid(locations)) {
+			throw new Exception ("Location is not valid");
+		}
+		List<Port> locationsAsPorts = convertLocations(locations);
+		container.updateJourney(times, locationsAsPorts, temperatures, humidities, pressures);
+		
+		
+	}
+
+	private List<Port> convertLocations(List<String> locations) {
+		
+		return locations.stream().map((location)->findPort(location)).collect(Collectors.toList());
+	}
+
+	private boolean isLocationNotValid(List<String> locations) {
+		return locations.stream().anyMatch((location)->!portIsRegistered(location));
+	}
+
 		
 }

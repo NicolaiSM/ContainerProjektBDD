@@ -1,7 +1,9 @@
+import java.util.List;
 
 public class Container {
 	private Port port;
 	private Journey journey;
+	private List<Journey> journeys;
 	
 	public Container(Port port) {
 		this.port = port;
@@ -26,4 +28,40 @@ public class Container {
 		}
 		return (keyword.equals(port.getPort()) | keyword.equals(journey.getPortOfOrigin().getPort()) | keyword.equals(journey.getDestination().getPort()) | keyword.equals(journey.getContent()) | keyword.equals(journey.getClient()));
 	}
+
+	public void updateJourney(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
+		journey.update(times, locations, temperatures, humidities, pressures);
+		//setportOfcontainer
+		setPort(journey.getLastLocation());
+		
+		//if port destin -> end journey
+		if (isLocationDestination()) {
+			endJourney();
+		}		
+	}
+
+	private void endJourney() {
+		journeys.add(journey);
+		journey = null;
+
+	}
+
+	private boolean isLocationDestination() {
+		if (port == journey.getDestination()) {
+			return true;
+		}
+		return false;
+	}
+
+	private void setPort(Port port) {
+		this.port = port;
+		
+	}
+
+	public Journey getJourney() {
+		return journey;
+	}
+
+	
+
 }

@@ -334,4 +334,71 @@ public class StepDefinition {
 	    assertNotNull(exception);
 	}
 	
+	
+	
+	
+	
+	//
+	//
+	//
+	
+	// Update Container
+	List<String> times = new ArrayList<String>();
+	List<String> locations = new ArrayList<String>();
+	List<Integer> temperatures = new ArrayList<Integer>();
+	List<Integer> humidities = new ArrayList<Integer>();
+	List<Integer> pressures = new ArrayList<Integer>();
+	Container container;
+	
+	
+	@Given("a list of existing ports {string}, {string} and {string}")
+	public void a_list_of_existing_ports_and(String port1, String port2, String port3) throws Exception {
+	    containerApp.registerPort(port1);
+	    containerApp.registerPort(port2);
+	    containerApp.registerPort(port3);
+	}
+	
+	@Given("a container: port {string} with journey: port of origin {string}, destination {string}, content {string} with the client: client name {string}, address {string}, contact person {string}, email {string}")
+	public void a_container_port_with_journey_port_of_origin_destination_content_with_the_client_client_name_address_contact_person_email(String port, String portOfOrigin, String destination, String content, String name, String address, String contactPerson, String email) throws Exception {
+		containerApp.createContainer(port);
+		keywords.add(port);
+		container = containerApp.findContainer(keywords).get(0);
+		client = new Client(name, address, contactPerson, email);
+		containerApp.registerContainer(portOfOrigin, destination, content, client);
+	}
+
+	@Given("new internal information: timestamp {string}, location {string}, temperature {int}, humidity {int}, pressure {int}")
+	public void new_internal_information_timestamp_location_temperature_humidity_pressure(String times, String locations, Integer temperatures, Integer humidities, Integer pressures) {
+	    this.times.add(times);
+	    this.locations.add(locations);
+	    this.temperatures.add(temperatures);
+	    this.humidities.add(humidities);
+	    this.pressures.add(pressures);
+	}
+
+	@When("updating a journey")
+	public void updating_a_journey() {
+	    try {
+			containerApp.updateJourney(container, times, locations, temperatures, humidities, pressures);
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+
+	@Then("the journey is updated")
+	public void the_journey_is_updated() {
+	    assertNull(exception);
+	}
+
+	@Then("the journey has ended")
+	public void the_journey_has_ended() {
+		assertNull(exception);
+		assertTrue(container.getJourney() == null);
+	}
+
+	@Then("the journey is not updated")
+	public void the_journey_is_not_updated() {
+		assertNotNull(exception);
+	}
+	
 }
