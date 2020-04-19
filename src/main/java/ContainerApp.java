@@ -114,5 +114,19 @@ public class ContainerApp {
 		return keywords.stream().anyMatch((keyword)->container.hasKeyword(keyword));
 	}
 
+	public List<Journey> findJourney(List<String> keywords) throws Exception {
+		List<Journey> resultingJourneys = journeys.stream().filter((journey)->journeyHasKeyword(keywords, journey)).collect(Collectors.toList());
+		if (resultingJourneys.isEmpty()) {
+			throw new Exception("No journeys found");
+			
+		}
+		
+		return resultingJourneys;
+	}
+
+	private boolean journeyHasKeyword(List<String> keywords, Journey journey) {
+		return keywords.stream().anyMatch((keyword)->journey.hasKeyword(keyword));
+	}
+
 		
 }

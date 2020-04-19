@@ -24,4 +24,12 @@ public class Journey {
 	public String getContent() {
 		return content;
 	}
+
+	public boolean hasKeyword(String keyword) {
+		return (keyword.equals(portOfOrigin.getPort()) | keyword.equals(destination.getPort()) | keyword.equals(content) | keyword.equals(client.getClientName()));
+	}
+
+	public Object getClient() {
+		return client;
+	}
 }

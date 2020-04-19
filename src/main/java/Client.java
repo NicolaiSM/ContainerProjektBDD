@@ -13,7 +13,7 @@ public class Client {
 	}
 
 	public boolean hasKeyword(String keyword) {
-		return (keyword.equals(clientName) || keyword.equals(address) || keyword.equals(contactPerson) || keyword.equals(email));
+		return (keyword.equals(clientName) | keyword.equals(address) | keyword.equals(contactPerson) | keyword.equals(email));
 	}
 	
 	//Setters

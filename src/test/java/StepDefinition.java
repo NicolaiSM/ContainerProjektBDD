@@ -293,8 +293,45 @@ public class StepDefinition {
 	@Then("the keyword does not match any container")
 	public void the_keyword_does_not_match_any_container() {
 		assertNotNull(exception);
+		
+	}
+	
+	//
+	//
+	//
+	
+	// Find Journey
+
+
+	@Given("a list of existing journeys: port of origin {string}, destination {string}, content {string} with the client: client name {string}, address {string}, contact person {string}, email {string}")
+	public void a_list_of_existing_journeys_port_of_origin_destination_content_with_the_client_client_name_address_contact_person_email(String portOfOrigin, String destination, String content, String clientName, String clientAddress, String contactPerson, String email) throws Exception {
+	    containerApp.registerPort(portOfOrigin);
+	    containerApp.registerPort(destination);
+	    containerApp.createContainer(portOfOrigin);
+	    client = new Client(clientName, clientAddress, contactPerson, email);
+	    containerApp.registerContainer(portOfOrigin, destination, content, client);
+	    
 	}
 
-	
+	@When("searching for a journey")
+	public void searching_for_a_journey() {
+		try {
+			containerApp.findJourney(keywords);
+		} catch (Exception e) {
+			exception = e;
+		}
+		
+	}
+
+	@Then("a journey has been found")
+	public void a_journey_has_been_found() {
+		assertNull(exception);
+		
+	}
+
+	@Then("the keyword does not match any journey")
+	public void the_keyword_does_not_match_any_journey() {
+	    assertNotNull(exception);
+	}
 	
 }

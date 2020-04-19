@@ -8,7 +8,7 @@ Feature: Find a container by one or more keywords
     Then a container has been found
     
 	Scenario: Unsuccessful search: no container matches input
-		Given: a keyword "London"
+		Given a keyword "London" and a keyword "Cheese"
 		When searching for a container
 		Then the keyword does not match any container
 		
