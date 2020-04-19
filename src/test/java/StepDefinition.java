@@ -224,7 +224,7 @@ public class StepDefinition {
 		this.content = content;
 	}
 
-	@Given("a list of existing containers: port {string}, port {string} with journey port of origin {string}, destination {string}, content {string} with the client in the system")
+	@Given("a list of existing containers: port {string}, port {string} with journey: port of origin {string}, destination {string}, content {string} with the client in the system")
 	public void a_list_of_existing_containers_port_port_with_journey_port_of_origin_destination_content_with_the_client_in_the_system(String port1, String port2, String portOfOrigin, String destination, String content) throws Exception {
 		containerApp.registerPort(port1);
 		containerApp.registerPort(port2);
@@ -266,6 +266,35 @@ public class StepDefinition {
 	    assertNull(exception);
 
 	}
+	
+
+	
+	
+	//
+	//
+	//
+	
+	// Find Container
+	
+	@When("searching for a container")
+	public void searching_for_a_container() {
+		try {
+			containerApp.findContainer(keywords);
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+
+	@Then("a container has been found")
+	public void a_container_has_been_found() {
+	    assertNull(exception);
+	}
+
+	@Then("the keyword does not match any container")
+	public void the_keyword_does_not_match_any_container() {
+		assertNotNull(exception);
+	}
+
 	
 	
 }

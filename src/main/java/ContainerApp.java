@@ -2,10 +2,10 @@ import java.util.*;
 import java.util.stream.*;
 
 public class ContainerApp {
-	List<Client> clients = new ArrayList<Client>();
-	Set<Port> ports = new HashSet<Port>();
-	List<Container> containers = new ArrayList<Container>();
-	List<Journey> journeys = new ArrayList<Journey>();
+	private List<Client> clients = new ArrayList<Client>();
+	private Set<Port> ports = new HashSet<Port>();
+	private List<Container> containers = new ArrayList<Container>();
+	private List<Journey> journeys = new ArrayList<Journey>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email) throws Exception {
 		if (isClientRegistered(clientName)) {
@@ -85,19 +85,34 @@ public class ContainerApp {
 		if (startport == null || finalport == null) {
 			throw new Exception ("No valid ports");
 		}
-		List <Container> availableContainers = getAvailableContainers(startport);
-		if(availableContainers.isEmpty()) {
+		Container availableContainer = getAvailableContainer(startport);
+		if(availableContainer == null) {
 			throw new Exception ("No available containers in port");
 		}
-		Journey journey = new Journey (portOfOrigin, destination, content, client);
+		Journey journey = new Journey (startport, finalport, content, client);
 		journeys.add(journey);
-		availableContainers.get(0).setJourney(journey);
+		availableContainer.setJourney(journey);
 		
 				
 	}
 
-	private List<Container> getAvailableContainers(Port startport) {
+	private Container getAvailableContainer(Port startport) {
 		
-		return containers.stream().filter((container)->container.isContainerAvailable(startport)).collect(Collectors.toList());
+		return containers.stream().filter((container)->container.isContainerAvailable(startport)).findFirst().orElse(null);
 	}
+
+	public List<Container> findContainer(List<String> keywords) throws Exception {
+		List<Container> resultingContainers = containers.stream().filter((container)->containerHasKeyword(keywords, container)).collect(Collectors.toList());
+		if (resultingContainers.isEmpty()) {
+			throw new Exception("No containers found");
+
+		}
+		return resultingContainers;
+	}
+
+	private boolean containerHasKeyword(List<String> keywords, Container container) {
+		return keywords.stream().anyMatch((keyword)->container.hasKeyword(keyword));
+	}
+
+		
 }

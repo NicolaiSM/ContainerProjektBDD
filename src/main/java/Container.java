@@ -1,7 +1,7 @@
 
 public class Container {
-	Port port;
-	Journey journey;
+	private Port port;
+	private Journey journey;
 	
 	public Container(Port port) {
 		this.port = port;
@@ -18,5 +18,12 @@ public class Container {
 	public void setJourney(Journey journey) {
 		this.journey = journey;
 		
+	}
+
+	public boolean hasKeyword(String keyword) {
+		if (journey == null) {
+			return keyword.equals(port.getPort());
+		}
+		return (keyword.equals(port.getPort()) | keyword.equals(journey.getPortOfOrigin().getPort()) | keyword.equals(journey.getDestination().getPort()) | keyword.equals(journey.getContent()));
 	}
 }

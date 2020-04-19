@@ -1,4 +1,4 @@
-Feature: find clients based one or more of it attributes 
+Feature: Find clients based one or more of it attributes 
 
 	Background: attributes is contactperson firstname, contacperson lastname, contactperson email, client adress and client name
 

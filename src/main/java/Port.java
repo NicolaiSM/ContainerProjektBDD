@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Port {
-	String port;
-	List<Container> containers = new ArrayList<Container>();
+	private String port;
+	private List<Container> containers = new ArrayList<Container>();
 	
 	public Port(String port) {
 		this.port = port;
