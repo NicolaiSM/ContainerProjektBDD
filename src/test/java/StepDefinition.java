@@ -165,13 +165,13 @@ public class StepDefinition {
 	//
 	//
 	
-	// Register Port
+	// Create Container
 	
-	Client newClient;
-	String portOfOrigin;
-	String destination;
-	String content;
-	Journey journey;
+//	Client newClient;
+//	String portOfOrigin;
+//	String destination;
+//	String content;
+//	Journey journey;
 	@Given("a port of origin {string}")
 	public void a_port_of_origin(String port) {
 	    this.port = port;
@@ -182,10 +182,6 @@ public class StepDefinition {
 	    containerApp.registerPort(port);
 	}
 	
-//	@Given("a list of existing containers containing a container in port {string} and in port {string}")
-//	public void a_list_of_existing_containers_containing_a_container_in_port_and_in_port(String port1, String port2) {
-//		
-//	}
 
 	@When("creating a new container")
 	public void creating_a_new_container() {
@@ -206,34 +202,34 @@ public class StepDefinition {
 		assertNotNull(exception);
 	}
 	
-	@Given("Port Of Origin {string}, Destination {string}, Content {string} and a Client")
-	public void port_Of_Origin_Destination_Content_and_a_Client(String string, String string2, String string3) {
-	    newClient = new  Client("a","b","c","d");
-	    portOfOrigin = string;
-	    destination = string2;
-	    content = string3;
-	}
+//	@Given("Port Of Origin {string}, Destination {string}, Content {string} and a Client")
+//	public void port_Of_Origin_Destination_Content_and_a_Client(String string, String string2, String string3) {
+//	    newClient = new  Client("a","b","c","d");
+//	    portOfOrigin = string;
+//	    destination = string2;
+//	    content = string3;
+//	}
+//
+//	@Given("list of all ports {string} and {string}")
+//	public void list_of_all_ports_and(String port1, String port2) throws Exception {
+//		containerApp.registerPort(port1);
+//		containerApp.registerPort(port2);
+//	}
 
-	@Given("list of all ports {string} and {string}")
-	public void list_of_all_ports_and(String port1, String port2) throws Exception {
-		containerApp.registerPort(port1);
-		containerApp.registerPort(port2);
-	}
-
-	@When("Creating a Journey")
-	public void creating_a_Journey() {
-	   journey = containerApp.createJourney(newClient, portOfOrigin, destination, content);
-	}
-
-	@Then("Check that new journey is created")
-	public void check_that_new_journey_is_created() {
-	    assertNotNull(journey);
-	}
-
-	@Then("Check that new journey is not created")
-	public void check_that_new_journey_is_not_created() {
-	    assertNull(journey);
-	}
+//	@When("Creating a Journey")
+//	public void creating_a_Journey() {
+//	   journey = containerApp.createJourney(newClient, portOfOrigin, destination, content);
+//	}
+//
+//	@Then("Check that new journey is created")
+//	public void check_that_new_journey_is_created() {
+//	    assertNotNull(journey);
+//	}
+//
+//	@Then("Check that new journey is not created")
+//	public void check_that_new_journey_is_not_created() {
+//	    assertNull(journey);
+//	}
 	
 	
 }
