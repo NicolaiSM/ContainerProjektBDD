@@ -134,8 +134,6 @@ public class ContainerApp {
 		}
 		List<Port> locationsAsPorts = convertLocations(locations);
 		container.updateJourney(times, locationsAsPorts, temperatures, humidities, pressures);
-		
-		
 	}
 
 	private List<Port> convertLocations(List<String> locations) {

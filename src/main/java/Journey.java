@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Journey {
@@ -6,11 +7,11 @@ public class Journey {
 	private Port destination;
 	private String content;
 	private Client client;
-	private List<String> times;
-	private List<Port> locations;
-	private List<Integer> temperatures;
-	private List<Integer> humidities;
-	private List<Integer> pressures;
+	private List<String> times = new ArrayList<String>();
+	private List<Port> locations = new ArrayList<Port>();
+	private List<Integer> temperatures = new ArrayList<Integer>();
+	private List<Integer> humidities = new ArrayList<Integer>();
+	private List<Integer> pressures = new ArrayList<Integer>();
 	
 	public Journey(Port portOfOrigin, Port destination, String content, Client client) {
 		this.portOfOrigin = portOfOrigin;
@@ -40,14 +41,11 @@ public class Journey {
 	}
 
 	public void update(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
-		this.times.addAll(times);
+		this.times.addAll(0,times);
 		this.locations.addAll(locations);
 		this.temperatures.addAll(temperatures);
 		this.humidities.addAll(humidities);
 		this.pressures.addAll(pressures);
-		
-				
-
 	}
 
 	public Port getLastLocation() {

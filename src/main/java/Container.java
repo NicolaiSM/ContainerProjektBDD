@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Container {
 	private Port port;
 	private Journey journey;
-	private List<Journey> journeys;
+	private List<Journey> journeys = new ArrayList<Journey>();
 	
 	public Container(Port port) {
 		this.port = port;
@@ -26,15 +27,12 @@ public class Container {
 		if (journey == null) {
 			return keyword.equals(port.getPort());
 		}
-		return (keyword.equals(port.getPort()) | keyword.equals(journey.getPortOfOrigin().getPort()) | keyword.equals(journey.getDestination().getPort()) | keyword.equals(journey.getContent()) | keyword.equals(journey.getClient()));
+		return (keyword.equals(port.getPort()) | keyword.equals(journey.getPortOfOrigin().getPort()) | keyword.equals(journey.getDestination().getPort()) | keyword.equals(journey.getContent()) | keyword.equals(journey.getClient().getClientName()));
 	}
 
 	public void updateJourney(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
 		journey.update(times, locations, temperatures, humidities, pressures);
-		//setportOfcontainer
 		setPort(journey.getLastLocation());
-		
-		//if port destin -> end journey
 		if (isLocationDestination()) {
 			endJourney();
 		}		
