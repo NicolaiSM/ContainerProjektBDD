@@ -392,7 +392,7 @@ public class StepDefinition {
 
 	@Then("the journey has ended")
 	public void the_journey_has_ended() {
-		assertTrue(container.getJourney() == null);
+		assertNull(container.getJourney());
 		assertNull(exception);
 	}
 

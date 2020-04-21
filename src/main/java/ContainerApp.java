@@ -32,10 +32,22 @@ public class ContainerApp {
 	}
 
 	public void updateClient(Client client, String clientName, String address, String contactPerson, String email) throws Exception {
-		if (changeInClientName(client, clientName) & isClientRegistered(clientName)) {
+		if (noChangeInClientName(client, clientName) | isClientAvailable(clientName) ) {
+			setClientInformation(client, clientName, address, contactPerson, email);
+
+		}
+		else {
 			throw new Exception("New client name already exists");
 		}
-		setClientInformation(client, clientName, address, contactPerson, email);
+
+	}
+
+	private boolean isClientAvailable(String clientName) {
+		return clients.stream().noneMatch((client)->client.getClientName().equals(clientName));
+	}
+
+	private boolean noChangeInClientName(Client client, String clientName) {
+		return client.getClientName().equals(clientName);
 	}
 
 	private void setClientInformation(Client client, String clientName, String address, String contactPerson, String email) {
@@ -43,10 +55,6 @@ public class ContainerApp {
 		client.setAddress(address);
 		client.setContactPerson(contactPerson);
 		client.setEmail(email);
-	}
-
-	private boolean changeInClientName(Client client, String clientName) {
-		return !client.getClientName().equals(clientName);
 	}
 
 	public void registerPort(String port) throws Exception {
