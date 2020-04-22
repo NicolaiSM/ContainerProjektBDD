@@ -1,15 +1,36 @@
+package website.model;
+
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 
+@Entity
 public class Container {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column
+	private long id;
+	
+	@ManyToOne
 	private Port port;
+	
+	@ManyToOne
 	private Journey journey;
+	
+	@OneToMany
 	private List<Journey> journeys = new ArrayList<Journey>();
+	
+
 	
 	public Container(Port port) {
 		this.port = port;
 	}
-
+	
+	public long getId() {
+		return id;
+	}
+	
 	public boolean isContainerAvailable(Port startport) {
 		
 		if(startport == this.port && journey == null )  {
@@ -32,7 +53,9 @@ public class Container {
 
 	public void updateJourney(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
 		journey.update(times, locations, temperatures, humidities, pressures);
+		port.removeContainer(this);
 		setPort(journey.getLastLocation());
+		port.addContainer(this);
 		if (isLocationDestination()) {
 			endJourney();
 		}		

@@ -1,5 +1,11 @@
+package application;
+
 import java.util.*;
 import java.util.stream.*;
+
+import website.model.Container;
+import website.model.Journey;
+import website.model.Port;
 
 public class ContainerApp {
 	private List<Client> clients = new ArrayList<Client>();
