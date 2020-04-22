@@ -31,31 +31,24 @@ public class ContainerApp {
 		return keywords.stream().anyMatch((keyword)->client.hasKeyword(keyword));
 	}
 
-	public void updateClient(Client client, String clientName, String address, String contactPerson, String email) throws Exception {
-		if (noChangeInClientName(client, clientName) | isClientAvailable(clientName) ) {
-			setClientInformation(client, clientName, address, contactPerson, email);
-
+	public void updateClient(Client client, String key, String value) throws Exception {
+		if (key.equals("clientName")) {
+			if (isClientAvailable(value)) {
+				client.setClientInfo(key, value);
+			}
+			else {
+				throw new Exception("New client name already exists");
+			}
+		} else {
+			client.setClientInfo(key, value);
 		}
-		else {
-			throw new Exception("New client name already exists");
-		}
-
 	}
 
 	private boolean isClientAvailable(String clientName) {
 		return clients.stream().noneMatch((client)->client.getClientName().equals(clientName));
 	}
 
-	private boolean noChangeInClientName(Client client, String clientName) {
-		return client.getClientName().equals(clientName);
-	}
 
-	private void setClientInformation(Client client, String clientName, String address, String contactPerson, String email) {
-		client.setClientName(clientName);
-		client.setAddress(address);
-		client.setContactPerson(contactPerson);
-		client.setEmail(email);
-	}
 
 	public void registerPort(String port) throws Exception {
 		if (portIsRegistered(port)) {
@@ -90,7 +83,7 @@ public class ContainerApp {
 		Port startport = findPort(portOfOrigin);
 		Port finalport = findPort(destination);
 		
-		if (startport == null || finalport == null) {
+		if (startport == null | finalport == null) {
 			throw new Exception ("No valid ports");
 		}
 		Container availableContainer = getAvailableContainer(startport);

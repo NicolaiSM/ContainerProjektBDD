@@ -12,7 +12,9 @@ public class StepDefinition {
 	private String contactPerson;
 	private String email;
 	private Exception exception;
-	private ContainerApp containerApp = new ContainerApp();	
+	private ContainerApp containerApp = new ContainerApp();
+	private String key;
+	private String value;
 	
 	// REGISTER CLIENT
 	
@@ -95,18 +97,16 @@ public class StepDefinition {
 	    client = new Client(clientName,address,contactPerson,email);
 	}
 
-	@Given("Client wants to update client name to {string}, address to {string}, contact person to {string} and email to {string}")
-	public void client_wants_to_update_client_name_to_address_to_contact_person_to_and_email_to(String clientName, String clientAddress, String contactPerson, String email) {
-	    this.clientName = clientName;
-	    this.address = clientAddress;
-	    this.contactPerson = contactPerson;
-	    this.email = email;
+	@Given("Client wants to update the client information {string} to {string}")
+	public void Client_wants_to_update_the_client_information__to_(String key, String value) {
+	    this.key = key;
+	    this.value = value;
 	}
 
 	@When("Change previous client information to the given information")
 	public void change_previous_client_information_to_the_given_information() {
 		try {
-			containerApp.updateClient(client,clientName,address,contactPerson,email);
+			containerApp.updateClient(client, key, value);
 		} catch (Exception e) {
 			exception = e;
 		}

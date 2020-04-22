@@ -1,40 +1,29 @@
 
+import java.util.*;
+
 public class Client {
-	private String clientName;
-	private String address;
-	private String contactPerson;
-	private String email;
+	private Map<String,String> clientInfo = new HashMap<>();
+	
 	
 	Client(String clientName, String address, String contactPerson, String email) {
-	    this.clientName = clientName;
-	    this.address = address;
-	    this.contactPerson = contactPerson;
-	    this.email = email;
+		clientInfo.put("clientName",clientName);
+		clientInfo.put("address", address);
+		clientInfo.put("contactPerson", contactPerson);
+		clientInfo.put("email", email);
 	}
-
-	public boolean hasKeyword(String keyword) {
-		return (keyword.equals(clientName) | keyword.equals(address) | keyword.equals(contactPerson) | keyword.equals(email));
+	
+	public boolean hasKeyword(String key) {
+		return clientInfo.containsValue(key);
 	}
 	
 	//Setters
-	public void setClientName(String clientName) {
-		this.clientName = clientName;
-	}
-	
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	public void setContactPerson(String contactPerson) {
-		this.contactPerson = contactPerson;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
+	public void setClientInfo(String key, String value) {
+		clientInfo.put(key, value);
 	}
 	
 	//Getters
 	public String getClientName() {
-		return this.clientName;
+		return clientInfo.get("clientName");
 	}
+
 }
