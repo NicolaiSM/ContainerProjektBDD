@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import website.ListenHandler;
+import website.model.Client;
 import website.model.Container;
 import website.model.Credentials;
 import website.model.Port;
@@ -51,6 +52,33 @@ public class ContainerController {
 		
 	}
 	
+	
+	@GetMapping("/createclient")
+	public String createclient(Client client, Model model) {
+		model.addAttribute("client", new Client());
+		ListenHandler.getListenerByKey("createClient").increment();
+		return "createclient";
+	}
+	
+	
+	@PostMapping("/createclient")
+	public String createclient(Client client, BindingResult result ,Model model) {
+		return "redirect:/";
+	}
+	
+	@GetMapping("/registercontainer")
+	public String registercontainer(Client client, Model model) {
+		model.addAttribute("client", new Client());
+		ListenHandler.getListenerByKey("registerContainer").increment();
+		return "registercontainer";
+	}
+	
+	
+	@PostMapping("/registercontainer")
+	public String registercontainer(Client client, BindingResult result ,Model model) {
+		
+		return "redirect:/";
+	}
 	
 	
 	
