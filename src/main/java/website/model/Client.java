@@ -26,6 +26,10 @@ public class Client {
 	}
 	
 	
+	public Client() {
+		
+	}
+
 	public boolean hasKeyword(String key) {
 		return clientInfo.containsValue(key);
 	}
