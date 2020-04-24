@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+<head>
+<title>Container Tracker</title>
+</head>
+
+	<h1> Please login here:</h1>
+	
+	<form th:action="@{/login}" method="post" th:object="${credentials}">
+	  	<label>Username</label>:
+      	<input type="text" name="username" th:field="*{username}"/> <br />
+      	<label>Password</label>:
+      	<input type="password" name="password" th:field="*{password}"/> <br />
+  		<input type="submit" value="Log in" />
+	</form>
+
+
+
+</html>

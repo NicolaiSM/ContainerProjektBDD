@@ -4,14 +4,13 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import application.Client;
-
 
 @Entity
 public class Journey {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column
 	private long id;
 	
 	@OneToOne
@@ -23,7 +22,8 @@ public class Journey {
 	@Column
 	private String content;
 	
-//	private Client client;
+	@ManyToOne
+	private Client client;
 	
 	@ElementCollection
 	private List<String> times = new ArrayList<String>();

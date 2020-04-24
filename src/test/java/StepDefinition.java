@@ -1,10 +1,10 @@
 import io.cucumber.java.en.*;
+import website.model.Client;
 import website.model.Container;
 import static org.junit.Assert.*;
 
 import java.util.*;
 
-import application.Client;
 import application.ContainerApp;
 
 
@@ -95,10 +95,11 @@ public class StepDefinition {
 	// UPDATE CLIENT INFORMATION
 	private Client client;
 	
-	@Given("a client with; name: {string}, address: {string}, contactperson name: {string} and contactperson email: {string}")
+	@Given("a client with name: {string}, address: {string}, contactperson name: {string} and contactperson email: {string}")
 	public void a_client_with_name_address_contactperson_name_and_contactperson_email(String clientName, String address, String contactPerson, String email) {
 	    client = new Client(clientName,address,contactPerson,email);
 	}
+
 
 	@Given("Client wants to update the client information {string} to {string}")
 	public void Client_wants_to_update_the_client_information__to_(String key, String value) {

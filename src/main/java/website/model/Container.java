@@ -3,6 +3,7 @@ package website.model;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Container {
@@ -13,6 +14,7 @@ public class Container {
 	private long id;
 	
 	@ManyToOne
+	@NotBlank()
 	private Port port;
 	
 	@ManyToOne
