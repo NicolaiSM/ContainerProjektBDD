@@ -19,12 +19,16 @@ public class ContainerApp {
 	}
 	
 	public List<Client> findClient(List<String> keywords) throws Exception {
-		List<Client> resultingClients = clients.stream().filter((client)->clientHasKeyword(keywords, client)).collect(Collectors.toList());
+		List<Client> resultingClients = getClients(keywords);
 		if (resultingClients.isEmpty()) {
 			throw new Exception("No clients found");
 
 		}
 		return resultingClients;
+	}
+
+	private List<Client> getClients(List<String> keywords) {
+		return clients.stream().filter((client)->clientHasKeyword(keywords, client)).collect(Collectors.toList());
 	}
 
 	private boolean clientHasKeyword(List<String> keywords, Client client) {
@@ -103,7 +107,7 @@ public class ContainerApp {
 	}
 
 	public List<Container> findContainer(List<String> keywords) throws Exception {
-		List<Container> resultingContainers = containers.stream().filter((container)->containerHasKeyword(keywords, container)).collect(Collectors.toList());
+		List<Container> resultingContainers = getContainers(keywords);
 		if (resultingContainers.isEmpty()) {
 			throw new Exception("No containers found");
 
@@ -111,18 +115,26 @@ public class ContainerApp {
 		return resultingContainers;
 	}
 
+	private List<Container> getContainers(List<String> keywords) {
+		return containers.stream().filter((container)->containerHasKeyword(keywords, container)).collect(Collectors.toList());
+	}
+
 	private boolean containerHasKeyword(List<String> keywords, Container container) {
 		return keywords.stream().anyMatch((keyword)->container.hasKeyword(keyword));
 	}
 
 	public List<Journey> findJourney(List<String> keywords) throws Exception {
-		List<Journey> resultingJourneys = journeys.stream().filter((journey)->journeyHasKeyword(keywords, journey)).collect(Collectors.toList());
+		List<Journey> resultingJourneys = getJourneys(keywords);
 		if (resultingJourneys.isEmpty()) {
 			throw new Exception("No journeys found");
 			
 		}
 		
 		return resultingJourneys;
+	}
+
+	private List<Journey> getJourneys(List<String> keywords) {
+		return journeys.stream().filter((journey)->journeyHasKeyword(keywords, journey)).collect(Collectors.toList());
 	}
 
 	private boolean journeyHasKeyword(List<String> keywords, Journey journey) {
