@@ -4,11 +4,11 @@
 <title>Container Tracker</title>
 </head>
 
-	<h1> Please login here:</h1>
+	<h1> Input information about port:</h1>
 	
-	<form th:action="@{/createcontainer}" method="post" th:object="${port}">
+	<form th:action="@{/createcontainer}" method="post" th:object="${simpelform}">
 	  	<label>Container port</label>:
-      	<input type="text" name="port" th:field="*{port}"/> <br />
+      	<input type="text" name="" th:field="*{simpelString}"/> <br />
   		<input type="submit" value="Create" />
 	</form>
 

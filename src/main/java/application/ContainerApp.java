@@ -9,9 +9,20 @@ import website.model.Journey;
 import website.model.Port;
 
 public class ContainerApp {
+	
+	private static ContainerApp instance = null;
+	
+	public static ContainerApp getInstance() {
+		if(instance == null) {
+			instance = new ContainerApp();
+		}
+		return instance;
+	}
+	
+	
 	private List<Client> clients = new ArrayList<Client>();
 	private Set<Port> ports = new HashSet<Port>();
-	private List<Container> containers = new ArrayList<Container>();
+	public List<Container> containers = new ArrayList<Container>();
 	private List<Journey> journeys = new ArrayList<Journey>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email) throws Exception {
