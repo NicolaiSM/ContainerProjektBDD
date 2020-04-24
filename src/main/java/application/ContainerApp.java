@@ -149,7 +149,7 @@ public class ContainerApp {
 	}
 
 	public void updateJourney(Container container, List<String> times, List<String> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) throws Exception {
-		if (container.hasNoJourney()) {
+		if (!container.hasJourney()) {
 			throw new Exception ("Container is not on a journey");
 		}
 		if (isLocationNotValid(locations)) {

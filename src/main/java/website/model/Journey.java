@@ -79,8 +79,7 @@ public class Journey {
 		this.pressures.addAll(pressures);
 	}
 
-	public Port getLastLocation() {
-		
+	public Port getLastLocation() {	
 		return locations.get(locations.size()-1);
 	}
 }

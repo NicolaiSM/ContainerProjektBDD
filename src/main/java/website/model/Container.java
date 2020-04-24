@@ -34,11 +34,8 @@ public class Container {
 	}
 	
 	public boolean isContainerAvailable(Port startport) {
-		
-		if(startport == this.port && journey == null )  {
-			return true;
-		}
-		return false;
+		return startport == this.port && !hasJourney();
+
 	}
 
 	public void setJourney(Journey journey) {
@@ -47,7 +44,7 @@ public class Container {
 	}
 
 	public boolean hasKeyword(String keyword) {
-		if (journey == null) {
+		if (!hasJourney()) {
 			return keyword.equals(port.getPort());
 		}
 		return (keyword.equals(port.getPort()) | keyword.equals(journey.getPortOfOrigin().getPort()) | keyword.equals(journey.getDestination().getPort()) | keyword.equals(journey.getContent()) | keyword.equals(journey.getClient().getClientName()));
@@ -70,10 +67,7 @@ public class Container {
 	}
 
 	private boolean isLocationDestination() {
-		if (port == journey.getDestination()) {
-			return true;
-		}
-		return false;
+		return port == journey.getDestination();
 	}
 
 	private void setPort(Port port) {
@@ -85,10 +79,9 @@ public class Container {
 		return journey;
 	}
 
-	public boolean hasNoJourney() {
-		return journey == null;
+	public boolean hasJourney() {
+		return journey != null;
 	}
 
-	
 
 }

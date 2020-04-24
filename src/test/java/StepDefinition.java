@@ -45,7 +45,7 @@ public class StepDefinition {
 			exception = e;
 		}
 	}
-
+	
 	@Then("Client is registered")
 	public void client_is_registered() {
 	    assertTrue(containerApp.isClientRegistered(clientName));
