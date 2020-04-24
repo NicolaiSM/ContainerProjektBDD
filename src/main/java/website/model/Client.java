@@ -15,11 +15,6 @@ public class Client {
 	@ElementCollection
 	private Map<String,String> clientInfo = new HashMap<>();
 	
-	@Column
-	private String password;
-	
-	@Column
-	private String username;
 
 	
 	
@@ -30,10 +25,6 @@ public class Client {
 		clientInfo.put("email", email);
 	}
 	
-	public Client(String clientName, String password) {
-		this.password = password;
-		this.username = clientName;
-	}
 	
 	public boolean hasKeyword(String key) {
 		return clientInfo.containsValue(key);

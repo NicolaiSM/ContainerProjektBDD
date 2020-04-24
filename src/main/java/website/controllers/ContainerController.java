@@ -12,6 +12,7 @@ import website.ListenHandler;
 import website.model.Container;
 import website.model.Credentials;
 import website.model.Port;
+import website.model.SimpelForm;
 import website.repository.ContainersRepository;
 
 @Controller
@@ -25,31 +26,31 @@ public class ContainerController {
 	}
 	
 	@GetMapping("/createcontainer")
-	public String createcontainer(Port port, Model model) {
-		model.addAttribute("port", new Port());
+	public String createcontainer(SimpelForm simpelform, Model model) {
+		model.addAttribute("simpelform", new SimpelForm());
 		ListenHandler.getListenerByKey("createContainer").increment();
 		return "createcontainer";
 	}
 	
 	@PostMapping("/createcontainer")
-	public String createcontainer(Port port,BindingResult result ,Model model) {
+	public String createcontainer(SimpelForm simpelform,BindingResult result ,Model model) {
 		return "redirect:/";
 		
 	}
 	
-	@GetMapping("/createport")
-	public String createport(Port port, Model model) {
-		model.addAttribute("port", new Port());
-		ListenHandler.getListenerByKey("createPort").increment();
-		return "createcontainer";
-	}
-	
-	
-	@PostMapping("/createport")
-	public String createport(Port port,BindingResult result ,Model model) {
-		return "redirect:/";
-		
-	}
+//	@GetMapping("/createport")
+//	public String createport(Port port, Model model) {
+//		model.addAttribute("port", new Port());
+//		ListenHandler.getListenerByKey("createPort").increment();
+//		return "createcontainer";
+//	}
+//	
+//	
+//	@PostMapping("/createport")
+//	public String createport(Port port,BindingResult result ,Model model) {
+//		return "redirect:/";
+//		
+//	}
 	
 	
 	
