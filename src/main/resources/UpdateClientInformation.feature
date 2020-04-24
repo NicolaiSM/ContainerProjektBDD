@@ -18,10 +18,6 @@ Background: We assume that the we are already given an existing client. Which is
     When Change previous client information to the given information
     Then Client has not been updated
     
-    #Examples: 
-      #| key		  		 | value 				 |
-      #| "address" 	 | "Hollywood 5" |
-      #| "clientName" | "Rema500"     |
 
 
     

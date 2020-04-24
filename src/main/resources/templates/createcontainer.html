@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+<head>
+<title>Container Tracker</title>
+</head>
+
+	<h1> Please login here:</h1>
+	
+	<form th:action="@{/createcontainer}" method="post" th:object="${port}">
+	  	<label>Container port</label>:
+      	<input type="text" name="port" th:field="*{port}"/> <br />
+  		<input type="submit" value="Create" />
+	</form>
+
+
+
+</html>
