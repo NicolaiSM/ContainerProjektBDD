@@ -19,6 +19,9 @@ public class Port {
 	public Port(String port) {
 		this.port = port;
 	}
+	
+	public Port() {
+	}
 
 	public String getPort() {
 		return port;
