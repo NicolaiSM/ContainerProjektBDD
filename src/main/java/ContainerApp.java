@@ -83,7 +83,7 @@ public class ContainerApp {
 		Port startport = findPort(portOfOrigin);
 		Port finalport = findPort(destination);
 		
-		if (startport == null | finalport == null) {
+		if (startport == null || finalport == null) {
 			throw new Exception ("No valid ports");
 		}
 		Container availableContainer = getAvailableContainer(startport);
@@ -130,6 +130,9 @@ public class ContainerApp {
 	}
 
 	public void updateJourney(Container container, List<String> times, List<String> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) throws Exception {
+		if (container.hasNoJourney()) {
+			throw new Exception ("Container is not on a journey");
+		}
 		if (isLocationNotValid(locations)) {
 			throw new Exception ("Location is not valid");
 		}

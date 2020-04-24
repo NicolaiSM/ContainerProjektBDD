@@ -13,8 +13,10 @@ public class StepDefinition {
 	private String email;
 	private Exception exception;
 	private ContainerApp containerApp = new ContainerApp();
-	private String key;
-	private String value;
+	private String key1;
+	private String value1;
+	private String key2;
+	private String value2;
 	
 	// REGISTER CLIENT
 	
@@ -92,24 +94,27 @@ public class StepDefinition {
 	// UPDATE CLIENT INFORMATION
 	private Client client;
 	
-	@Given("a client with; name: {string}, address: {string}, contactperson name: {string} and contactperson email: {string}")
+	@Given("a client with name: {string}, address: {string}, contactperson name: {string} and contactperson email: {string}")
 	public void a_client_with_name_address_contactperson_name_and_contactperson_email(String clientName, String address, String contactPerson, String email) {
 	    client = new Client(clientName,address,contactPerson,email);
 	}
 
-	@Given("Client wants to update the client information {string} to {string}")
-	public void Client_wants_to_update_the_client_information__to_(String key, String value) {
-	    this.key = key;
-	    this.value = value;
+	@Given("Client wants to update the client information {string} to {string} and {string} to {string}")
+	public void Client_wants_to_update_the_client_information_to_(String key1, String value1, String key2, String value2) {
+	    this.key1 = key1;
+	    this.value1 = value1;
+	    this.key2 = key2;
+	    this.value2 = value2;
 	}
 
 	@When("Change previous client information to the given information")
-	public void change_previous_client_information_to_the_given_information() {
+	public void change_previous_client_information_to_the_given_information() throws Exception {
 		try {
-			containerApp.updateClient(client, key, value);
+			containerApp.updateClient(client, key1, value1);
 		} catch (Exception e) {
 			exception = e;
 		}
+		containerApp.updateClient(client, key2, value2);
 	}
 
 	@Then("Client has been updated")
@@ -375,7 +380,14 @@ public class StepDefinition {
 	    this.humidities.add(humidities);
 	    this.pressures.add(pressures);
 	}
-
+	
+	@Given("a container: port {string} with no journey")
+	public void a_container_port_with_no_journey(String port) throws Exception {
+		containerApp.createContainer(port);
+		keywords.add(port);
+		container = containerApp.findContainer(keywords).get(0);
+	}
+	
 	@When("updating a journey")
 	public void updating_a_journey() {
 	    try {

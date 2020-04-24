@@ -60,6 +60,10 @@ public class Container {
 		return journey;
 	}
 
+	public boolean hasNoJourney() {
+		return journey == null;
+	}
+
 	
 
 }

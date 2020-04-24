@@ -20,3 +20,13 @@ Feature: Update a container
     And new internal information: timestamp "13:44:32 May 8. 2020", location "Bern", temperature 9, humidity 64, pressure 1
     When updating a journey
     Then the journey is not updated
+    
+    Scenario: Unsuccesful update of a journey: Container has no journey
+    Given a list of existing ports "Oslo", "Stockholm" and "London" 
+    And a container: port "Oslo" with no journey
+    And new internal information: timestamp "13:44:32 May 8. 2020", location "Bern", temperature 9, humidity 64, pressure 1
+    When updating a journey
+    Then the journey is not updated
+    
+    
+    
