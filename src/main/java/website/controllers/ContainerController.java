@@ -29,12 +29,6 @@ public class ContainerController {
 	
 	@GetMapping("/createcontainer")
 	public String createcontainer(SimpelForm simpelform, Model model) {
-		try {
-			ContainerApp.getInstance().registerPort("TEST");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		model.addAttribute("simpelform", new SimpelForm());
 		ListenHandler.getListenerByKey("createContainer").increment();
 		return "createcontainer";
@@ -48,12 +42,9 @@ public class ContainerController {
 		
 		try {
 			ContainerApp.getInstance().createContainer(simpelform.getSimpelString());
-			System.out.println("test");
 		} catch (Exception e) {
 			
 		} 
-		
-		System.out.println(ContainerApp.getInstance().containers.size());
 		
 		
 		return "redirect:/";
