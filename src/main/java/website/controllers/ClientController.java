@@ -1,5 +1,7 @@
 package website.controllers;
 
+
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import website.model.ClientForm;
 import website.model.CredentialForm;
+import website.model.LogisitcCompanyForm;
 import website.model.UserForm;
 import website.repository.UsersRepository;
 
 @Controller
 public class ClientController {
+	
+	private UserForm user;
 	
 	@Autowired
 	private UsersRepository userrepository;
@@ -41,15 +46,16 @@ public class ClientController {
 		
 		userrepository.save(userForm);
 		
-		System.out.println(userrepository.findById("admin"));
-		
-		return "redirect:/index";
+		return "redirect:/login";
 		
 	}
 	
 	@GetMapping("/")
 	public String login(CredentialForm credentialForm , Model model) {
 		model.addAttribute("credentialForm", new CredentialForm());
+		
+		System.out.println(userrepository.count());
+		
 		return "login";
 	}
 	
@@ -60,13 +66,48 @@ public class ClientController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@Valid CredentialForm credentialForm, BindingResult result, Model model) {		
+	public String login(@Valid CredentialForm credentialForm, BindingResult result, Model model) {	
+		System.out.println(userrepository.count());
 		if(result.hasErrors()) {
 			return "login";
 		}
 		
-		return "redirect:/index";
+		user = userrepository.findById(credentialForm.getClientName()).get();
+		
+		if (user instanceof LogisitcCompanyForm) {
+			return "redirect:/logisitccompanyview";
+		}
+		
+		return "redirect:/clientview";
+		
+		
+		
 	}
+	
+	@GetMapping("/clientview")
+	public String clientView(Model model) {
+		model.addAttribute("clientForm", (ClientForm) user);
+		
+		return "clientview";
+	}
+	
+	@GetMapping("/logisitccompanyview")
+	public String logisticCompany(Model model) {
+		model.addAttribute("logisitccompanyForm", (LogisitcCompanyForm) user);
+		
+		return "logisitccompanyview";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
