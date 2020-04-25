@@ -6,14 +6,24 @@
 
 	<h1> Please login here:</h1>
 	
-	<form th:action="@{/login}" method="post" th:object="${credentials}">
-	  	<label>Username</label>:
-      	<input type="text" name="username" th:field="*{username}"/> <br />
-      	<label>Password</label>:
-      	<input type="password" name="password" th:field="*{password}"/> <br />
+	<form th:action="@{/login}" method="post" th:object="${credentialForm}">
+	<div th:if="${#fields.hasErrors('global')}">The login is not valid!</div>
+	  	<label>Username
+      	<input type="text" name="clientName" th:field="*{clientName}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}"></p>
+      	<br />
+      	<label>Password
+      	<input type="password" name="password" th:field="*{password}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+      	<br />
   		<input type="submit" value="Log in" />
 	</form>
 
+	<form th:action="@{/createclient}" method="post" th:object="${credentialForm}">
+		<input type="submit" value="Create Client" />
+	</form>
 
 
 </html>

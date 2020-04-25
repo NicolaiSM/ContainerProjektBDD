@@ -1,4 +1,4 @@
-package website.model;
+package application;
 
 import java.util.*;
 

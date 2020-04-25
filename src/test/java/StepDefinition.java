@@ -1,10 +1,11 @@
 import io.cucumber.java.en.*;
-import website.model.Client;
-import website.model.Container;
+
 import static org.junit.Assert.*;
 
 import java.util.*;
 
+import application.Client;
+import application.Container;
 import application.ContainerApp;
 
 
