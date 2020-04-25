@@ -29,7 +29,9 @@ public class UserLoginValidator implements ConstraintValidator<ValidLogin, Crede
 
 	@Override
 	public boolean isValid(CredentialForm value, ConstraintValidatorContext context) { 
-		return value != null &&	userRepository.findById(username).filter(user -> user.getPassword().equals(password)).isPresent();
+		String usernamecheck = (String) new BeanWrapperImpl(value).getPropertyValue(username);
+		String passwordcheck = (String) new BeanWrapperImpl(value).getPropertyValue(password);
+		return value != null &&	userRepository.findById(usernamecheck).filter(user -> user.getPassword().equals(passwordcheck)).isPresent();
 	}
 	
 	

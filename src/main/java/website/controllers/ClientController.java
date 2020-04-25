@@ -27,19 +27,21 @@ public class ClientController {
 	}
 	
 	@GetMapping("/createclient")
-	public String createClient(UserForm userForm, Model model) {
-		model.addAttribute("userForm", (UserForm) new ClientForm());
+	public String createClient(ClientForm userForm, Model model) {
+		model.addAttribute("clientForm", new ClientForm());
 		return "createclient";
 	}
 	
 	@PostMapping("/createclient")
-	public String createClient(@Valid UserForm userForm, BindingResult result, Model model) {
+	public String createClient(@Valid ClientForm userForm, BindingResult result, Model model) {
 		
 		if(result.hasErrors()) {
 			return "createclient";
 		}
 		
 		userrepository.save(userForm);
+		
+		System.out.println(userrepository.findById("admin"));
 		
 		return "redirect:/index";
 		

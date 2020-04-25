@@ -30,6 +30,7 @@ public class UserForm {
 	private String contactPerson;
 	
 	@Column
+	@NotBlank(message = "The Contact person is mandatory")
 	private String password;
 
 
