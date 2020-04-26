@@ -15,6 +15,7 @@ import application.Client;
 import application.ContainerApp;
 import website.model.ClientForm;
 import website.model.CredentialForm;
+import website.model.JourneyForm;
 import website.model.LogisitcCompanyForm;
 import website.model.UserForm;
 import website.repository.UsersRepository;
@@ -25,7 +26,17 @@ public class ClientController {
 	
 	@GetMapping("/index")
 	public String index(Model model) {
-		
+		try {
+			ContainerApp.getInstance().registerClient("a","a" ,"a","a@a.com","a");
+			ContainerApp.getInstance().registerPort("a");
+			ContainerApp.getInstance().registerPort("b");
+			ContainerApp.getInstance().createContainer("a");
+			ContainerApp.getInstance().createContainer("b");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "index";
 	}
 	
@@ -85,8 +96,9 @@ public class ClientController {
 	
 	@GetMapping("/clientview")
 	public String clientView(Model model) {
-//		model.addAttribute("clientForm", (ClientForm) user);
-		
+		model.addAttribute("client", user);
+		model.addAttribute("journeyForm", new JourneyForm());
+		model.addAttribute("containers", ContainerApp.getInstance().findContainerByClient(user));
 		return "clientview";
 	}
 	
@@ -97,8 +109,19 @@ public class ClientController {
 		return "logisitccompanyview";
 	}
 	
+	@PostMapping("/registercontainer")
+	public String registerContainer(@Valid JourneyForm journeyForm, BindingResult result, Model model) {
+		try {
+			ContainerApp.getInstance().registerContainer(journeyForm.getPortOfOrigin(), journeyForm.getDestination(), journeyForm.getContent(), user);
+		} catch (Exception e) {
+			model.addAttribute("registercontainermessage", e.getMessage());
+			e.printStackTrace();
+			System.out.println(user.getClientName());
+			
+		} 			
+		return "clientview";
 	
-	
+	}
 	
 	
 	
