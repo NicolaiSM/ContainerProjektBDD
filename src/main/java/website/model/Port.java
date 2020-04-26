@@ -1,6 +1,7 @@
 package website.model;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.*;
 
@@ -18,9 +19,9 @@ public class Port {
 	
 	public Port(String port) {
 		this.port = port;
-	}
-	
-	public Port() {
+		Random rand = new Random();
+		xCoordinate = rand.nextInt((20000-(-20000))+1)+(-20000);
+		yCoordinate = rand.nextInt((20000-(-20000))+1)+(-20000);
 	}
 
 	public String getPort() {
@@ -35,5 +36,14 @@ public class Port {
 		containers.remove(container);
 	}
 
-	
+	private final int xCoordinate;
+	private final int yCoordinate;
+
+	public double getXCoordinate() {
+		return (double) xCoordinate;
+	}
+
+	public double getYCoordinate() {
+		return (double) yCoordinate;
+	}
 }

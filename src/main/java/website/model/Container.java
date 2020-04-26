@@ -83,5 +83,34 @@ public class Container {
 		return journey != null;
 	}
 
+	public int getDistance() {
+		int distance = 0;
+		if (!journeys.isEmpty()) {
+			distance = journeys.stream().mapToInt(journey->journey.getDistance()).sum();
+		}
+		if (!(journey==null)) {
+			distance+=journey.getDistance();
+		}
+		return distance;
 
+	}
+
+	public int getNumberOfJourneys() {
+		int numberOfJourneys = journeys.size();
+		if (!(journey==null)) {
+			numberOfJourneys++;
+		}
+		return numberOfJourneys;
+	}
+	
+	public int getNumberOfPorts() {
+		int numberOfPorts = 0;
+		if (!journeys.isEmpty()) {
+			numberOfPorts = journeys.stream().mapToInt(journey->journey.getNumberOfPorts()).sum();
+		}
+		if (!(journey==null)) {
+			numberOfPorts+=journey.getNumberOfPorts();
+		}
+		return numberOfPorts;
+	}
 }
