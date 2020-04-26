@@ -21,6 +21,10 @@ public class ContainerApp {
 	private List<Journey> journeys = new ArrayList<Journey>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
+		System.out.println(clients.size());
+		if (clients.size() > 0) {
+			System.out.println(clients.get(0).get("clientName"));
+		}
 		if (isClientRegistered(clientName)) {
 			throw new Exception("Client already registered");
 		}
@@ -34,8 +38,7 @@ public class ContainerApp {
 		clients.add(new Client(clientName, address, contactPerson, email));
 	}
 	public Client loggedInClient(String clientName, String password) throws Exception {
-		Client c = clients.stream().filter((client)->client.get("clientName").equals(clientName)).collect(Collectors.toList()).get(0);
-
+		Client c = clients.stream().filter((client)->client.get("clientName").equals(clientName)).findFirst().orElse(null);
 		if (c==null) {
 			throw new Exception("Username is incorrect");
 		}
