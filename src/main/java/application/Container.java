@@ -88,7 +88,7 @@ public class Container {
 		if (!journeys.isEmpty()) {
 			distance = journeys.stream().mapToInt(journey->journey.getDistance()).sum();
 		}
-		if (!(journey==null)) {
+		if (hasJourney()) {
 			distance+=journey.getDistance();
 		}
 		return distance;
@@ -97,7 +97,7 @@ public class Container {
 
 	public int getNumberOfJourneys() {
 		int numberOfJourneys = journeys.size();
-		if (!(journey==null)) {
+		if (hasJourney()) {
 			numberOfJourneys++;
 		}
 		return numberOfJourneys;
@@ -108,7 +108,7 @@ public class Container {
 		if (!journeys.isEmpty()) {
 			numberOfPorts = journeys.stream().mapToInt(journey->journey.getNumberOfPorts()).sum();
 		}
-		if (!(journey==null)) {
+		if (hasJourney()) {
 			numberOfPorts+=journey.getNumberOfPorts();
 		}
 		return numberOfPorts;

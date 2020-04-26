@@ -15,7 +15,11 @@ public class Port {
 	
 	@OneToMany
 	private List<Container> containers = new ArrayList<Container>();
-
+	
+	@Column
+	private final int xCoordinate;
+	@Column
+	private final int yCoordinate;
 	
 	public Port(String port) {
 		this.port = port;
@@ -35,9 +39,6 @@ public class Port {
 	public void removeContainer(Container container) {
 		containers.remove(container);
 	}
-
-	private final int xCoordinate;
-	private final int yCoordinate;
 
 	public double getXCoordinate() {
 		return (double) xCoordinate;
