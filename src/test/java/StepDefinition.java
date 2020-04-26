@@ -417,4 +417,51 @@ public class StepDefinition {
 		assertNotNull(exception);
 	}
 	
+	//
+	//
+	//
+	
+	// Client login
+	String username;
+	String password;
+	
+	@Given("clients")
+	public void clients(io.cucumber.datatable.DataTable dataTable) throws Exception {
+	    // Write code here that turns the phrase above into concrete actions
+	    // For automatic transformation, change DataTable to one of
+	    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+	    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+	    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+	    //
+	    // For other transformations you can register a DataTableType.
+		containerApp.registerClient(dataTable.cell(2, 0),dataTable.cell(2, 1),dataTable.cell(2, 2),dataTable.cell(2, 3),dataTable.cell(2, 4));
+		containerApp.registerClient(dataTable.cell(1, 0),dataTable.cell(1, 1),dataTable.cell(1, 2),dataTable.cell(1, 3),dataTable.cell(1, 4));
+	}
+
+
+	@Given("a username {string} and a password {string}")
+	public void a_username_and_a_password(String username, String password) {
+	    this.username = username;
+	    this.password = password;
+	}
+
+	@When("logging in")
+	public void logging_in() {
+	    try {
+			containerApp.loggedInClient(username, password);
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+
+	@Then("client is logged in")
+	public void client_is_logged_in() {
+	    assertNull(exception);
+	}
+	
+	@Then("client is not logged in")
+	public void client_is_not_logged_in() {
+	    assertNotNull(exception);
+	}
+
 }

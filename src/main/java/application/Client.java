@@ -14,8 +14,15 @@ public class Client {
 	
 	@ElementCollection
 	private Map<String,String> clientInfo = new HashMap<>();
-	
 
+
+	public Client(String clientName, String address, String contactPerson, String email, String password) {
+		clientInfo.put("clientName",clientName);
+		clientInfo.put("address", address);
+		clientInfo.put("contactPerson", contactPerson);
+		clientInfo.put("email", email);
+		clientInfo.put("password",password);
+	}
 	
 	
 	public Client(String clientName, String address, String contactPerson, String email) {
@@ -23,11 +30,6 @@ public class Client {
 		clientInfo.put("address", address);
 		clientInfo.put("contactPerson", contactPerson);
 		clientInfo.put("email", email);
-	}
-	
-	
-	public Client() {
-		
 	}
 
 	public boolean hasKeyword(String key) {
@@ -43,5 +45,7 @@ public class Client {
 	public String getClientName() {
 		return clientInfo.get("clientName");
 	}
-
+	public String get(String key) {
+		return clientInfo.get(key);
+	}
 }

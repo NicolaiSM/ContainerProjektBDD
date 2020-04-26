@@ -6,7 +6,8 @@
 
 	<h1> Create client:</h1>
 	
-	<form th:action="@{/createclient}" method="post" th:object="${clientForm}">
+	<form th:action="@{/createclient}" method="post" th:object="${userForm}">
+		<p th:text="${message}"></p>
 	  	<label> Client Name
       	<input type="text" name="clientName" th:field="*{clientName}"/>
       	</label>
