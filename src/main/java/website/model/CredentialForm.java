@@ -3,7 +3,7 @@ package website.model;
 import javax.validation.constraints.NotBlank;
 
 
-@ValidLogin(username = "clientName", password ="password")
+
 public class CredentialForm {
 	
 	@NotBlank(message = "password is mandatory")

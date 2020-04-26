@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import website.model.UserForm;
 
-@Repository
+
 public interface UsersRepository extends CrudRepository<UserForm,String>  {
 	
  

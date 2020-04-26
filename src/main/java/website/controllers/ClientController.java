@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import application.ContainerApp;
 import website.model.ClientForm;
 import website.model.CredentialForm;
 import website.model.LogisitcCompanyForm;
@@ -19,11 +20,7 @@ import website.repository.UsersRepository;
 
 @Controller
 public class ClientController {
-	
-	private UserForm user;
-	
-	@Autowired
-	private UsersRepository userrepository;
+
 	
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -38,13 +35,12 @@ public class ClientController {
 	}
 	
 	@PostMapping("/createclient")
-	public String createClient(@Valid ClientForm userForm, BindingResult result, Model model) {
+	public String createClient(@Valid UserForm userForm, BindingResult result, Model model) {
 		
 		if(result.hasErrors()) {
 			return "createclient";
 		}
 		
-		userrepository.save(userForm);
 		
 		return "redirect:/login";
 		
@@ -53,8 +49,7 @@ public class ClientController {
 	@GetMapping("/")
 	public String login(CredentialForm credentialForm , Model model) {
 		model.addAttribute("credentialForm", new CredentialForm());
-		
-		System.out.println(userrepository.count());
+		model.addAttribute("message", "Valid form");
 		
 		return "login";
 	}
@@ -67,15 +62,8 @@ public class ClientController {
 	
 	@PostMapping("/login")
 	public String login(@Valid CredentialForm credentialForm, BindingResult result, Model model) {	
-		System.out.println(userrepository.count());
 		if(result.hasErrors()) {
 			return "login";
-		}
-		
-		user = userrepository.findById(credentialForm.getClientName()).get();
-		
-		if (user instanceof LogisitcCompanyForm) {
-			return "redirect:/logisitccompanyview";
 		}
 		
 		return "redirect:/clientview";
@@ -86,14 +74,14 @@ public class ClientController {
 	
 	@GetMapping("/clientview")
 	public String clientView(Model model) {
-		model.addAttribute("clientForm", (ClientForm) user);
+//		model.addAttribute("clientForm", (ClientForm) user);
 		
 		return "clientview";
 	}
 	
 	@GetMapping("/logisitccompanyview")
 	public String logisticCompany(Model model) {
-		model.addAttribute("logisitccompanyForm", (LogisitcCompanyForm) user);
+//		model.addAttribute("logisitccompanyForm", (LogisitcCompanyForm) user);
 		
 		return "logisitccompanyview";
 	}
