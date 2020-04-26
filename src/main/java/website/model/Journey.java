@@ -82,4 +82,28 @@ public class Journey {
 	public Port getLastLocation() {	
 		return locations.get(locations.size()-1);
 	}
+
+	public int getDistance() {
+		int numberOfLocations = locations.size();
+		double distance = 0;
+		if (!(numberOfLocations<1)) {
+			double x = locations.get(0).getXCoordinate()-portOfOrigin.getXCoordinate();
+			double y = locations.get(0).getYCoordinate()-portOfOrigin.getYCoordinate();
+			distance+=Math.sqrt(x*x+y*y);
+			for (int i=0; i<numberOfLocations-1; i++) {
+				x = locations.get(i+1).getXCoordinate()-locations.get(i).getXCoordinate();
+				y = locations.get(i+1).getYCoordinate()-locations.get(i).getYCoordinate();
+				distance+=Math.sqrt(x*x+y*y);
+			}
+		}
+		return (int) distance;
+	}
+
+	public int getNumberOfPorts() {
+		int numberOfPorts = locations.size();
+		if (portOfOrigin!=null) {
+			numberOfPorts++;
+		}
+		return numberOfPorts;
+	}
 }

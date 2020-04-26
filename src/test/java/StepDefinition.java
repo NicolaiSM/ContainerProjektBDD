@@ -416,4 +416,192 @@ public class StepDefinition {
 		assertNotNull(exception);
 	}
 	
+	//
+	//
+	//
+	
+	// Most Kilometers Traveled
+	
+	@Given("a new journey with port of origin {string}, destination {string}, content {string} with the same client")
+	public void a_new_journey_with_port_of_origin_destination_content_with_the_same_client(String portOfOrigin, String destination, String content) throws Exception {
+		containerApp.registerContainer(portOfOrigin, destination, content, client);
+	}
+
+	@Given("internal information: timestamp {string}, location {string}, temperature {int}, humidity {int}, pressure {int}")
+	public void internal_information_timestamp_location_temperature_humidity_pressure(String time, String location, Integer temperature, Integer humidity, Integer pressure) throws Exception {
+	    this.times.add(time);
+	    this.locations.add(location);
+	    this.temperatures.add(temperature);
+	    this.humidities.add(humidity);
+	    this.pressures.add(pressure);
+		containerApp.updateJourney(container, times, locations, temperatures, humidities, pressures);
+
+	}
+
+	@Given("a second container with port {string}")
+	public void a_second_container_with_port(String port) throws Exception {
+	    containerApp.createContainer(port);
+	}
+	
+	@When("determining the container that traveled the most")
+	public void determining_the_container_that_traveled_the_most() {
+		try {
+			containerApp.mostKilometersTraveled();
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+
+	@Then("the container that traveled the most is found")
+	public void the_container_that_traveled_the_most_is_found() {
+	    assertNull(exception);
+	}
+	
+	@Then("no container found")
+	public void no_container_found() {
+	    assertNotNull(exception);
+	}
+	
+	//
+	//
+	//
+	// Most Journeys
+	
+	@When("determining the container that went on the most journeys")
+	public void determining_the_container_that_went_on_the_most_journeys() {
+	    try {
+	    	containerApp.mostJourneys();
+	    } catch (Exception e) {
+	    	exception = e;
+	    }
+	}
+
+	@Then("the container that went on the most journeys is found")
+	public void the_container_that_went_on_the_most_journeys_is_found() {
+	    assertNull(exception);
+	}
+	//
+	//
+	//
+	// Most Ports
+	@When("determining the container that visited the most ports")
+	public void determining_the_container_that_visited_the_most_ports() {
+		try {
+	    	containerApp.mostPorts();
+	    } catch (Exception e) {
+	    	exception = e;
+	    }
+	}
+
+	@Then("the container that visited the most ports is found")
+	public void the_container_that_visited_the_most_ports_is_found() {
+	    assertNull(exception);
+
+	}
+	
+	//
+	//
+	//
+	
+	// Least Kilometers traveled
+	
+	@When("determining the container that traveled the least")
+	public void determining_the_container_that_traveled_the_least() {
+		try {
+			containerApp.leastKilometersTraveled();
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+	
+	@Then("the container that traveled the least is found")
+	public void the_container_that_traveled_the_least_is_found() {
+	    assertNull(exception);
+
+	}
+	
+	//
+	//
+	//
+	// Least Journeys
+
+	@When("determining the container that went on the least journeys")
+	public void determining_the_container_that_went_on_the_least_journeys() {
+		try {
+			containerApp.leastJourneys();
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+
+	@Then("the container that went on the least journeys is found")
+	public void the_container_that_went_on_the_least_journeys_is_found() {
+	    assertNull(exception);
+	}
+	
+	//
+	//
+	//
+	// Least Ports
+	
+	@When("determining the container that visited the least ports")
+	public void determining_the_container_that_visited_the_least_ports() {
+		try {
+			containerApp.leastPorts();
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+
+	@Then("the container that visited the least ports is found")
+	public void the_container_that_visited_the_least_ports_is_found() {
+	    assertNull(exception);
+	}
+
+	//
+	//
+	//
+	// Longest Journey
+
+	@When("determining the longest journey")
+	public void determining_the_longest_journey() {
+	    try {
+			containerApp.longestJourney();
+		} catch (Exception e) {
+			exception = e;
+		}
+
+	}
+
+	@Then("the longest journey is found")
+	public void the_longest_journey_is_found() {
+	    assertNull(exception);
+
+	}
+
+	//
+	//
+	//
+	// Shortest
+	
+	@When("determining the shortest journey")
+	public void determining_the_shortest_journey() {
+	    try {
+			containerApp.shortestJourney();
+		} catch (Exception e) {
+			exception = e;
+		}
+	}
+
+	@Then("the shortest journey is found")
+	public void the_shortest_journey_is_found() {
+	    assertNull(exception);
+
+	}
+
+	@Then("no journey found")
+	public void no_journey_found() {
+	    assertNotNull(exception);
+	}
+	
 }
