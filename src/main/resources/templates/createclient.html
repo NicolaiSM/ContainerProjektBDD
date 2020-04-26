@@ -6,20 +6,37 @@
 
 	<h1> Create client:</h1>
 	
-	<form th:action="@{/createclient}" method="post" th:object="${port}">
-	  	<label>Client name</label>:
-      	<input type="text" name="clientname" th:field="*{clientname}"/> <br />
-      	<label>Address</label>:
-      	<input type="text" name="address" th:field="*{address}"/> <br />
-      	<label>Contact person</label>:
-      	<input type="text" name="contactperson" th:field="*{contactperson}"/> <br />
-      	<label>email</label>:
-      	<input type="text" name="email" th:field="*{email}"/> <br />
-      	
-      	<label>Extra</label>:
-      	<input type="text" name="test" th:field="*{test}"/> <br />
+	<form th:action="@{/createclient}" method="post" th:object="${userForm}">
+		<p th:text="${message}"></p>
+	  	<label> Client Name
+      	<input type="text" name="clientName" th:field="*{clientName}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}"></p>
+      	<br/>
+      	<label> Address
+      	<input type="text" name="address" th:field="*{address}"/> 
+      	</label>
+      	<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+      	<br />
+      	<label> Contact person
+      	<input type="text" name="contactPerson" th:field="*{contactPerson}"/> 
+      	</label>
+      	<p th:if="${#fields.hasErrors('contactPerson')}" th:errors="*{contactPerson}"></p>
+      	<br/>
+      	<label> Email
+      	<input type="text" name="email" th:field="*{email}"/> 
+      	</label>
+      	<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+      	<br/>
+      	<label> Password
+      	<input type="text" name="password" th:field="*{password}"/> 
+      	</label>
+      	<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+      	<br/>
       	
   		<input type="submit" value="Create" />
+  		
+
 	</form>
 
 

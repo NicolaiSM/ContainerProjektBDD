@@ -1,4 +1,3 @@
-
 Feature: Update client information
 
 Background: We assume that the we are already given an existing client. Which is in the system.

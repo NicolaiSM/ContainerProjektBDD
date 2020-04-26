@@ -1,4 +1,4 @@
-package website.model;
+package application;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

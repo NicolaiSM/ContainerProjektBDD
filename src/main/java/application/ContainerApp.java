@@ -3,11 +3,6 @@ package application;
 import java.util.*;
 import java.util.stream.*;
 
-import website.model.Client;
-import website.model.Container;
-import website.model.Journey;
-import website.model.Port;
-
 public class ContainerApp {
 	
 	private static ContainerApp instance = null;
@@ -25,11 +20,31 @@ public class ContainerApp {
 	public List<Container> containers = new ArrayList<Container>();
 	private List<Journey> journeys = new ArrayList<Journey>();
 	
+	public void registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
+		if (isClientRegistered(clientName)) {
+			throw new Exception("Client already registered");
+		}
+		clients.add(new Client(clientName, address, contactPerson, email, password));
+	}
+	
 	public void registerClient(String clientName, String address, String contactPerson, String email) throws Exception {
 		if (isClientRegistered(clientName)) {
 			throw new Exception("Client already registered");
 		}
 		clients.add(new Client(clientName, address, contactPerson, email));
+	}
+	public Client loggedInClient(String clientName, String password) throws Exception {
+		Client c = clients.stream().filter((client)->client.get("clientName").equals(clientName)).collect(Collectors.toList()).get(0);
+
+		if (c==null) {
+			throw new Exception("Username is incorrect");
+		}
+		else if (!c.get("password").equals(password)) {
+			throw new Exception("Password is incorrect");
+		}
+		else {
+			return c;
+		}
 	}
 	
 	public boolean isClientRegistered(String clientName) {

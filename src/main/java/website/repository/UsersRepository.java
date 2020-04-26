@@ -1,13 +1,14 @@
 package website.repository;
 
+
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import website.model.UserForm;
 
-import website.model.Container;
 
-@Repository 
-public interface ContainersRepository extends CrudRepository<Container, Long> {
-
+public interface UsersRepository extends CrudRepository<UserForm,String>  {
 	
+ 
 }
