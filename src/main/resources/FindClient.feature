@@ -4,7 +4,7 @@ Feature: Find clients based one or more of it attributes
 
 	Scenario: one or more cleints found matching one or more keywords
 		Given a keyword "Netto" and a keyword "Jens Bearge"
-    Given a list of clients with attributes; name: "Netto", address: "Hindbearsnittevej 23", contactperson name "Jens Bearge", contactperson email "Jens.Bearge@live.dk" and name: "NovaNordisk", address: "Englandsvej 103, 2300 København", contactperson name: "Thomas Dhal", contactperson email: "TD@NN.com"
+    Given a list of clients with attributes; name: "Netto", address: "Hindbearsnittevej 23", contactperson name "Jens Bearge", contactperson email "Jens.Bearge@live.dk", password: "admin" and name: "NovaNordisk", address: "Englandsvej 103, 2300 København", contactperson name: "Thomas Dhal", contactperson email: "TD@NN.com", password: "admin2"
     When Finding clients that matches keyword
     Then Check if any client is found
 		

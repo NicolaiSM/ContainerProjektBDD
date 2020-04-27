@@ -21,9 +21,10 @@ public class ContainerApp {
 	private List<Journey> journeys = new ArrayList<Journey>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
+		System.out.println("this client = "+clientName);
 		System.out.println(clients.size());
 		if (clients.size() > 0) {
-			System.out.println(clients.get(0).get("clientName"));
+			System.out.println("clients = "+clients.get(0).get("clientName"));
 		}
 		if (isClientRegistered(clientName)) {
 			throw new Exception("Client already registered");
@@ -31,12 +32,6 @@ public class ContainerApp {
 		clients.add(new Client(clientName, address, contactPerson, email, password));
 	}
 	
-	public void registerClient(String clientName, String address, String contactPerson, String email) throws Exception {
-		if (isClientRegistered(clientName)) {
-			throw new Exception("Client already registered");
-		}
-		clients.add(new Client(clientName, address, contactPerson, email));
-	}
 	public Client loggedInClient(String clientName, String password) throws Exception {
 		Client c = clients.stream().filter((client)->client.get("clientName").equals(clientName)).findFirst().orElse(null);
 		if (c==null) {
@@ -73,6 +68,7 @@ public class ContainerApp {
 
 	public void updateClient(Client client, String key, String value) throws Exception {
 		if (key.equals("clientName")) {
+			System.out.println("this. client = "+value);
 			if (isClientAvailable(value)) {
 				client.setClientInfo(key, value);
 			}
@@ -85,6 +81,9 @@ public class ContainerApp {
 	}
 
 	private boolean isClientAvailable(String clientName) {
+		for (Client client : clients) {
+			System.out.println("compare "+client.getClientName());
+		}
 		return clients.stream().noneMatch((client)->client.getClientName().equals(clientName));
 	}
 
