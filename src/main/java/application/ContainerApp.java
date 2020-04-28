@@ -21,10 +21,7 @@ public class ContainerApp {
 	private List<Journey> journeys = new ArrayList<Journey>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
-		System.out.println("this client = "+clientName);
-		System.out.println(clients.size());
 		if (clients.size() > 0) {
-			System.out.println("clients = "+clients.get(0).get("clientName"));
 		}
 		if (isClientRegistered(clientName)) {
 			throw new Exception("Client already registered");
@@ -68,7 +65,6 @@ public class ContainerApp {
 
 	public void updateClient(Client client, String key, String value) throws Exception {
 		if (key.equals("clientName")) {
-			System.out.println("this. client = "+value);
 			if (isClientAvailable(value)) {
 				client.setClientInfo(key, value);
 			}
@@ -82,7 +78,6 @@ public class ContainerApp {
 
 	private boolean isClientAvailable(String clientName) {
 		for (Client client : clients) {
-			System.out.println("compare "+client.getClientName());
 		}
 		return clients.stream().noneMatch((client)->client.getClientName().equals(clientName));
 	}
@@ -268,14 +263,15 @@ public class ContainerApp {
 		throw new Exception("No containers exist");			
 	}
 
-	public ArrayList longestJourney() throws Exception {
+	public Pair longestJourney() throws Exception {
 		if (!journeys.isEmpty()) {
-			ArrayList longestJourney = new ArrayList();
+//			ArrayList longestJourney = new ArrayList();
 			Journey journey = Collections.max(journeys,Comparator.comparing(j -> j.getDistance()));
-//			return new Pair<Container,String>(container,container.getDistance());
-			longestJourney.add(journey);
-			longestJourney.add(journey.getDistance());
-			return longestJourney;
+			return new Pair(journey,journey.getDistance());
+			
+//			longestJourney.add(journey);
+//			longestJourney.add(journey.getDistance());
+//			return longestJourney;
 		}
 		throw new Exception("No journeys exist");			
 	}
@@ -291,11 +287,7 @@ public class ContainerApp {
 		throw new Exception("No journeys exist");			
 	}
 	
-	public List<Container> findContainerByClient(Client client) {
-		return containers.stream().filter((containers)->containers.getJourney().getClient()==client).collect(Collectors.toList());
-		
-		
-	}
+
 	
 }
 
