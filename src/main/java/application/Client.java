@@ -23,14 +23,6 @@ public class Client {
 		clientInfo.put("email", email);
 		clientInfo.put("password",password);
 	}
-	
-	
-	public Client(String clientName, String address, String contactPerson, String email) {
-		clientInfo.put("clientName",clientName);
-		clientInfo.put("address", address);
-		clientInfo.put("contactPerson", contactPerson);
-		clientInfo.put("email", email);
-	}
 
 	public boolean hasKeyword(String key) {
 		return clientInfo.containsValue(key);
