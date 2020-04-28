@@ -16,6 +16,9 @@ public class Client {
 	private Map<String,String> clientInfo = new HashMap<>();
 
 
+	public Client()  {
+		
+	}
 	public Client(String clientName, String address, String contactPerson, String email, String password) {
 		clientInfo.put("clientName",clientName);
 		clientInfo.put("address", address);

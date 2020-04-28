@@ -290,5 +290,12 @@ public class ContainerApp {
 		}
 		throw new Exception("No journeys exist");			
 	}
+	
+	public List<Container> findContainerByClient(Client client) {
+		return containers.stream().filter((containers)->containers.getJourney().getClient()==client).collect(Collectors.toList());
+		
+		
+	}
+	
 }
 

@@ -6,7 +6,43 @@
 
 	<h1> ClientView</h1>
 	
+	<h2> Register container</h2>
+	<form th:action="@{/registercontainer}" method="post" th:object="${journeyForm}">
+		<p th:text="${registercontainermessage}"> </p>
+  		<label>Port of origin:
+      		<input type="text" name="portOfOrigin" th:field="*{portOfOrigin}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('portOfOrigin')}" th:errors="*{portOfOrigin}"></p>
+      	<br />
+      	<label>Destination: 
+      		<input type="text" name="destination" th:field="*{destination}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></p>
+      	<br />
+      	<label>Content: 
+      		<input type="text" name="content" th:field="*{content}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
+      	<br />
+  		<input type="submit" value="Register container" />
+	</form>
 	
+	<h2>Find container</h2>
+	<div th:unless="${#lists.isEmpty(containers)}">
+	 
+	  <table>
+	    <thead>
+	      <tr>
+	        <th th:text="#{containers.content}">Content</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr th:each="container : ${containers}">
+	      <td th:text="container.content">
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
 
 
 </html>
