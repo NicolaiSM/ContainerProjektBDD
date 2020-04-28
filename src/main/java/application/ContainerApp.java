@@ -191,83 +191,83 @@ public class ContainerApp {
 		return locations.stream().anyMatch((location)->!portIsRegistered(location));
 	}
 
-	public ArrayList mostKilometersTraveled() throws Exception {
+	public Pair<Container,Integer> mostKilometersTraveled() throws Exception {
 		if (!containers.isEmpty()) {
-			ArrayList containerMost = new ArrayList();
+//			ArrayList containerMost = new ArrayList();
 			Container container = Collections.max(containers,Comparator.comparing(c -> c.getDistance()));
-//			return new Pair<Container,String>(container,container.getDistance());
-			containerMost.add(container);
-			containerMost.add(container.getDistance());
-			return containerMost;
+			return new Pair<Container,Integer>(container,container.getDistance());
+//			containerMost.add(container);
+//			containerMost.add(container.getDistance());
+//			return containerMost;
 		}
 		throw new Exception("No containers exist");
 	}
 
-	public ArrayList mostJourneys() throws Exception {
+	public Pair<Container,Integer> mostJourneys() throws Exception {
 		if (!containers.isEmpty()) {
-			ArrayList containerMost = new ArrayList();
+//			ArrayList containerMost = new ArrayList();
 			Container container = Collections.max(containers,Comparator.comparing(c -> c.getNumberOfJourneys()));
-//			return new Pair<Container,String>(container,container.getDistance());
-			containerMost.add(container);
-			containerMost.add(container.getNumberOfJourneys());
-			return containerMost;
+			return new Pair<Container,Integer>(container,container.getDistance());
+//			containerMost.add(container);
+//			containerMost.add(container.getNumberOfJourneys());
+//			return containerMost;
 		}
 		throw new Exception("No containers exist");
 	}
 	
-	public ArrayList mostPorts() throws Exception {
+	public Pair<Container,Integer> mostPorts() throws Exception {
 		if (!containers.isEmpty()) {
-			ArrayList containerMost = new ArrayList();
+//			ArrayList containerMost = new ArrayList();
 			Container container = Collections.max(containers,Comparator.comparing(c -> c.getNumberOfPorts()));
-//			return new Pair<Container,String>(container,container.getDistance());
-			containerMost.add(container);
-			containerMost.add(container.getNumberOfPorts());
-			return containerMost;
+			return new Pair<Container,Integer>(container,container.getDistance());
+//			containerMost.add(container);
+//			containerMost.add(container.getNumberOfPorts());
+//			return containerMost;
 		}
 		throw new Exception("No containers exist");
 	}
 
-	public ArrayList leastKilometersTraveled() throws Exception {
+	public Pair<Container,Integer> leastKilometersTraveled() throws Exception {
 		if (!containers.isEmpty()) {
-			ArrayList containerLeast = new ArrayList();
+//			ArrayList containerLeast = new ArrayList();
 			Container container = Collections.min(containers,Comparator.comparing(c -> c.getDistance()));
-//			return new Pair<Container,String>(container,container.getDistance());
-			containerLeast.add(container);
-			containerLeast.add(container.getDistance());
-			return containerLeast;
+			return new Pair<Container,Integer>(container,container.getDistance());
+//			containerLeast.add(container);
+//			containerLeast.add(container.getDistance());
+//			return containerLeast;
 		}
 		throw new Exception("No containers exist");		
 	}
 
-	public ArrayList leastJourneys() throws Exception {
+	public Pair<Container,Integer> leastJourneys() throws Exception {
 		if (!containers.isEmpty()) {
-			ArrayList containerLeast = new ArrayList();
+//			ArrayList containerLeast = new ArrayList();
 			Container container = Collections.min(containers,Comparator.comparing(c -> c.getNumberOfJourneys()));
-//			return new Pair<Container,String>(container,container.getDistance());
-			containerLeast.add(container);
-			containerLeast.add(container.getNumberOfJourneys());
-			return containerLeast;
+			return new Pair<Container,Integer>(container,container.getDistance());
+//			containerLeast.add(container);
+//			containerLeast.add(container.getNumberOfJourneys());
+//			return containerLeast;
 		}
 		throw new Exception("No containers exist");			
 	}
 
-	public ArrayList leastPorts() throws Exception {
+	public Pair<Container,Integer> leastPorts() throws Exception {
 		if (!containers.isEmpty()) {
-			ArrayList containerLeast = new ArrayList();
+//			ArrayList containerLeast = new ArrayList();
 			Container container = Collections.min(containers,Comparator.comparing(c -> c.getNumberOfPorts()));
-//			return new Pair<Container,String>(container,container.getDistance());
-			containerLeast.add(container);
-			containerLeast.add(container.getNumberOfPorts());
-			return containerLeast;
+			return new Pair<Container,Integer>(container,container.getDistance());
+//			containerLeast.add(container);
+//			containerLeast.add(container.getNumberOfPorts());
+//			return containerLeast;
 		}
 		throw new Exception("No containers exist");			
 	}
 
-	public Pair longestJourney() throws Exception {
+	public Pair<Journey,Integer> longestJourney() throws Exception {
 		if (!journeys.isEmpty()) {
 //			ArrayList longestJourney = new ArrayList();
 			Journey journey = Collections.max(journeys,Comparator.comparing(j -> j.getDistance()));
-			return new Pair(journey,journey.getDistance());
+			return new Pair<Journey,Integer>(journey,journey.getDistance());
 			
 //			longestJourney.add(journey);
 //			longestJourney.add(journey.getDistance());
@@ -275,14 +275,14 @@ public class ContainerApp {
 		}
 		throw new Exception("No journeys exist");			
 	}
-	public ArrayList shortestJourney() throws Exception {
+	public Pair<Journey,Integer> shortestJourney() throws Exception {
 		if (!journeys.isEmpty()) {
-			ArrayList shortestJourney = new ArrayList();
+//			ArrayList shortestJourney = new ArrayList();
 			Journey journey = Collections.min(journeys,Comparator.comparing(j -> j.getDistance()));
-//			return new Pair<Container,String>(container,container.getDistance());
-			shortestJourney.add(journey);
-			shortestJourney.add(journey.getDistance());
-			return shortestJourney;
+			return new Pair<Journey,Integer>(journey,journey.getDistance());
+//			shortestJourney.add(journey);
+//			shortestJourney.add(journey.getDistance());
+//			return shortestJourney;
 		}
 		throw new Exception("No journeys exist");			
 	}
