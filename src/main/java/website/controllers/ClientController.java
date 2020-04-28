@@ -2,6 +2,8 @@ package website.controllers;
 
 
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,7 @@ public class ClientController {
 	@GetMapping("/index")
 	public String index(Model model) {
 		try {
-			ContainerApp.getInstance().registerClient("a","a" ,"a","a@a.com","a");
-			ContainerApp.getInstance().registerPort("a");
-			ContainerApp.getInstance().registerPort("b");
-			ContainerApp.getInstance().createContainer("a");
-			ContainerApp.getInstance().createContainer("b");
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -67,6 +65,19 @@ public class ClientController {
 	public String login(CredentialForm credentialForm , Model model) {
 		model.addAttribute("credentialForm", new CredentialForm());
 		
+		try {
+			ContainerApp.getInstance().registerClient("a","a" ,"a","a@a.com","a");
+		
+		ContainerApp.getInstance().registerPort("a");
+		ContainerApp.getInstance().registerPort("b");
+		ContainerApp.getInstance().createContainer("a");
+		ContainerApp.getInstance().createContainer("b");
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "login";
 	}
 	@GetMapping("/login")
@@ -95,11 +106,18 @@ public class ClientController {
 	}
 	
 	@GetMapping("/clientview")
-	public String clientView(Model model) {
+	public String clientView(Model model, String[] keyword) {
 		model.addAttribute("client", user);
 		model.addAttribute("journeyForm", new JourneyForm());
-		model.addAttribute("containers", ContainerApp.getInstance().findContainerByClient(user));
+		try {
+			model.addAttribute("containers", ContainerApp.getInstance().findContainer(user.get("ClientName")));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "clientview";
+		
+		
 	}
 	
 	@GetMapping("/logisitccompanyview")
