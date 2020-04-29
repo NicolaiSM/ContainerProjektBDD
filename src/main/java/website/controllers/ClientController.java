@@ -2,9 +2,9 @@ package website.controllers;
 
 
 
+
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import application.Client;
 import application.ContainerApp;
-import website.model.ClientForm;
 import website.model.CredentialForm;
 import website.model.JourneyForm;
-import website.model.LogisitcCompanyForm;
 import website.model.UserForm;
-import website.repository.UsersRepository;
 
 @Controller
 public class ClientController {
@@ -27,11 +24,7 @@ public class ClientController {
 	@GetMapping("/index")
 	public String index(Model model) {
 		try {
-			ContainerApp.getInstance().registerClient("a","a" ,"a","a@a.com","a");
-			ContainerApp.getInstance().registerPort("a");
-			ContainerApp.getInstance().registerPort("b");
-			ContainerApp.getInstance().createContainer("a");
-			ContainerApp.getInstance().createContainer("b");
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -42,7 +35,7 @@ public class ClientController {
 	
 	@GetMapping("/createclient")
 	public String createClient(UserForm userForm, Model model) {
-		model.addAttribute("userForm", new ClientForm());
+		model.addAttribute("userForm", new UserForm());
 		return "createclient";
 	}
 	
@@ -66,6 +59,19 @@ public class ClientController {
 	@GetMapping("/")
 	public String login(CredentialForm credentialForm , Model model) {
 		model.addAttribute("credentialForm", new CredentialForm());
+		
+		try {
+			ContainerApp.getInstance().registerClient("a","a" ,"a","a@a.com","a");
+		
+		ContainerApp.getInstance().registerPort("a");
+		ContainerApp.getInstance().registerPort("b");
+		ContainerApp.getInstance().createContainer("a");
+		ContainerApp.getInstance().createContainer("b");
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return "login";
 	}
@@ -95,11 +101,18 @@ public class ClientController {
 	}
 	
 	@GetMapping("/clientview")
-	public String clientView(Model model) {
+	public String clientView(Model model, String[] keyword) {
 		model.addAttribute("client", user);
 		model.addAttribute("journeyForm", new JourneyForm());
-		model.addAttribute("containers", ContainerApp.getInstance().findContainerByClient(user));
+		try {
+			model.addAttribute("containers", ContainerApp.getInstance().findContainer(user.get("ClientName")));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "clientview";
+		
+		
 	}
 	
 	@GetMapping("/logisitccompanyview")
