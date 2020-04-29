@@ -1,10 +1,11 @@
-package website.model;
+package website.model.annotations;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.BeanWrapperImpl;
 
+import website.model.CredentialForm;
 import website.repository.UsersRepository;
 
 

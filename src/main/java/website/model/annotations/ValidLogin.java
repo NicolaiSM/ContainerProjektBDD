@@ -1,4 +1,4 @@
-package website.model;
+package website.model.annotations;
 
 
 import java.lang.annotation.*;
