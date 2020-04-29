@@ -63,12 +63,11 @@ public class StepDefinition {
 	//
 	
 	// FIND CLIENT
-	List<String> keywords = new ArrayList<String>();
+	String[] keywords;
 	
 	@Given("a keyword {string} and a keyword {string}")
 	public void a_keyword_and_a_keyword(String keyword1, String keyword2) {
-		keywords.add(keyword1);
-		keywords.add(keyword2);
+		keywords = new String[] { keyword1, keyword2};
 	}
 
 	@When("Finding clients that matches keyword")
@@ -101,10 +100,8 @@ public class StepDefinition {
 	
 	@Given("a client with name: {string}, address: {string}, contactperson name: {string}, contactperson email: {string}, password {string}")
 	public void a_client_with_name_address_contactperson_name_and_contactperson_email_password(String clientName, String address, String contactPerson, String email, String password) throws Exception {
-//	    client = new Client(clientName,address,contactPerson,email,password);
 		containerApp.registerClient(clientName, address, contactPerson, email, password);
-		keywords.add(clientName);
-		client = containerApp.findClient(keywords).get(0);
+		client = containerApp.findClient(clientName).get(0);
 	}
 
 	@Given("Client wants to update the client information {string} to {string} and {string} to {string}")
@@ -116,13 +113,14 @@ public class StepDefinition {
 	}
 
 	@When("Change previous client information to the given information")
-	public void change_previous_client_information_to_the_given_information() throws Exception {
+	public void change_previous_client_information_to_the_given_information()  {
 		try {
 			containerApp.updateClient(client, key1, value1);
+			containerApp.updateClient(client, key2, value2);
 		} catch (Exception e) {
 			exception = e;
 		}
-		containerApp.updateClient(client, key2, value2);
+			
 	}
 
 	@Then("Client has been updated")
@@ -373,8 +371,7 @@ public class StepDefinition {
 	@Given("a container: port {string} with journey: port of origin {string}, destination {string}, content {string} with the client: client name {string}, address {string}, contact person {string}, email {string}, password {string}")
 	public void a_container_port_with_journey_port_of_origin_destination_content_with_the_client_client_name_address_contact_person_email_password(String port, String portOfOrigin, String destination, String content, String name, String address, String contactPerson, String email, String password) throws Exception {
 		containerApp.createContainer(port);
-		keywords.add(port);
-		container = containerApp.findContainer(keywords).get(0);
+		container = containerApp.findContainer(port).get(0);
 		client = new Client(name, address, contactPerson, email, password);
 		containerApp.registerContainer(portOfOrigin, destination, content, client);
 	}
@@ -391,8 +388,7 @@ public class StepDefinition {
 	@Given("a container: port {string} with no journey")
 	public void a_container_port_with_no_journey(String port) throws Exception {
 		containerApp.createContainer(port);
-		keywords.add(port);
-		container = containerApp.findContainer(keywords).get(0);
+		container = containerApp.findContainer(port).get(0);
 	}
 	
 	@When("updating a journey")

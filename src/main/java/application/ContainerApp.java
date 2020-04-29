@@ -21,8 +21,6 @@ public class ContainerApp {
 	private List<Journey> journeys = new ArrayList<Journey>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
-		if (clients.size() > 0) {
-		}
 		if (isClientRegistered(clientName)) {
 			throw new Exception("Client already registered");
 		}
@@ -46,7 +44,7 @@ public class ContainerApp {
 		return clients.stream().anyMatch((client)->client.getClientName().equals(clientName));
 	}
 	
-	public List<Client> findClient(List<String> keywords) throws Exception {
+	public List<Client> findClient(String... keywords) throws Exception {
 		List<Client> resultingClients = getClients(keywords);
 		if (resultingClients.isEmpty()) {
 			throw new Exception("No clients found");
@@ -55,12 +53,17 @@ public class ContainerApp {
 		return resultingClients;
 	}
 
-	private List<Client> getClients(List<String> keywords) {
+	private List<Client> getClients(String... keywords) {
 		return clients.stream().filter((client)->clientHasKeyword(keywords, client)).collect(Collectors.toList());
 	}
 
-	private boolean clientHasKeyword(List<String> keywords, Client client) {
-		return keywords.stream().anyMatch((keyword)->client.hasKeyword(keyword));
+	private boolean clientHasKeyword(String[] keywords, Client client) {
+		for(String keyword: keywords) {
+			if( client.hasKeyword(keyword)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void updateClient(Client client, String key, String value) throws Exception {
@@ -136,7 +139,7 @@ public class ContainerApp {
 		return containers.stream().filter((container)->container.isContainerAvailable(startport)).findFirst().orElse(null);
 	}
 
-	public List<Container> findContainer(List<String> keywords) throws Exception {
+	public List<Container> findContainer(String... keywords) throws Exception {
 		List<Container> resultingContainers = getContainers(keywords);
 		if (resultingContainers.isEmpty()) {
 			throw new Exception("No containers found");
@@ -145,15 +148,21 @@ public class ContainerApp {
 		return resultingContainers;
 	}
 
-	private List<Container> getContainers(List<String> keywords) {
+	private List<Container> getContainers(String[] keywords) {
 		return containers.stream().filter((container)->containerHasKeyword(keywords, container)).collect(Collectors.toList());
 	}
 
-	private boolean containerHasKeyword(List<String> keywords, Container container) {
-		return keywords.stream().anyMatch((keyword)->container.hasKeyword(keyword));
+	private boolean containerHasKeyword(String[] keywords, Container container) {
+		for(String keyword: keywords) {
+			if( container.hasKeyword(keyword)) {
+			 return true;	
+			}
+		}
+		
+		return false;
 	}
 
-	public List<Journey> findJourney(List<String> keywords) throws Exception {
+	public List<Journey> findJourney(String... keywords) throws Exception {
 		List<Journey> resultingJourneys = getJourneys(keywords);
 		if (resultingJourneys.isEmpty()) {
 			throw new Exception("No journeys found");
@@ -163,12 +172,19 @@ public class ContainerApp {
 		return resultingJourneys;
 	}
 
-	private List<Journey> getJourneys(List<String> keywords) {
+	private List<Journey> getJourneys(String[] keywords) {
 		return journeys.stream().filter((journey)->journeyHasKeyword(keywords, journey)).collect(Collectors.toList());
 	}
 
-	private boolean journeyHasKeyword(List<String> keywords, Journey journey) {
-		return keywords.stream().anyMatch((keyword)->journey.hasKeyword(keyword));
+	private boolean journeyHasKeyword(String[] keywords, Journey journey) {
+		for(String keyword : keywords) {
+			if(journey.hasKeyword(keyword)) {
+				return true;
+			}
+			
+		}
+		return false;
+		
 	}
 
 	public void updateJourney(Container container, List<String> times, List<String> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) throws Exception {
