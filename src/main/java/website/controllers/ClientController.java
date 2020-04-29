@@ -2,11 +2,9 @@ package website.controllers;
 
 
 
-import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,12 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import application.Client;
 import application.ContainerApp;
-import website.model.ClientForm;
 import website.model.CredentialForm;
 import website.model.JourneyForm;
-import website.model.LogisitcCompanyForm;
 import website.model.UserForm;
-import website.repository.UsersRepository;
 
 @Controller
 public class ClientController {
@@ -40,7 +35,7 @@ public class ClientController {
 	
 	@GetMapping("/createclient")
 	public String createClient(UserForm userForm, Model model) {
-		model.addAttribute("userForm", new ClientForm());
+		model.addAttribute("userForm", new UserForm());
 		return "createclient";
 	}
 	
