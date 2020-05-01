@@ -5,12 +5,10 @@ import java.util.List;
 import javax.persistence.*;
 
 
-@Entity
+
 public class Journey {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column
+
 	private long id;
 	
 	@OneToOne
@@ -25,19 +23,14 @@ public class Journey {
 	@ManyToOne
 	private final Client client;
 	
-	@ElementCollection
 	private List<String> times = new ArrayList<String>();
 	
-	@OneToMany
 	private List<Port> locations = new ArrayList<Port>();
 	
-	@ElementCollection
 	private List<Integer> temperatures = new ArrayList<Integer>();
 	
-	@ElementCollection
 	private List<Integer> humidities = new ArrayList<Integer>();
 	
-	@ElementCollection
 	private List<Integer> pressures = new ArrayList<Integer>();
 	
 	public Journey(Port portOfOrigin, Port destination, String content, Client client) {

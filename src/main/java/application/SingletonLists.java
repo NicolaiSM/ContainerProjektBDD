@@ -3,15 +3,7 @@ package application;
 public class SingletonLists {
 	
 	
-	private static AdvancedQueryLinkedList<Client> clientListInstance = null;
-	
-	public static AdvancedQueryLinkedList<Client> getClientList() {
-		if (clientListInstance == null) {
-			clientListInstance = new AdvancedQueryLinkedList<Client>();
-		}
 
-		return clientListInstance;
-	}
 	
 	private static AdvancedQueryLinkedList<Container> containerListInstance = null;
 	

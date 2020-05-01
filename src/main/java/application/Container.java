@@ -5,22 +5,15 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-@Entity
+
 public class Container {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column
 	private long id;
 	
-	@ManyToOne
-	@NotBlank()
 	private Port port;
 	
-	@ManyToOne
 	private Journey journey;
 	
-	@OneToMany
 	private List<Journey> journeys = new ArrayList<Journey>();
 	
 
