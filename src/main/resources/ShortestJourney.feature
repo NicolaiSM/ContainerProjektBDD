@@ -1,14 +1,32 @@
 Feature: Get the shortest journey
 
   Scenario: Successful determination of the shortest journey
-    Given a list of existing ports "Oslo", "Stockholm" and "London"
-    And a container: port "Oslo" with journey: port of origin "Oslo", destination "Stockholm", content "Cheese" with the client: client name "HM", address "Nyvej 2", contact person "Jens Ole", email "jo@hm.com", password "admin"
-    And internal information: timestamp "13:44:32 May 8. 2020", location "Stockholm", temperature 9, humidity 64, pressure 1
-    And a new journey with port of origin "Stockholm", destination "London", content "Cheese" with the same client
-    And internal information: timestamp "14:44:32 May 9. 2020", location "Oslo", temperature 8, humidity 63, pressure 2
-    When determining the shortest journey
-    Then the shortest journey is found
+    Given A client
+  	| clientname | address | contactperson | email		 | password |
+		| HM	  		 | Nyvej 2 | Jens Ole 		 | JO@hm.com | admin    |
+		Given Ports
+		| port 	 		|
+		| Oslo 	 		|
+		| London 		|
+		| Stockholm |
+		Given A container
+		| port | journey |
+		| Oslo | none		 |
+		Given A journey
+		| port of origin | destination | content | client |
+		| Oslo					 | Stockholm	 | Cheese	 | given	|
+		Given New internal information
+		| timestamp 	| location 	 | temperature | humidity | pressure |
+		| Maj 8. 2020 | London		 | 9					 | 64				|	1				 |
+		Given A container
+		| port 	 | journey |
+		| London | none		 |
+		Given A journey
+		| port of origin | destination | content | client |
+		| London				 | Stockholm	 | Cheese	 | given	|
+    When Determining the shortest journey
+    Then The shortest journey is found
     
   Scenario: Unsuccesful determination of the shortest journey
-    When determining the shortest journey
-    Then no journey found
+    When Determining the shortest journey
+    Then No journey found

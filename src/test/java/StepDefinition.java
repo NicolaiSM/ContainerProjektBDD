@@ -24,22 +24,16 @@ public class StepDefinition {
 	
 	// REGISTER CLIENT
 	
-	@Given("information about a client; name {string}, address {string}, contactperson with name {string}, email of contactperson {string}, and password {string}")
-	public void information_about_a_client_name_address_contactperson_with_name_email_of_contactperson_and_password(String clientName, String address, String contactPerson, String email, String password) {
-		this.clientName = clientName;
-	    this.address = address;
-	    this.contactPerson = contactPerson;
-	    this.email = email;
-	    this.password = password;
-	}
-
-	@Given("a list of clients with attributes; name: {string}, address: {string}, contactperson name {string}, contactperson email {string}, password: {string} and name: {string}, address: {string}, contactperson name: {string}, contactperson email: {string}, password: {string}")
-	public void a_list_of_clients_with_attributes_name_address_contactperson_name_contactperson_email_password_and_name_address_contactperson_name_contactperson_email_password(String clientName1, String address1, String contactPerson1, String email1, String password1, String clientName2, String address2, String contactPerson2, String email2, String password2) throws Exception {
-		containerApp.registerClient(clientName1, address1, contactPerson1, email1, password1);
-	    containerApp.registerClient(clientName2, address2, contactPerson2, email2, password2);
+	@Given("Information about a client")
+	public void information_about_a_client(io.cucumber.datatable.DataTable dataTable) throws Exception {
+		clientName = dataTable.cell(1, 0);
+		address = dataTable.cell(1, 1);
+		contactPerson = dataTable.cell(1, 2);
+		email = dataTable.cell(1, 3);
+		password = dataTable.cell(1, 4);
 	}
 	
-	@When("registering the client")
+	@When("Registering the client")
 	public void registering_the_client() {
 	    try {
 			containerApp.registerClient(clientName, address, contactPerson, email, password);
@@ -53,8 +47,8 @@ public class StepDefinition {
 	    assertTrue(containerApp.isClientRegistered(clientName));
 	}
 
-	@Then("Client registration failed")
-	public void client_registration_failed() {
+	@Then("Client could not be registered")
+	public void client_could_not_be_registered() {
 	    assertNotNull(exception);
 	}
 	
@@ -65,11 +59,12 @@ public class StepDefinition {
 	// FIND CLIENT
 	String[] keywords;
 	
-	@Given("a keyword {string} and a keyword {string}")
-	public void a_keyword_and_a_keyword(String keyword1, String keyword2) {
-		keywords = new String[] { keyword1, keyword2};
-	}
 
+	@Given("Keywords")
+	public void keywords(io.cucumber.datatable.DataTable dataTable) {
+		keywords = new String[] {dataTable.cell(1, 0), dataTable.cell(2, 0)};
+
+	}
 	@When("Finding clients that matches keyword")
 	public void finding_clients_that_matches_keyword() {
 
@@ -80,13 +75,13 @@ public class StepDefinition {
 		}
 	}
 
-	@Then("Check if any client is found")
-	public void check_if_any_client_is_found() {
+	@Then("One or more clients found")
+	public void one_or_more_clients_found() {
 	    assertNull(exception);
 	}
 
-	@Then("Check that no result is found")
-	public void check_that_no_result_is_found() {
+	@Then("No clients are found")
+	public void no_clients_are_found() {
 	    assertNotNull(exception);
 
 	}
@@ -98,22 +93,21 @@ public class StepDefinition {
 	// UPDATE CLIENT INFORMATION
 	private Client client;
 	
-	@Given("a client with name: {string}, address: {string}, contactperson name: {string}, contactperson email: {string}, password {string}")
-	public void a_client_with_name_address_contactperson_name_and_contactperson_email_password(String clientName, String address, String contactPerson, String email, String password) throws Exception {
-		containerApp.registerClient(clientName, address, contactPerson, email, password);
-		client = containerApp.findClient(clientName).get(0);
+	@Given("A client")
+	public void a_client(io.cucumber.datatable.DataTable dataTable) throws Exception {
+		containerApp.registerClient(dataTable.cell(1, 0),dataTable.cell(1, 1),dataTable.cell(1, 2),dataTable.cell(1, 3),dataTable.cell(1, 4));
+		client = containerApp.findClient(dataTable.cell(1, 0)).get(0);
+	}
+	@Given("Information that should be changed")
+	public void information_that_should_be_changed(io.cucumber.datatable.DataTable dataTable) {
+		key1 = dataTable.cell(1, 0);
+		value1 = dataTable.cell(1, 1);
+		key2 = dataTable.cell(2, 0);
+		value2 = dataTable.cell(2, 1);
 	}
 
-	@Given("Client wants to update the client information {string} to {string} and {string} to {string}")
-	public void Client_wants_to_update_the_client_information_to_(String key1, String value1, String key2, String value2) {
-	    this.key1 = key1;
-	    this.value1 = value1;
-	    this.key2 = key2;
-	    this.value2 = value2;
-	}
-
-	@When("Change previous client information to the given information")
-	public void change_previous_client_information_to_the_given_information()  {
+	@When("Updating the client")
+	public void updating_the_client()  {
 		try {
 			containerApp.updateClient(client, key1, value1);
 			containerApp.updateClient(client, key2, value2);
@@ -140,13 +134,8 @@ public class StepDefinition {
 	// Register Port
 	
 	String port;
-	
-	@Given("a list of ports containing {string}")
-	public void a_list_of_ports_containing(String port) throws Exception {
-			containerApp.registerPort(port);
-	}
 
-	@Given("a port to be registered {string}")
+	@Given("A port to be registered {string}")
 	public void a_port_to_be_registered(String port) {
 	    this.port = port;
 	}
@@ -177,19 +166,18 @@ public class StepDefinition {
 	
 	// Create Container
 	
-
-	@Given("a port of origin {string}")
-	public void a_port_of_origin(String port) {
+	@Given("A port {string}")
+	public void a_port(String port) {
 	    this.port = port;
 	}
 
-	@Given("a list of ports containing the port {string}")
-	public void a_list_of_ports_containing_the_port(String port) throws Exception {
-	    containerApp.registerPort(port);
+	@Given("Existing ports")
+	public void existing_ports(io.cucumber.datatable.DataTable dataTable) throws Exception {
+		containerApp.registerPort(dataTable.cell(1, 0));
 	}
 	
 
-	@When("creating a new container")
+	@When("Creating a new container")
 	public void creating_a_new_container() {
 		try {
 			containerApp.createContainer(port);
@@ -198,13 +186,13 @@ public class StepDefinition {
 		}
 	}
 
-	@Then("a new container has been added to the existing containers")
-	public void a_new_container_has_been_added_to_the_existing_containers() {
+	@Then("The container is created")
+	public void the_container_is_created() {
 	    assertNull(exception);
 	}
 
-	@Then("the container could not be created since the port was not a validport")
-	public void the_container_could_not_be_created_since_the_port_was_not_a_validport() {
+	@Then("The container could not be created")
+	public void the_container_could_not_be_created() {
 		assertNotNull(exception);
 	}
 	
@@ -219,59 +207,43 @@ public class StepDefinition {
 	String destination;
 	String content;
 
-	@Given("a list of existing containers: port {string}, port {string}")
-	public void a_list_of_existing_containers_port_port(String port1, String port2) throws Exception {
-		containerApp.registerPort(port1);
-		containerApp.registerPort(port2);
-		containerApp.createContainer(port1);
-		containerApp.createContainer(port2);
-
+	@Given("Containers")
+	public void containers(io.cucumber.datatable.DataTable dataTable) throws Exception {
+		for (int i=1; i<dataTable.height(); i++) {
+			containerApp.createContainer(dataTable.cell(i, 0));
+		}
+	}
+	
+	@Given("Information about the journey")
+	public void information_about_the_journey(io.cucumber.datatable.DataTable dataTable) {
+		portOfOrigin = dataTable.cell(1, 0);
+		destination = dataTable.cell(1, 1);
+		content = dataTable.cell(1, 2);
+	}
+	
+	@Given("A journey")
+	public void a_journey(io.cucumber.datatable.DataTable dataTable) throws Exception {
+		containerApp.registerContainer(dataTable.cell(1, 0), dataTable.cell(1, 1), dataTable.cell(1, 2), client);
 	}
 
-	@Given("information about the journey: port of origin {string}, destination {string}, content {string}")
-	public void information_about_the_journey_port_of_origin_destination_content(String portOfOrigin, String destination, String content) {
-		this.portOfOrigin = portOfOrigin;
-		this.destination = destination;
-		this.content = content;
-	}
-
-	@Given("a list of existing containers: port {string}, port {string} with journey: port of origin {string}, destination {string}, content {string} with the client in the system")
-	public void a_list_of_existing_containers_port_port_with_journey_port_of_origin_destination_content_with_the_client_in_the_system(String port1, String port2, String portOfOrigin, String destination, String content) throws Exception {
-		containerApp.registerPort(port1);
-		containerApp.registerPort(port2);
-		containerApp.createContainer(port1);
-		containerApp.createContainer(port2);
-		containerApp.registerContainer(portOfOrigin, destination, content, client);
-	}
-
-	@Given("a list of existing containers: port {string}")
-	public void a_list_of_existing_containers_port(String port) throws Exception {
-		containerApp.registerPort(port);
-		containerApp.createContainer(port);
-	}
-
-	@When("registrering a container")
+	@When("Registrering a container")
 	public void registrering_a_container() {
 		try {
 			containerApp.registerContainer(portOfOrigin, destination, content, client);
 		} catch (Exception e) {
 			exception = e;
 		}
-		
 	}
 
-	@Then("container is not registred")
+	@Then("Container is registred")
+	public void container_is_registred() {
+	    assertNull(exception);
+	}
+	
+	@Then("Container is not registred")
 	public void container_is_not_registred() {
 	    assertNotNull(exception);
 	}
-
-	@Then("container is registred")
-	public void container_is_registred() {
-	    assertNull(exception);
-
-	}
-	
-
 	
 	
 	//
@@ -280,15 +252,8 @@ public class StepDefinition {
 	
 	// Find Container
 	
-
-	@Given("a client: name {string}, address {string}, contact person {string}, email {string}, password {string}")
-	public void a_client_name_address_contact_person_email_password(String name, String address, String contactPerson, String email, String password) {
-		client  = new Client(name, address, contactPerson, email, password); 
-		
-		
-	}
 	
-	@When("searching for a container")
+	@When("Searching for a container")
 	public void searching_for_a_container() {
 		try {
 			containerApp.findContainer(keywords);
@@ -297,13 +262,13 @@ public class StepDefinition {
 		}
 	}
 
-	@Then("a container has been found")
+	@Then("A container has been found")
 	public void a_container_has_been_found() {
 	    assertNull(exception);
 	}
 
-	@Then("the keyword does not match any container")
-	public void the_keyword_does_not_match_any_container() {
+	@Then("No containers found")
+	public void no_containers_found() {
 		assertNotNull(exception);
 		
 	}
@@ -313,18 +278,14 @@ public class StepDefinition {
 	//
 	
 	// Find Journey
-
-	@Given("a list of existing journeys: port of origin {string}, destination {string}, content {string} with the client: client name {string}, address {string}, contact person {string}, email {string}, password {string}")
-	public void a_list_of_existing_journeys_port_of_origin_destination_content_with_the_client_client_name_address_contact_person_email_password(String portOfOrigin, String destination, String content, String clientName, String clientAddress, String contactPerson, String email, String password) throws Exception {
-	    containerApp.registerPort(portOfOrigin);
-	    containerApp.registerPort(destination);
-	    containerApp.createContainer(portOfOrigin);
-	    client = new Client(clientName, clientAddress, contactPerson, email, password);
-	    containerApp.registerContainer(portOfOrigin, destination, content, client);
-	    
+	
+	@Given("Journeys")
+	public void journeys(io.cucumber.datatable.DataTable dataTable) throws Exception {
+	    containerApp.registerContainer(dataTable.cell(1, 0), dataTable.cell(1, 1), dataTable.cell(1, 2), client);
+	    containerApp.registerContainer(dataTable.cell(2, 0), dataTable.cell(2, 1), dataTable.cell(2, 2), client);
 	}
-
-	@When("searching for a journey")
+	
+	@When("Searching for a journey")
 	public void searching_for_a_journey() {
 		try {
 			containerApp.findJourney(keywords);
@@ -334,13 +295,13 @@ public class StepDefinition {
 		
 	}
 
-	@Then("a journey has been found")
+	@Then("A journey has been found")
 	public void a_journey_has_been_found() {
 		assertNull(exception);
 		
 	}
 
-	@Then("the keyword does not match any journey")
+	@Then("The keyword does not match any journey")
 	public void the_keyword_does_not_match_any_journey() {
 	    assertNotNull(exception);
 	}
@@ -353,45 +314,36 @@ public class StepDefinition {
 	//
 	//
 	
-	// Update Container
+	// Update Journey
 	List<String> times = new ArrayList<String>();
 	List<String> locations = new ArrayList<String>();
 	List<Integer> temperatures = new ArrayList<Integer>();
 	List<Integer> humidities = new ArrayList<Integer>();
 	List<Integer> pressures = new ArrayList<Integer>();
 	Container container;
-	
-	
-	@Given("a list of existing ports {string}, {string} and {string}")
-	public void a_list_of_existing_ports_and(String port1, String port2, String port3) throws Exception {
-	    containerApp.registerPort(port1);
-	    containerApp.registerPort(port2);
-	    containerApp.registerPort(port3);
-	}
-	@Given("a container: port {string} with journey: port of origin {string}, destination {string}, content {string} with the client: client name {string}, address {string}, contact person {string}, email {string}, password {string}")
-	public void a_container_port_with_journey_port_of_origin_destination_content_with_the_client_client_name_address_contact_person_email_password(String port, String portOfOrigin, String destination, String content, String name, String address, String contactPerson, String email, String password) throws Exception {
-		containerApp.createContainer(port);
-		container = containerApp.findContainer(port).get(0);
-		client = new Client(name, address, contactPerson, email, password);
-		containerApp.registerContainer(portOfOrigin, destination, content, client);
+
+	@Given("New internal information")
+	public void new_internal_information(io.cucumber.datatable.DataTable dataTable) {
+		this.times.add(dataTable.cell(1, 0));
+	    this.locations.add(dataTable.cell(1, 1));
+	    this.temperatures.add(Integer.parseInt(dataTable.cell(1, 2)));
+	    this.humidities.add(Integer.parseInt(dataTable.cell(1, 3)));
+	    this.pressures.add(Integer.parseInt(dataTable.cell(1, 4)));
 	}
 
-	@Given("new internal information: timestamp {string}, location {string}, temperature {int}, humidity {int}, pressure {int}")
-	public void new_internal_information_timestamp_location_temperature_humidity_pressure(String times, String locations, Integer temperatures, Integer humidities, Integer pressures) {
-	    this.times.add(times);
-	    this.locations.add(locations);
-	    this.temperatures.add(temperatures);
-	    this.humidities.add(humidities);
-	    this.pressures.add(pressures);
+	@Given("A container")
+	public void a_container(io.cucumber.datatable.DataTable dataTable) throws Exception {
+		containerApp.createContainer(dataTable.cell(1, 0));
+		container = containerApp.findContainer(dataTable.cell(1, 0)).get(0);
 	}
-	
-	@Given("a container: port {string} with no journey")
-	public void a_container_port_with_no_journey(String port) throws Exception {
-		containerApp.createContainer(port);
-		container = containerApp.findContainer(port).get(0);
+	@Given("Ports")
+	public void ports(io.cucumber.datatable.DataTable dataTable) throws Exception {
+	    for (int i=1; i<dataTable.height(); i++) {
+			containerApp.registerPort(dataTable.cell(i, 0));
+	    }
 	}
-	
-	@When("updating a journey")
+
+	@When("Updating a journey")
 	public void updating_a_journey() {
 	    try {
 			containerApp.updateJourney(container, times, locations, temperatures, humidities, pressures);
@@ -400,18 +352,18 @@ public class StepDefinition {
 		}
 	}
 
-	@Then("the journey is updated")
+	@Then("The journey is updated")
 	public void the_journey_is_updated() {
 	    assertNull(exception);
 	}
 
-	@Then("the journey has ended")
+	@Then("The journey has ended")
 	public void the_journey_has_ended() {
 		assertNull(container.getJourney());
 		assertNull(exception);
 	}
 
-	@Then("the journey is not updated")
+	@Then("The journey is not updated")
 	public void the_journey_is_not_updated() {
 		assertNotNull(exception);
 	}
@@ -421,29 +373,8 @@ public class StepDefinition {
 	//
 	
 	// Most Kilometers Traveled
-	
-	@Given("a new journey with port of origin {string}, destination {string}, content {string} with the same client")
-	public void a_new_journey_with_port_of_origin_destination_content_with_the_same_client(String portOfOrigin, String destination, String content) throws Exception {
-		containerApp.registerContainer(portOfOrigin, destination, content, client);
-	}
-
-	@Given("internal information: timestamp {string}, location {string}, temperature {int}, humidity {int}, pressure {int}")
-	public void internal_information_timestamp_location_temperature_humidity_pressure(String time, String location, Integer temperature, Integer humidity, Integer pressure) throws Exception {
-	    this.times.add(time);
-	    this.locations.add(location);
-	    this.temperatures.add(temperature);
-	    this.humidities.add(humidity);
-	    this.pressures.add(pressure);
-		containerApp.updateJourney(container, times, locations, temperatures, humidities, pressures);
-
-	}
-
-	@Given("a second container with port {string}")
-	public void a_second_container_with_port(String port) throws Exception {
-	    containerApp.createContainer(port);
-	}
-	
-	@When("determining the container that traveled the most")
+		
+	@When("Determining the container that traveled the most")
 	public void determining_the_container_that_traveled_the_most() {
 		try {
 			containerApp.mostKilometersTraveled();
@@ -452,12 +383,12 @@ public class StepDefinition {
 		}
 	}
 
-	@Then("the container that traveled the most is found")
+	@Then("The container that traveled the most is found")
 	public void the_container_that_traveled_the_most_is_found() {
 	    assertNull(exception);
 	}
 	
-	@Then("no container found")
+	@Then("No container found")
 	public void no_container_found() {
 	    assertNotNull(exception);
 	}
@@ -467,7 +398,7 @@ public class StepDefinition {
 	//
 	// Most Journeys
 	
-	@When("determining the container that went on the most journeys")
+	@When("Determining the container that went on the most journeys")
 	public void determining_the_container_that_went_on_the_most_journeys() {
 	    try {
 	    	containerApp.mostJourneys();
@@ -476,7 +407,7 @@ public class StepDefinition {
 	    }
 	}
 
-	@Then("the container that went on the most journeys is found")
+	@Then("The container that went on the most journeys is found")
 	public void the_container_that_went_on_the_most_journeys_is_found() {
 	    assertNull(exception);
 	}
@@ -484,7 +415,7 @@ public class StepDefinition {
 	//
 	//
 	// Most Ports
-	@When("determining the container that visited the most ports")
+	@When("Determining the container that visited the most ports")
 	public void determining_the_container_that_visited_the_most_ports() {
 		try {
 	    	containerApp.mostPorts();
@@ -493,7 +424,7 @@ public class StepDefinition {
 	    }
 	}
 
-	@Then("the container that visited the most ports is found")
+	@Then("The container that visited the most ports is found")
 	public void the_container_that_visited_the_most_ports_is_found() {
 	    assertNull(exception);
 
@@ -505,7 +436,7 @@ public class StepDefinition {
 	
 	// Least Kilometers traveled
 	
-	@When("determining the container that traveled the least")
+	@When("Determining the container that traveled the least")
 	public void determining_the_container_that_traveled_the_least() {
 		try {
 			containerApp.leastKilometersTraveled();
@@ -514,7 +445,7 @@ public class StepDefinition {
 		}
 	}
 	
-	@Then("the container that traveled the least is found")
+	@Then("The container that traveled the least is found")
 	public void the_container_that_traveled_the_least_is_found() {
 	    assertNull(exception);
 
@@ -525,7 +456,7 @@ public class StepDefinition {
 	//
 	// Least Journeys
 
-	@When("determining the container that went on the least journeys")
+	@When("Determining the container that went on the least journeys")
 	public void determining_the_container_that_went_on_the_least_journeys() {
 		try {
 			containerApp.leastJourneys();
@@ -534,7 +465,7 @@ public class StepDefinition {
 		}
 	}
 
-	@Then("the container that went on the least journeys is found")
+	@Then("The container that went on the least journeys is found")
 	public void the_container_that_went_on_the_least_journeys_is_found() {
 	    assertNull(exception);
 	}
@@ -544,7 +475,7 @@ public class StepDefinition {
 	//
 	// Least Ports
 	
-	@When("determining the container that visited the least ports")
+	@When("Determining the container that visited the least ports")
 	public void determining_the_container_that_visited_the_least_ports() {
 		try {
 			containerApp.leastPorts();
@@ -553,7 +484,7 @@ public class StepDefinition {
 		}
 	}
 
-	@Then("the container that visited the least ports is found")
+	@Then("The container that visited the least ports is found")
 	public void the_container_that_visited_the_least_ports_is_found() {
 	    assertNull(exception);
 	}
@@ -563,7 +494,7 @@ public class StepDefinition {
 	//
 	// Longest Journey
 
-	@When("determining the longest journey")
+	@When("Determining the longest journey")
 	public void determining_the_longest_journey() {
 	    try {
 			containerApp.longestJourney();
@@ -573,7 +504,7 @@ public class StepDefinition {
 
 	}
 
-	@Then("the longest journey is found")
+	@Then("The longest journey is found")
 	public void the_longest_journey_is_found() {
 	    assertNull(exception);
 
@@ -582,24 +513,25 @@ public class StepDefinition {
 	//
 	//
 	//
-	// Shortest
+	// Shortest Journey
 	
-	@When("determining the shortest journey")
+	@When("Determining the shortest journey")
 	public void determining_the_shortest_journey() {
 	    try {
-			containerApp.shortestJourney();
+			int a = containerApp.shortestJourney().getSecond();
+			System.out.println(a);
 		} catch (Exception e) {
 			exception = e;
 		}
 	}
 
-	@Then("the shortest journey is found")
+	@Then("The shortest journey is found")
 	public void the_shortest_journey_is_found() {
 	    assertNull(exception);
 
 	}
 
-	@Then("no journey found")
+	@Then("No journey found")
 	public void no_journey_found() {
 	    assertNotNull(exception);
 	}
@@ -612,27 +544,20 @@ public class StepDefinition {
 	private String username;
 	private String password;
 	
-	@Given("clients")
+	@Given("Clients")
 	public void clients(io.cucumber.datatable.DataTable dataTable) throws Exception {
-	    // Write code here that turns the phrase above into concrete actions
-	    // For automatic transformation, change DataTable to one of
-	    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-	    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-	    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-	    //
-	    // For other transformations you can register a DataTableType.
-		containerApp.registerClient(dataTable.cell(2, 0),dataTable.cell(2, 1),dataTable.cell(2, 2),dataTable.cell(2, 3),dataTable.cell(2, 4));
-		containerApp.registerClient(dataTable.cell(1, 0),dataTable.cell(1, 1),dataTable.cell(1, 2),dataTable.cell(1, 3),dataTable.cell(1, 4));
+		for (int i=1; i<dataTable.height(); i++) {
+			containerApp.registerClient(dataTable.cell(i, 0),dataTable.cell(i, 1),dataTable.cell(i, 2),dataTable.cell(i, 3),dataTable.cell(i, 4));
+		}
 	}
 
-
-	@Given("a username {string} and a password {string}")
+	@Given("A username {string} and a password {string}")
 	public void a_username_and_a_password(String username, String password) {
 	    this.username = username;
 	    this.password = password;
 	}
 
-	@When("logging in")
+	@When("Logging in")
 	public void logging_in() {
 	    try {
 			containerApp.loggedInClient(username, password);
@@ -641,12 +566,12 @@ public class StepDefinition {
 		}
 	}
 
-	@Then("client is logged in")
+	@Then("Client is logged in")
 	public void client_is_logged_in() {
 	    assertNull(exception);
 	}
 	
-	@Then("client is not logged in")
+	@Then("Client is not logged in")
 	public void client_is_not_logged_in() {
 	    assertNotNull(exception);
 	}

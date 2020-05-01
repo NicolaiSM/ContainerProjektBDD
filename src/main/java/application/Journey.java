@@ -100,10 +100,6 @@ public class Journey {
 	}
 
 	public int getNumberOfPorts() {
-		int numberOfPorts = locations.size();
-		if (portOfOrigin!=null) {
-			numberOfPorts++;
-		}
-		return numberOfPorts;
+		return locations.size()+1;
 	}
 }
