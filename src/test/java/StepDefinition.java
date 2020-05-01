@@ -515,6 +515,18 @@ public class StepDefinition {
 	//
 	// Shortest Journey
 	
+	@Given("Internal information")
+	public void internal_information(io.cucumber.datatable.DataTable dataTable) throws Exception {
+		for (int i=1; i<dataTable.height(); i++) {
+			this.times.add(dataTable.cell(i, 0));
+		    this.locations.add(dataTable.cell(i, 1));
+		    this.temperatures.add(Integer.parseInt(dataTable.cell(i, 2)));
+		    this.humidities.add(Integer.parseInt(dataTable.cell(i, 3)));
+		    this.pressures.add(Integer.parseInt(dataTable.cell(i, 4)));
+		}
+	    containerApp.updateJourney(container, times, locations, temperatures, humidities, pressures);
+	}
+	
 	@When("Determining the shortest journey")
 	public void determining_the_shortest_journey() {
 	    try {

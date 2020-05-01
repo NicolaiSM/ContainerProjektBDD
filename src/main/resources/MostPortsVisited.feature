@@ -16,6 +16,13 @@ Feature: Get the container that visited the most ports
 		Given A journey
 		| port of origin | destination | content | client |
 		| Oslo					 | Stockholm	 | Cheese	 | given	|
+		Given Internal information
+		| timestamp 	| location 	 | temperature | humidity | pressure |
+		| Maj 8. 2020 | London		 | 9					 | 64				|	1				 |
+		| Maj 9. 2020 | Stockholm	 | 9					 | 64				|	1				 |
+		Given A journey
+		| port of origin | destination | content | client |
+		| Stockholm			 | London			 | Cheese	 | given	|
 		Given A container
 		| port 	 | journey |
 		| London | none		 |
