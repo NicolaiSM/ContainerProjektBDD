@@ -19,6 +19,19 @@ public class Port {
 
 	private final int yCoordinate;
 	
+	@Override
+	public boolean equals(Object object) {
+		return this.port.equals(((Port) object).getPort());
+		
+	}
+	
+	@Override
+	public int hashCode() {
+		return port.hashCode();
+	}
+	
+
+	
 	public Port(String port) {
 		this.port = port;
 		Random rand = new Random();

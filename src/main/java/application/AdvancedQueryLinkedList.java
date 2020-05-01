@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 public class AdvancedQueryLinkedList<A extends Elements> extends LinkedList<A> {
 
 
+	LinkedList<A> test = new LinkedList<A>();
+	
 	/**
 	 * 
 	 */
@@ -29,7 +31,7 @@ public class AdvancedQueryLinkedList<A extends Elements> extends LinkedList<A> {
 	public boolean anyMatch(String...keywords) {
 		return this.stream().anyMatch((element)->element.hasKeyword(keywords));
 	}
-
+	
 
 
 
