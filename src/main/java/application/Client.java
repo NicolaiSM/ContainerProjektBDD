@@ -4,15 +4,10 @@ import java.util.*;
 
 import javax.persistence.*;
 
-@Entity
-public class Client {
+public class Client implements Elements {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column
 	private long id;
 	
-	@ElementCollection
 	private Map<String,String> clientInfo = new HashMap<>();
 
 
@@ -43,4 +38,13 @@ public class Client {
 	public String get(String key) {
 		return clientInfo.get(key);
 	}
+	
+	@Override
+	public boolean hasKeyword(String... keywords) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+
+	
 }

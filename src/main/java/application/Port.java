@@ -6,19 +6,15 @@ import java.util.Random;
 import javax.persistence.*;
 
 
-@Entity
+
 public class Port {
 	
-	@Id
-	@Column(name = "port")
 	private String port;
 	
-	@OneToMany
 	private List<Container> containers = new ArrayList<Container>();
 	
-	@Column
 	private final int xCoordinate;
-	@Column
+
 	private final int yCoordinate;
 	
 	public Port(String port) {
