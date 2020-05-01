@@ -11,7 +11,7 @@ public class Port {
 	
 	@Id
 	@Column(name = "port")
-	private String port;
+	private final String port;
 	
 	@OneToMany
 	private List<Container> containers = new ArrayList<Container>();

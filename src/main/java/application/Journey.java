@@ -14,16 +14,16 @@ public class Journey {
 	private long id;
 	
 	@OneToOne
-	private Port portOfOrigin;
+	private final Port portOfOrigin;
 	
 	@OneToOne
-	private Port destination;
+	private final Port destination;
 	
 	@Column
-	private String content;
+	private final String content;
 	
 	@ManyToOne
-	private Client client;
+	private final Client client;
 	
 	@ElementCollection
 	private List<String> times = new ArrayList<String>();

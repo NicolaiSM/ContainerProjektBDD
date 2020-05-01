@@ -530,8 +530,7 @@ public class StepDefinition {
 	@When("Determining the shortest journey")
 	public void determining_the_shortest_journey() {
 	    try {
-			int a = containerApp.shortestJourney().getSecond();
-			System.out.println(a);
+			containerApp.shortestJourney();
 		} catch (Exception e) {
 			exception = e;
 		}

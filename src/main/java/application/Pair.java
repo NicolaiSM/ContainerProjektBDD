@@ -2,8 +2,8 @@ package application;
 
 public class Pair<T,D> {
 	
-	private T first;
-	private D second;
+	private final T first;
+	private final D second;
 	
 	
 	public T getFirst() {
