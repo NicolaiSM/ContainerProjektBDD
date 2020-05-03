@@ -21,7 +21,7 @@ public class Journey {
 	private final String content;
 	
 	@ManyToOne
-	private final Client client;
+	private final User client;
 	
 	private List<String> times = new ArrayList<String>();
 	
@@ -33,11 +33,11 @@ public class Journey {
 	
 	private List<Integer> pressures = new ArrayList<Integer>();
 	
-	public Journey(Port portOfOrigin, Port destination, String content, Client client) {
+	public Journey(Port portOfOrigin, Port destination, String content, User user) {
 		this.portOfOrigin = portOfOrigin;
 		this.destination = destination;
 		this.content = content;
-		this.client = client;
+		this.client = user;
 	}
 
 	public long getId() {
@@ -57,10 +57,10 @@ public class Journey {
 	}
 
 	public boolean hasKeyword(String keyword) {
-		return (keyword.equals(portOfOrigin.getPort()) | keyword.equals(destination.getPort()) | keyword.equals(content) | keyword.equals(client.getClientName()));
+		return (keyword.equals(portOfOrigin.getPort()) | keyword.equals(destination.getPort()) | keyword.equals(content) | keyword.equals(client.get("clientName")));
 	}
 
-	public Client getClient() {
+	public User getClient() {
 		return client;
 	}
 

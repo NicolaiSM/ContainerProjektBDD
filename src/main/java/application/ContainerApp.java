@@ -13,39 +13,36 @@ public class ContainerApp {
 		}
 		return instance;
 	}
-	
-	
-	private List<Client> clients = new ArrayList<Client>();
+	private Set<User> users = new HashSet<User>(Arrays.asList(new LogisticCompany("Mærsk","1234")));
 	private Set<Port> ports = new HashSet<Port>();
-	public List<Container> containers = new ArrayList<Container>();
+	private List<Container> containers = new ArrayList<Container>();
 	private List<Journey> journeys = new ArrayList<Journey>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
 		if (isClientRegistered(clientName)) {
 			throw new Exception("Client already registered");
 		}
-		clients.add(new Client(clientName, address, contactPerson, email, password));
+		users.add(new Client(clientName, address, contactPerson, email, password));
 	}
-	
-	public Client loggedInClient(String clientName, String password) throws Exception {
-		Client c = clients.stream().filter((client)->client.get("clientName").equals(clientName)).findFirst().orElse(null);
-		if (c==null) {
+	public User loggedInUser(String username, String password) throws Exception {
+		Optional<User> u = users.stream().filter((user)->user.get("clientName").equals(username)).findFirst();
+		if (u.isEmpty()) {
 			throw new Exception("Username is incorrect");
 		}
-		else if (!c.get("password").equals(password)) {
+		else if (!u.get().get("password").equals(password)) {
 			throw new Exception("Password is incorrect");
 		}
 		else {
-			return c;
+			return u.get();
 		}
 	}
 	
 	public boolean isClientRegistered(String clientName) {
-		return clients.stream().anyMatch((client)->client.getClientName().equals(clientName));
+		return users.stream().anyMatch((client)->client.get("clientName").equals(clientName));
 	}
 	
-	public List<Client> findClient(String... keywords) throws Exception {
-		List<Client> resultingClients = getClients(keywords);
+	public List<User> findClient(String... keywords) throws Exception {
+		List<User> resultingClients = getClients(keywords);
 		if (resultingClients.isEmpty()) {
 			throw new Exception("No clients found");
 
@@ -53,20 +50,11 @@ public class ContainerApp {
 		return resultingClients;
 	}
 
-	private List<Client> getClients(String... keywords) {
-		return clients.stream().filter((client)->clientHasKeyword(keywords, client)).collect(Collectors.toList());
+	private List<User> getClients(String... keywords) {
+		return users.stream().filter((client)->client.hasKeyword(keywords)).collect(Collectors.toList());
 	}
 
-	private boolean clientHasKeyword(String[] keywords, Client client) {
-		for(String keyword: keywords) {
-			if( client.hasKeyword(keyword)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void updateClient(Client client, String key, String value) throws Exception {
+	public void updateClient(User client, String key, String value) throws Exception {
 		if (key.equals("clientName")) {
 			if (isClientAvailable(value)) {
 				client.setClientInfo(key, value);
@@ -80,9 +68,7 @@ public class ContainerApp {
 	}
 
 	private boolean isClientAvailable(String clientName) {
-		for (Client client : clients) {
-		}
-		return clients.stream().noneMatch((client)->client.getClientName().equals(clientName));
+		return users.stream().noneMatch((client)->client.get("clientName").equals(clientName));
 	}
 
 
@@ -116,7 +102,7 @@ public class ContainerApp {
 		
 	}
 
-	public void registerContainer(String portOfOrigin, String destination, String content, Client client) throws Exception {
+	public void registerContainer(String portOfOrigin, String destination, String content, User client) throws Exception {
 		Port startport = findPort(portOfOrigin);
 		Port finalport = findPort(destination);
 		
@@ -209,96 +195,64 @@ public class ContainerApp {
 
 	public Pair<Container,Integer> mostKilometersTraveled() throws Exception {
 		if (!containers.isEmpty()) {
-//			ArrayList containerMost = new ArrayList();
 			Container container = Collections.max(containers,Comparator.comparing(c -> c.getDistance()));
 			return new Pair<Container,Integer>(container,container.getDistance());
-//			containerMost.add(container);
-//			containerMost.add(container.getDistance());
-//			return containerMost;
 		}
 		throw new Exception("No containers exist");
 	}
 
 	public Pair<Container,Integer> mostJourneys() throws Exception {
 		if (!containers.isEmpty()) {
-//			ArrayList containerMost = new ArrayList();
 			Container container = Collections.max(containers,Comparator.comparing(c -> c.getNumberOfJourneys()));
 			return new Pair<Container,Integer>(container,container.getDistance());
-//			containerMost.add(container);
-//			containerMost.add(container.getNumberOfJourneys());
-//			return containerMost;
 		}
 		throw new Exception("No containers exist");
 	}
 	
 	public Pair<Container,Integer> mostPorts() throws Exception {
 		if (!containers.isEmpty()) {
-//			ArrayList containerMost = new ArrayList();
 			Container container = Collections.max(containers,Comparator.comparing(c -> c.getNumberOfPorts()));
 			return new Pair<Container,Integer>(container,container.getDistance());
-//			containerMost.add(container);
-//			containerMost.add(container.getNumberOfPorts());
-//			return containerMost;
 		}
 		throw new Exception("No containers exist");
 	}
 
 	public Pair<Container,Integer> leastKilometersTraveled() throws Exception {
 		if (!containers.isEmpty()) {
-//			ArrayList containerLeast = new ArrayList();
 			Container container = Collections.min(containers,Comparator.comparing(c -> c.getDistance()));
 			return new Pair<Container,Integer>(container,container.getDistance());
-//			containerLeast.add(container);
-//			containerLeast.add(container.getDistance());
-//			return containerLeast;
 		}
 		throw new Exception("No containers exist");		
 	}
 
 	public Pair<Container,Integer> leastJourneys() throws Exception {
 		if (!containers.isEmpty()) {
-//			ArrayList containerLeast = new ArrayList();
 			Container container = Collections.min(containers,Comparator.comparing(c -> c.getNumberOfJourneys()));
 			return new Pair<Container,Integer>(container,container.getDistance());
-//			containerLeast.add(container);
-//			containerLeast.add(container.getNumberOfJourneys());
-//			return containerLeast;
 		}
 		throw new Exception("No containers exist");			
 	}
 
 	public Pair<Container,Integer> leastPorts() throws Exception {
 		if (!containers.isEmpty()) {
-//			ArrayList containerLeast = new ArrayList();
 			Container container = Collections.min(containers,Comparator.comparing(c -> c.getNumberOfPorts()));
 			return new Pair<Container,Integer>(container,container.getDistance());
-//			containerLeast.add(container);
-//			containerLeast.add(container.getNumberOfPorts());
-//			return containerLeast;
 		}
 		throw new Exception("No containers exist");			
 	}
 
 	public Pair<Journey,Integer> longestJourney() throws Exception {
 		if (!journeys.isEmpty()) {
-//			ArrayList longestJourney = new ArrayList();
 			Journey journey = Collections.max(journeys,Comparator.comparing(j -> j.getDistance()));
 			return new Pair<Journey,Integer>(journey,journey.getDistance());
 			
-//			longestJourney.add(journey);
-//			longestJourney.add(journey.getDistance());
-//			return longestJourney;
 		}
 		throw new Exception("No journeys exist");			
 	}
 	public Pair<Journey,Integer> shortestJourney() throws Exception {
 		if (!journeys.isEmpty()) {
-//			ArrayList shortestJourney = new ArrayList();
 			Journey journey = Collections.min(journeys,Comparator.comparing(j -> j.getDistance()));
 			return new Pair<Journey,Integer>(journey,journey.getDistance());
-//			shortestJourney.add(journey);
-//			shortestJourney.add(journey.getDistance());
-//			return shortestJourney;
 		}
 		throw new Exception("No journeys exist");			
 	}

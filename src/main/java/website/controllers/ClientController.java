@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import application.Client;
 import application.ContainerApp;
+import application.LogisticCompany;
+import application.User;
 import website.model.CredentialForm;
 import website.model.JourneyForm;
 import website.model.UserForm;
 
 @Controller
 public class ClientController {
-	Client user;
+	User user;
 	
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -87,13 +89,17 @@ public class ClientController {
 			return "login";
 		}
 		try {
-			user = ContainerApp.getInstance().loggedInClient(credentialForm.getClientName(),credentialForm.getPassword());
+//			user = ContainerApp.loggedInLC
+//			if (user==null) 
+				user = ContainerApp.getInstance().loggedInUser(credentialForm.getClientName(),credentialForm.getPassword());
 		} catch (Exception e) {
 			model.addAttribute("message", e.getMessage());
 			
 			return "login";
 		}
-		
+//		if (user instanceof LogisticCompany) {
+//			return "redirect:/logisticcompanyview";
+//		}
 		return "redirect:/clientview";
 		
 		
@@ -124,12 +130,12 @@ public class ClientController {
 	
 	@PostMapping("/registercontainer")
 	public String registerContainer(@Valid JourneyForm journeyForm, BindingResult result, Model model) {
-		try {
+		try { 
 			ContainerApp.getInstance().registerContainer(journeyForm.getPortOfOrigin(), journeyForm.getDestination(), journeyForm.getContent(), user);
 		} catch (Exception e) {
 			model.addAttribute("registercontainermessage", e.getMessage());
 			e.printStackTrace();
-			System.out.println(user.getClientName());
+			System.out.println(user.get("clientName"));
 			
 		} 			
 		return "clientview";
@@ -139,7 +145,7 @@ public class ClientController {
 	
 	
 	
-	
+	 
 	
 	
 	

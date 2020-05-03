@@ -7,6 +7,7 @@ import java.util.*;
 import application.Client;
 import application.Container;
 import application.ContainerApp;
+import application.User;
 
 
 
@@ -91,7 +92,7 @@ public class StepDefinition {
 	//
 	
 	// UPDATE CLIENT INFORMATION
-	private Client client;
+	private User client;
 	
 	@Given("A client")
 	public void a_client(io.cucumber.datatable.DataTable dataTable) throws Exception {
@@ -571,18 +572,18 @@ public class StepDefinition {
 	@When("Logging in")
 	public void logging_in() {
 	    try {
-			containerApp.loggedInClient(username, password);
+			containerApp.loggedInUser(username, password);
 		} catch (Exception e) {
 			exception = e;
 		}
 	}
 
-	@Then("Client is logged in")
+	@Then("User is logged in")
 	public void client_is_logged_in() {
 	    assertNull(exception);
 	}
 	
-	@Then("Client is not logged in")
+	@Then("User is not logged in")
 	public void client_is_not_logged_in() {
 	    assertNotNull(exception);
 	}

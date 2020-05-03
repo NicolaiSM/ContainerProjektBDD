@@ -4,12 +4,9 @@ import java.util.*;
 
 import javax.persistence.*;
 
-public class Client implements Elements {
-	
+public class Client extends User implements Elements{
+		
 	private long id;
-	
-	private Map<String,String> clientInfo = new HashMap<>();
-
 
 	public Client()  {
 		
@@ -22,28 +19,26 @@ public class Client implements Elements {
 		clientInfo.put("password",password);
 	}
 
-	public boolean hasKeyword(String key) {
-		return clientInfo.containsValue(key);
-	}
-	
-	//Setters
-	public void setClientInfo(String key, String value) {
-		clientInfo.put(key, value);
-	}
-	
-	//Getters
-	public String getClientName() {
-		return clientInfo.get("clientName");
-	}
-	public String get(String key) {
-		return clientInfo.get(key);
-	}
-	
-	@Override
-	public boolean hasKeyword(String... keywords) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+//	public boolean hasKeyword(String key) {
+//		return clientInfo.containsValue(key);
+//	}
+//	
+//	//Setters
+//	public void setClientInfo(String key, String value) {
+//		clientInfo.put(key, value);
+//	}
+//	
+//
+//	
+//	@Override
+//	public boolean hasKeyword(String... keywords) {
+//		for (String keyword : keywords) {
+//			if (hasKeyword(keyword)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	
 
 	
