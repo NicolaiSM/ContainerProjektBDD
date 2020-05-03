@@ -76,19 +76,22 @@ public class ContainerApp {
 	public void registerPort(String port) throws Exception {
 		if (portIsRegistered(port)) {
 			throw new Exception("Port is already registered");
-		} 
-		ports.add(new Port(port));
+		}
+		else {
+			ports.add(new Port(port));
+		}
+		
 	}
 
 	private boolean portIsRegistered(String port) {
-		return ports.stream().anyMatch((Port)->Port.getPort().equals(port));
+		return ports.contains(new Port(port));
+		
 	}
 	
 
 	public Port findPort(String port){
 		
 		return ports.stream().filter((Port)->Port.getPort().equals(port)).findFirst().orElse(null);
-		
 	}
 	
 	public void createContainer(String port) throws Exception {
@@ -106,7 +109,7 @@ public class ContainerApp {
 		Port startport = findPort(portOfOrigin);
 		Port finalport = findPort(destination);
 		
-		if (startport == null || finalport == null) {
+		if (ports.contains(portOfOrigin)|| ports.contains(destination)) {
 			throw new Exception ("No valid ports");
 		}
 		Container availableContainer = getAvailableContainer(startport);
