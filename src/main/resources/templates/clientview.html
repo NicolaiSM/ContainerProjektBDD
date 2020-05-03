@@ -38,11 +38,64 @@
 	    </thead>
 	    <tbody>
 	      <tr th:each="container : ${containers}">
-	      <td th:text="container.content">
+	      <td th:text="${container.journey.content}">
 	      </tr>
 	    </tbody>
 	  </table>
 	</div>
+	
+	<h2>Update client</h2>
+	<form th:action="@{/updateclient}" method="post" th:object="${userForm}">
+	<p th:text="${updateclientmessage}"> </p>
+ 		<label>Client name :
+     		<input type="text" name="clientName" th:field="*{clientName}" />
+     	</label>
+     	<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}"></p>
+     	<br />
+     	<label>Address: 
+     		<input type="text" name="address" th:field="*{address}"/>
+     	</label>
+     	<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+     	<br />
+     	<label>Email :
+     		<input type="text" name="email" th:field="*{email}"/>
+     	</label>
+     	<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+     	<br />
+     	<label>Contact person: 
+     		<input type="text" name="contactPerson" th:field="*{contactPerson}"/>
+     	</label>
+     	<p th:if="${#fields.hasErrors('contactPerson')}" th:errors="*{contactPerson}"></p>
+     	<br />
+     	<label>Password :
+     		<input type="text" name="password" th:field="*{password}"/>
+     	</label>
+     	<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+     	<br />
+ 		<input type="submit" value="Update" />
+	</form>
 
+	<h2>Find port</h2>
+		<form th:action="@{/findport}" method="post" th:object="${keywordForm}">
+		<p th:text="${findportmessage}"> </p>
+	 		<label>Keywords :
+	     		<input type="text" name="keyword" th:field="*{keyword}" />
+	     	</label>
+	     	<p th:if="${#fields.hasErrors('keyword')}" th:errors="*{keyword}"></p>
+	     	<br />
+	 		<input type="submit" value="Find" />
+		</form>
+		<table>
+		    <thead>
+		      <tr>
+		        <th >Ports</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr th:each="port : ${ports}">
+		      <td th:text="${port.port}">
+		      </tr>
+		    </tbody>
+		  </table>
 
 </html>

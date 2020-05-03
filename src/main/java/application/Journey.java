@@ -1,5 +1,5 @@
 package application;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -23,15 +23,15 @@ public class Journey {
 	@ManyToOne
 	private final User client;
 	
-	private List<String> times = new ArrayList<String>();
+	private List<String> times = new LinkedList<String>();
 	
-	private List<Port> locations = new ArrayList<Port>();
+	private List<Port> locations = new LinkedList<Port>();
 	
-	private List<Integer> temperatures = new ArrayList<Integer>();
+	private List<Integer> temperatures = new LinkedList<Integer>();
 	
-	private List<Integer> humidities = new ArrayList<Integer>();
+	private List<Integer> humidities = new LinkedList<Integer>();
 	
-	private List<Integer> pressures = new ArrayList<Integer>();
+	private List<Integer> pressures = new LinkedList<Integer>();
 	
 	public Journey(Port portOfOrigin, Port destination, String content, User user) {
 		this.portOfOrigin = portOfOrigin;
@@ -39,6 +39,62 @@ public class Journey {
 		this.content = content;
 		this.client = user;
 	}
+
+	
+	public List<String> getTimes() {
+		return times;
+	}
+
+
+	public void setTimes(List<String> times) {
+		this.times = times;
+	}
+
+
+	public List<Port> getLocations() {
+		return locations;
+	}
+
+
+	public void setLocations(List<Port> locations) {
+		this.locations = locations;
+	}
+
+
+	public List<Integer> getTemperatures() {
+		return temperatures;
+	}
+
+
+	public void setTemperatures(List<Integer> temperatures) {
+		this.temperatures = temperatures;
+	}
+
+
+	public List<Integer> getHumidities() {
+		return humidities;
+	}
+
+
+	public void setHumidities(List<Integer> humidities) {
+		this.humidities = humidities;
+	}
+
+
+	public List<Integer> getPressures() {
+		return pressures;
+	}
+
+
+	public void setPressures(List<Integer> pressures) {
+		this.pressures = pressures;
+	}
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 
 	public long getId() {
 		return id;
@@ -55,13 +111,13 @@ public class Journey {
 	public String getContent() {
 		return content;
 	}
+	
+	public User getClient() {
+		return client;
+	}
 
 	public boolean hasKeyword(String keyword) {
 		return (keyword.equals(portOfOrigin.getPort()) | keyword.equals(destination.getPort()) | keyword.equals(content) | keyword.equals(client.get("clientName")));
-	}
-
-	public User getClient() {
-		return client;
 	}
 
 	public void update(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {

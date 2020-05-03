@@ -7,6 +7,8 @@ import javax.persistence.*;
 public class Client extends User implements Elements{
 		
 	private long id;
+	
+	
 
 	public Client()  {
 		

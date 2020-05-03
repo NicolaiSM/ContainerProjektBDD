@@ -3,6 +3,8 @@ package website.controllers;
 
 
 
+import java.lang.module.FindException;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import application.LogisticCompany;
 import application.User;
 import website.model.CredentialForm;
 import website.model.JourneyForm;
+import website.model.KeywordForm;
 import website.model.UserForm;
 
 @Controller
@@ -107,11 +110,16 @@ public class ClientController {
 	}
 	
 	@GetMapping("/clientview")
-	public String clientView(Model model, String[] keyword) {
-		model.addAttribute("client", user);
+	public String clientView(Model model) {
+		model.addAttribute("userForm", new UserForm(user.get("clientName"), user.get("address"), user.get("email"), user.get("contactPerson"), user.get("password")));
+		model.addAttribute("test", user.get("clientName"));
 		model.addAttribute("journeyForm", new JourneyForm());
+		model.addAttribute("ports", ContainerApp.getInstance().getPorts());
+		model.addAttribute("keywordForm", new KeywordForm());
+		
 		try {
-			model.addAttribute("containers", ContainerApp.getInstance().findContainer(user.get("ClientName")));
+			model.addAttribute("containers", ContainerApp.getInstance().getContainers());
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,18 +137,50 @@ public class ClientController {
 	}
 	
 	@PostMapping("/registercontainer")
-	public String registerContainer(@Valid JourneyForm journeyForm, BindingResult result, Model model) {
+	public String registerContainer(@Valid JourneyForm journeyForm, BindingResult result, Model model, UserForm userForm, KeywordForm keywordForm) {
 		try { 
 			ContainerApp.getInstance().registerContainer(journeyForm.getPortOfOrigin(), journeyForm.getDestination(), journeyForm.getContent(), user);
 		} catch (Exception e) {
 			model.addAttribute("registercontainermessage", e.getMessage());
 			e.printStackTrace();
 			System.out.println(user.get("clientName"));
-			
-		} 			
-		return "clientview";
-	
+			return "clientview";	
+		}
+		
+		model.addAttribute("registercontainermessage", "Container successfully registered");
+		return clientView(model);
 	}
+
+	@PostMapping("/updateclient")
+	public String updateClient(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
+		try {
+			ContainerApp.getInstance().updateClient(user, "clientName", userForm.getClientName());
+			ContainerApp.getInstance().updateClient(user, "address", userForm.getAddress());
+			ContainerApp.getInstance().updateClient(user, "email", userForm.getEmail());
+			ContainerApp.getInstance().updateClient(user, "contactPerson", userForm.getContactPerson());
+			ContainerApp.getInstance().updateClient(user, "password", userForm.getPassword());
+		} catch (Exception e) {
+			model.addAttribute("updateclientmessage", e.getMessage());
+			e.printStackTrace();
+		}
+		model.addAttribute("updateclientmessage", "Your information has been updated");
+		return "clientview";
+		
+	}
+	
+	@PostMapping("/findport")
+	public String findPort(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
+		try {
+			ContainerApp.getInstance().findPort(port);
+			
+		} catch (Exception e) {
+			
+		}
+//		model.addAttribute("findportmessage", "Ports found");
+		return "clientview";
+		
+	}
+	
 	
 	
 	

@@ -37,7 +37,7 @@ public class ContainerApp {
 		}
 	}
 	
-	public boolean isClientRegistered(String clientName) {
+	private boolean isClientRegistered(String clientName) {
 		return users.stream().anyMatch((client)->client.get("clientName").equals(clientName));
 	}
 	
@@ -109,9 +109,10 @@ public class ContainerApp {
 		Port startport = findPort(portOfOrigin);
 		Port finalport = findPort(destination);
 		
-		if (ports.contains(portOfOrigin)|| ports.contains(destination)) {
+		if (startport == null || finalport == null) {
 			throw new Exception ("No valid ports");
 		}
+		
 		Container availableContainer = getAvailableContainer(startport);
 		if(availableContainer == null) {
 			throw new Exception ("No available containers in port");
@@ -259,6 +260,14 @@ public class ContainerApp {
 		}
 		throw new Exception("No journeys exist");			
 	}
+	public Set<Port> getPorts() {
+		return ports;
+	}
+	public List<Container> getContainers() {
+		return containers;
+	}
+	
+	container.journey.content;
 	
 
 	

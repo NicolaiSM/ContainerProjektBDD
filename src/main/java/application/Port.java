@@ -1,5 +1,5 @@
 package application;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -13,7 +13,7 @@ public class Port {
 	@Column(name = "port")
 	private final String port;
 	
-	private List<Container> containers = new ArrayList<Container>();
+	private List<Container> containers = new LinkedList<Container>();
 	
 	private final int xCoordinate;
 

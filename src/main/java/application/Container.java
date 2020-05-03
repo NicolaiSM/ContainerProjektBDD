@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -14,13 +15,44 @@ public class Container {
 	
 	private Journey journey;
 	
-	private List<Journey> journeys = new ArrayList<Journey>();
+	private List<Journey> journeys = new LinkedList<Journey>();
 	
 
-	
 	public Container(Port port) {
 		this.port = port;
 	}
+	
+	public List<Journey> getJourneys() {
+		return journeys;
+	}
+	
+	public Journey getJourney() {
+		return journey;
+	}
+	
+	public void setJourney(Journey journey) {
+		this.journey = journey;
+		
+	}
+
+	public void setJourneys(List<Journey> journeys) {
+		this.journeys = journeys;
+	}
+
+	public Port getPort() {
+		return port;
+	}
+	
+	private void setPort(Port port) {
+		this.port = port;
+		
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+
 	
 	public long getId() {
 		return id;
@@ -30,12 +62,7 @@ public class Container {
 		return startport == this.port && !hasJourney();
 
 	}
-
-	public void setJourney(Journey journey) {
-		this.journey = journey;
-		
-	}
-
+	
 	public boolean hasKeyword(String keyword) {
 		if (!hasJourney()) {
 			return keyword.equals(port.getPort());
@@ -61,15 +88,6 @@ public class Container {
 
 	private boolean isLocationDestination() {
 		return port == journey.getDestination();
-	}
-
-	private void setPort(Port port) {
-		this.port = port;
-		
-	}
-
-	public Journey getJourney() {
-		return journey;
 	}
 
 	public boolean hasJourney() {
