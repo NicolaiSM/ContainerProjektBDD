@@ -1,9 +1,20 @@
-package application;
+package application.models;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import application.data.Elements;
+import application.models.id.UserId;
+
 public class User implements Elements {
+	
+	private  Long id;
+	
+	public User() {
+		id = UserId.newUserId();
+	}
+	
+	
 	protected Map<String,String> clientInfo = new HashMap<>();
 
 	public String get(String key) {
@@ -27,4 +38,12 @@ public class User implements Elements {
 	public void setClientInfo(String key, String value) {
 		clientInfo.put(key, value);		
 	}
+	
+	public Long getId() {
+		return this.id;
+	}
+
+
+	
+	
 }

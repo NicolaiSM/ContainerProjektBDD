@@ -1,4 +1,4 @@
-package application;
+package application.data;
 
 public interface Elements {
 

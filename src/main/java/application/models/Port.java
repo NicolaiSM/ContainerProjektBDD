@@ -1,27 +1,36 @@
-package application;
+package application.models;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import javax.persistence.*;
 
+import application.data.Elements;
 
 
-public class Port {
+
+public class Port implements Elements {
 	
 	@Id
 	@Column(name = "port")
 	private final String port;
 	
-	private List<Container> containers = new LinkedList<Container>();
+	private Set<Container> containers = new HashSet<Container>();
 	
 	private final int xCoordinate;
 
 	private final int yCoordinate;
 	
 	@Override
-	public boolean equals(Object object) {
-		return this.port.equals(((Port) object).getPort());
+	public boolean equals(Object port) {
+		return this.port.equals(((Port) port).getPort());
+		
+	}
+	
+	public boolean equals(String port) {
+		return this.port.equals(port);
 		
 	}
 	
@@ -57,5 +66,15 @@ public class Port {
 
 	public double getYCoordinate() {
 		return (double) yCoordinate;
+	}
+
+	@Override
+	public boolean hasKeyword(String... keywords) {
+		for (String keyword : keywords) {
+			if (equals(keyword)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

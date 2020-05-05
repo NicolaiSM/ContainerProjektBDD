@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-import application.Client;
-import application.Container;
 import application.ContainerApp;
-import application.User;
+import application.models.Client;
+import application.models.Container;
+import application.models.User;
 
 
 
@@ -169,6 +169,7 @@ public class StepDefinition {
 	
 	@Given("A port {string}")
 	public void a_port(String port) {
+		containerApp.clearPorts();
 	    this.port = port;
 	}
 
@@ -339,6 +340,7 @@ public class StepDefinition {
 	}
 	@Given("Ports")
 	public void ports(io.cucumber.datatable.DataTable dataTable) throws Exception {
+		containerApp.clearPorts();
 	    for (int i=1; i<dataTable.height(); i++) {
 			containerApp.registerPort(dataTable.cell(i, 0));
 	    }
@@ -572,7 +574,7 @@ public class StepDefinition {
 	@When("Logging in")
 	public void logging_in() {
 	    try {
-			containerApp.loggedInUser(username, password);
+			containerApp.loginUser(username, password);
 		} catch (Exception e) {
 			exception = e;
 		}

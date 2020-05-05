@@ -1,19 +1,16 @@
-package application;
+package application.models;
 
 import java.util.*;
 
 import javax.persistence.*;
 
-public class Client extends User implements Elements{
-		
-	private long id;
-	
-	
+import application.data.QueryLinkedList;
 
-	public Client()  {
-		
-	}
+public class Client extends User {
+	
+	
 	public Client(String clientName, String address, String contactPerson, String email, String password) {
+		super();
 		clientInfo.put("clientName",clientName);
 		clientInfo.put("address", address);
 		clientInfo.put("contactPerson", contactPerson);
@@ -21,27 +18,26 @@ public class Client extends User implements Elements{
 		clientInfo.put("password",password);
 	}
 
-//	public boolean hasKeyword(String key) {
-//		return clientInfo.containsValue(key);
-//	}
-//	
-//	//Setters
-//	public void setClientInfo(String key, String value) {
-//		clientInfo.put(key, value);
-//	}
-//	
-//
-//	
-//	@Override
-//	public boolean hasKeyword(String... keywords) {
-//		for (String keyword : keywords) {
-//			if (hasKeyword(keyword)) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-	
+	private List<Container> clientContainers = new QueryLinkedList<Container>();
 
+
+	public List<Container> getClientContainers() {
+		return clientContainers;
+	}
+	
+	@Override
+	public boolean equals(Object user) {
+		return get("clientName").equals(((User) user).get("clientName"));
+		
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		return get("clientName").hashCode();
+	}
+
+	
+	
 	
 }

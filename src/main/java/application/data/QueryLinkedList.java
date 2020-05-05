@@ -1,13 +1,10 @@
-package application;
+package application.data;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdvancedQueryLinkedList<A extends Elements> extends LinkedList<A> {
-
-
-	LinkedList<A> test = new LinkedList<A>();
+public class QueryLinkedList<A extends Elements> extends LinkedList<A> {
 	
 	/**
 	 * 
@@ -16,23 +13,17 @@ public class AdvancedQueryLinkedList<A extends Elements> extends LinkedList<A> {
 
 
 	public A findElement(String...keywords) {
-		
 		return this.stream().filter((element)->element.hasKeyword(keywords)).findFirst().orElse(null);
 		
 	}
 	
 	public List<A> findElements(String...keywords) {
-		
 		return this.stream().filter((element)->element.hasKeyword(keywords)).collect(Collectors.toList());
 		
 	}
 	
-	
 	public boolean anyMatch(String...keywords) {
 		return this.stream().anyMatch((element)->element.hasKeyword(keywords));
 	}
-	
-
-
 
 }

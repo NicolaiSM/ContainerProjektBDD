@@ -5,18 +5,18 @@ package website.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import application.AdvancedQueryLinkedList;
-import application.Client;
+import application.data.QueryLinkedList;
+import application.models.Client;
 import website.model.UserForm;
 
 
 public class UsersRepository {
 	
-	private static AdvancedQueryLinkedList<Client> clientListInstance = null;
+	private static QueryLinkedList<Client> clientListInstance = null;
 	
-	public static AdvancedQueryLinkedList<Client> getClientList() {
+	public static QueryLinkedList<Client> getClientList() {
 		if (clientListInstance == null) {
-			clientListInstance = new AdvancedQueryLinkedList<Client>();
+			clientListInstance = new QueryLinkedList<Client>();
 		}
 
 		return clientListInstance;

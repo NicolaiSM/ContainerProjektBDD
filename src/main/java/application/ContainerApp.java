@@ -3,6 +3,16 @@ package application;
 import java.util.*;
 import java.util.stream.*;
 
+import application.data.QueryHashSet;
+import application.data.QueryLinkedList;
+import application.data.SingletonPortsHashSet;
+import application.models.Client;
+import application.models.Container;
+import application.models.Journey;
+import application.models.Pair;
+import application.models.Port;
+import application.models.User;
+
 public class ContainerApp {
 	
 	private static ContainerApp instance = null;
@@ -13,36 +23,37 @@ public class ContainerApp {
 		}
 		return instance;
 	}
-	private Set<User> users = new HashSet<User>(Arrays.asList(new LogisticCompany("Mærsk","1234")));
-	private Set<Port> ports = new HashSet<Port>();
-	private List<Container> containers = new ArrayList<Container>();
-	private List<Journey> journeys = new ArrayList<Journey>();
+	
+	public void clearPorts() {
+		SingletonPortsHashSet.getInstance().clear();
+	}
+	
+	
+	private QueryHashSet<User> users = new QueryHashSet<User>();
+	private QueryLinkedList<Container> containers = new QueryLinkedList<Container>();
+	private QueryLinkedList<Journey> journeys = new QueryLinkedList<Journey>();
 	
 	public void registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
-		if (isClientRegistered(clientName)) {
+		if (!users.add(new Client(clientName, address, contactPerson, email, password))) {
 			throw new Exception("Client already registered");
 		}
-		users.add(new Client(clientName, address, contactPerson, email, password));
 	}
-	public User loggedInUser(String username, String password) throws Exception {
-		Optional<User> u = users.stream().filter((user)->user.get("clientName").equals(username)).findFirst();
-		if (u.isEmpty()) {
+	
+	public User loginUser(String username, String password) throws Exception {
+		Optional<User> user = users.stream().filter((user1)->user1.get("clientName").equals(username)).findFirst();
+		if (user.isEmpty()) {
 			throw new Exception("Username is incorrect");
 		}
-		else if (!u.get().get("password").equals(password)) {
+		else if (!user.get().get("password").equals(password)) {
 			throw new Exception("Password is incorrect");
 		}
 		else {
-			return u.get();
+			return user.get();
 		}
 	}
 	
-	private boolean isClientRegistered(String clientName) {
-		return users.stream().anyMatch((client)->client.get("clientName").equals(clientName));
-	}
-	
 	public List<User> findClient(String... keywords) throws Exception {
-		List<User> resultingClients = getClients(keywords);
+		List<User> resultingClients =  users.findElements(keywords);
 		if (resultingClients.isEmpty()) {
 			throw new Exception("No clients found");
 
@@ -50,9 +61,6 @@ public class ContainerApp {
 		return resultingClients;
 	}
 
-	private List<User> getClients(String... keywords) {
-		return users.stream().filter((client)->client.hasKeyword(keywords)).collect(Collectors.toList());
-	}
 
 	public void updateClient(User client, String key, String value) throws Exception {
 		if (key.equals("clientName")) {
@@ -74,24 +82,19 @@ public class ContainerApp {
 
 
 	public void registerPort(String port) throws Exception {
-		if (portIsRegistered(port)) {
+		if (!SingletonPortsHashSet.getInstance().add(new Port(port))) {
 			throw new Exception("Port is already registered");
 		}
-		else {
-			ports.add(new Port(port));
-		}
-		
 	}
 
 	private boolean portIsRegistered(String port) {
-		return ports.contains(new Port(port));
+		return SingletonPortsHashSet.getInstance().contains(new Port(port));
 		
 	}
 	
 
 	public Port findPort(String port){
-		
-		return ports.stream().filter((Port)->Port.getPort().equals(port)).findFirst().orElse(null);
+		return SingletonPortsHashSet.getInstance().findElement(port);
 	}
 	
 	public void createContainer(String port) throws Exception {
@@ -109,17 +112,20 @@ public class ContainerApp {
 		Port startport = findPort(portOfOrigin);
 		Port finalport = findPort(destination);
 		
-		if (startport == null || finalport == null) {
+		if (!SingletonPortsHashSet.getInstance().contains(new Port(portOfOrigin)) || !SingletonPortsHashSet.getInstance().contains(new Port(destination))) {
 			throw new Exception ("No valid ports");
 		}
 		
 		Container availableContainer = getAvailableContainer(startport);
+		
 		if(availableContainer == null) {
 			throw new Exception ("No available containers in port");
 		}
+		
 		Journey journey = new Journey (startport, finalport, content, client);
 		journeys.add(journey);
 		availableContainer.setJourney(journey);
+		availableContainer.getJourneys().add(journey);
 		
 				
 	}
@@ -139,18 +145,9 @@ public class ContainerApp {
 	}
 
 	private List<Container> getContainers(String[] keywords) {
-		return containers.stream().filter((container)->containerHasKeyword(keywords, container)).collect(Collectors.toList());
+		return containers.stream().filter((container)->container.hasKeyword(keywords)).collect(Collectors.toList());
 	}
 
-	private boolean containerHasKeyword(String[] keywords, Container container) {
-		for(String keyword: keywords) {
-			if( container.hasKeyword(keyword)) {
-			 return true;	
-			}
-		}
-		
-		return false;
-	}
 
 	public List<Journey> findJourney(String... keywords) throws Exception {
 		List<Journey> resultingJourneys = getJourneys(keywords);
@@ -184,9 +181,13 @@ public class ContainerApp {
 		if (isLocationNotValid(locations)) {
 			throw new Exception ("Location is not valid");
 		}
-		List<Port> locationsAsPorts = convertLocations(locations);
-		container.updateJourney(times, locationsAsPorts, temperatures, humidities, pressures);
+		container.updateJourney(times, convertLocations(locations), temperatures, humidities, pressures);
 	}
+	
+	
+	
+	
+	
 
 	private List<Port> convertLocations(List<String> locations) {
 		
@@ -196,6 +197,12 @@ public class ContainerApp {
 	private boolean isLocationNotValid(List<String> locations) {
 		return locations.stream().anyMatch((location)->!portIsRegistered(location));
 	}
+	
+	
+	
+	
+	
+	
 
 	public Pair<Container,Integer> mostKilometersTraveled() throws Exception {
 		if (!containers.isEmpty()) {
@@ -260,16 +267,12 @@ public class ContainerApp {
 		}
 		throw new Exception("No journeys exist");			
 	}
-	public Set<Port> getPorts() {
-		return ports;
-	}
-	public List<Container> getContainers() {
+
+	
+	public QueryLinkedList<Container> getContainers() {
 		return containers;
 	}
 	
-	container.journey.content;
-	
-
 	
 }
 

@@ -1,30 +1,32 @@
 package application;
 
 public class Hulahop {
-//
-//	public static void main(String[] args) {
-//		SingletonLists.getClientList().add(new Client());
-//		SingletonLists.getClientList().add(new Client("a","a","a","a","a"));
-//		SingletonLists.getClientList().add(new Client());
-//		SingletonLists.getClientList().add(new Client());
-//		SingletonLists.getClientList().add(new Client());
-//		System.out.println(SingletonLists.getClientList().size());
-//		System.out.println(SingletonLists.getClientList().anyMatch("a"));
-//	}
 
-	public static void main(String[] args) {
-
-		ContainerApp.getInstance().ports.add(new Port("test"));
-		ContainerApp.getInstance().ports.add(new Port("test2"));
-		ContainerApp.getInstance().ports.add(new Port("test"));
-		ContainerApp.getInstance().ports.contains("hulahop");
+	public static void main(String[] args ) {
 		
-		System.out.println(ContainerApp.getInstance().ports);
-		System.out.println(ContainerApp.getInstance().ports.contains(new Port("test")));
+		try {
+			ContainerApp.getInstance().registerClient("b", "b", "b", "b", "b");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			ContainerApp.getInstance().registerClient("c", "c", "c", "c", "c");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			ContainerApp.getInstance().registerClient("c", "c", "c", "c", "c");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		
-
 	}
 
 }

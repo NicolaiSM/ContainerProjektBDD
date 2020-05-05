@@ -13,10 +13,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import application.Client;
 import application.ContainerApp;
-import application.LogisticCompany;
-import application.User;
+import application.data.SingletonPortsHashSet;
+import application.models.Client;
+import application.models.LogisticCompany;
+import application.models.User;
 import website.model.CredentialForm;
 import website.model.JourneyForm;
 import website.model.KeywordForm;
@@ -94,7 +95,7 @@ public class ClientController {
 		try {
 //			user = ContainerApp.loggedInLC
 //			if (user==null) 
-				user = ContainerApp.getInstance().loggedInUser(credentialForm.getClientName(),credentialForm.getPassword());
+				user = ContainerApp.getInstance().loginUser(credentialForm.getClientName(),credentialForm.getPassword());
 		} catch (Exception e) {
 			model.addAttribute("message", e.getMessage());
 			
@@ -114,11 +115,11 @@ public class ClientController {
 		model.addAttribute("userForm", new UserForm(user.get("clientName"), user.get("address"), user.get("email"), user.get("contactPerson"), user.get("password")));
 		model.addAttribute("test", user.get("clientName"));
 		model.addAttribute("journeyForm", new JourneyForm());
-		model.addAttribute("ports", ContainerApp.getInstance().getPorts());
+		model.addAttribute("ports", SingletonPortsHashSet.getInstance());
 		model.addAttribute("keywordForm", new KeywordForm());
 		
 		try {
-			model.addAttribute("containers", ContainerApp.getInstance().getContainers());
+			model.addAttribute("containers", ((Client) user).getClientContainers());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -171,7 +172,6 @@ public class ClientController {
 	@PostMapping("/findport")
 	public String findPort(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
 		try {
-			ContainerApp.getInstance().findPort(port);
 			
 		} catch (Exception e) {
 			

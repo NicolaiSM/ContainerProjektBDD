@@ -1,15 +1,16 @@
-package application;
+package application.models;
 
-import java.util.ArrayList;
+
 import java.util.LinkedList;
 import java.util.List;
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+
+import application.data.Elements;
+import application.models.id.ContainerId;
 
 
-public class Container {
+public class Container implements Elements {
 	
-	private long id;
+	private Long id;
 	
 	private Port port;
 	
@@ -20,6 +21,7 @@ public class Container {
 
 	public Container(Port port) {
 		this.port = port;
+		id = ContainerId.newContainerId();
 	}
 	
 	public List<Journey> getJourneys() {
@@ -47,10 +49,6 @@ public class Container {
 		this.port = port;
 		
 	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 	
 
 	
@@ -63,11 +61,14 @@ public class Container {
 
 	}
 	
-	public boolean hasKeyword(String keyword) {
-		if (!hasJourney()) {
-			return keyword.equals(port.getPort());
+	@Override
+	public boolean hasKeyword(String... keywords) {
+		for (String keyword : keywords) {
+			if (port.equals(keyword) | (hasJourney() && journey.hasKeyword(keyword))) {
+				return true;
+			}
 		}
-		return (keyword.equals(port.getPort()) | keyword.equals(journey.getPortOfOrigin().getPort()) | keyword.equals(journey.getDestination().getPort()) | keyword.equals(journey.getContent()) | keyword.equals(journey.getClient().get("clientName")));
+		return false;
 	}
 
 	public void updateJourney(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
@@ -78,6 +79,7 @@ public class Container {
 		if (isLocationDestination()) {
 			endJourney();
 		}		
+		
 	}
 
 	private void endJourney() {
@@ -124,4 +126,20 @@ public class Container {
 		}
 		return numberOfPorts;
 	}
+	
+	
+	@Override
+	public boolean equals(Object object) {
+		return id.equals(((Container) object).getId());
+		
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+	
+
+	
 }

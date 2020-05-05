@@ -1,12 +1,14 @@
-package application;
+package application.models;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.*;
 
+import application.data.Elements;
 
 
-public class Journey {
+
+public class Journey implements Elements {
 	
 
 	private long id;
@@ -116,8 +118,13 @@ public class Journey {
 		return client;
 	}
 
-	public boolean hasKeyword(String keyword) {
-		return (keyword.equals(portOfOrigin.getPort()) | keyword.equals(destination.getPort()) | keyword.equals(content) | keyword.equals(client.get("clientName")));
+	public boolean hasKeyword(String... keywords) {
+		for (String keyword : keywords) {
+			if(portOfOrigin.equals(keyword) | destination.equals(keyword) | content.equals(keyword) | client.hasKeyword(keyword)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void update(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
