@@ -14,7 +14,7 @@
       	</label>
       	<p th:if="${#fields.hasErrors('portOfOrigin')}" th:errors="*{portOfOrigin}"></p>
       	<br />
-      	<label>Destination: 
+      	<label>Destination:
       		<input type="text" name="destination" th:field="*{destination}"/>
       	</label>
       	<p th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></p>
@@ -27,22 +27,38 @@
   		<input type="submit" value="Register container" />
 	</form>
 	
-	<h2>Find container</h2>
-	<div th:unless="${#lists.isEmpty(containers)}">
-	 
-	  <table>
-	    <thead>
-	      <tr>
-	        <th th:text="#{containers.content}">Content</th>
-	      </tr>
-	    </thead>
-	    <tbody>
-	      <tr th:each="container : ${containers}">
-	      <td th:text="${container.journey.content}">
-	      </tr>
-	    </tbody>
-	  </table>
-	</div>
+	<h2>Find container</h2>	 
+	<form th:action="@{/findcontainer}" method="post" th:object="${keywordForm}">
+	<p th:text="${findcontainermessage}"> </p>
+	<label>Keywords :
+   		<input type="text" name="keyword" th:field="*{keyword}" />
+   	</label>
+   	<p th:if="${#fields.hasErrors('keyword')}" th:errors="*{keyword}"></p>
+   	<br />
+	<input type="submit" value="Find" />
+	</form>
+	<table>
+	  <thead>
+	    <tr>
+	      <th>Content</th>
+	      <th>Container ID</th>
+	      <th>Journey ID</th>
+	      <th>Port</th>
+	      <th>Port of origin</th>
+	      <th>Destination</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr th:each="container : ${containers}">
+	    <td th:text="${container.journey.content}">
+	    <td th:text="${container.id}">
+	    <td th:text="${container.journey.id}">
+	    <td th:text="${container.port.port}">
+	    <td th:text="${container.journey.portOfOrigin.port}">
+	    <td th:text="${container.journey.destination.port}">
+	    </tr>
+	  </tbody>
+	</table>
 	
 	<h2>Update client</h2>
 	<form th:action="@{/updateclient}" method="post" th:object="${userForm}">

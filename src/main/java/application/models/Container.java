@@ -84,6 +84,7 @@ public class Container implements Elements {
 
 	private void endJourney() {
 		journeys.add(journey);
+		((Client) journey.getClient()).getClientContainers().remove(this);
 		journey = null;
 
 	}

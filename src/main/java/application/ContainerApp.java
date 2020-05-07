@@ -97,6 +97,10 @@ public class ContainerApp {
 		return SingletonPortsHashSet.getInstance().findElement(port);
 	}
 	
+	public List<Port> findPorts(String port){
+		return SingletonPortsHashSet.getInstance().findElements(port);
+	}
+	
 	public void createContainer(String port) throws Exception {
 		if (!portIsRegistered(port)) {
 			throw new Exception("Port is not registered");
@@ -108,7 +112,7 @@ public class ContainerApp {
 		
 	}
 
-	public void registerContainer(String portOfOrigin, String destination, String content, User client) throws Exception {
+	public void registerContainer(String portOfOrigin, String destination, String content, Client client) throws Exception {
 		Port startport = findPort(portOfOrigin);
 		Port finalport = findPort(destination);
 		
@@ -126,7 +130,7 @@ public class ContainerApp {
 		journeys.add(journey);
 		availableContainer.setJourney(journey);
 		availableContainer.getJourneys().add(journey);
-		
+		client.getClientContainers().add(availableContainer);
 				
 	}
 
