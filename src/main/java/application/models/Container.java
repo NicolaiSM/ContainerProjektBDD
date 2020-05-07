@@ -1,8 +1,10 @@
 package application.models;
 
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import application.data.Element;
 import application.models.id.ContainerId;
@@ -12,15 +14,16 @@ public class Container implements Element {
 	
 	private Long id;
 	
-	private Port port;
-	
-	private Journey journey;
-	
+//	private Port port;
+//	
+//	private Journey journey;
+//	
 	private List<Journey> journeys = new LinkedList<Journey>();
-	
+	private Map<String, Element> attributes = new HashMap<>();
+
 
 	public Container(Port port) {
-		this.port = port;
+		attributes.put("port", port);
 		id = ContainerId.newContainerId();
 	}
 	
@@ -29,25 +32,15 @@ public class Container implements Element {
 	}
 	
 	public Journey getJourney() {
-		return journey;
-	}
-	
-	public void setJourney(Journey journey) {
-		this.journey = journey;
-		
+		return (Journey) attributes.get("journey");
 	}
 
-	public void setJourneys(List<Journey> journeys) {
-		this.journeys = journeys;
+	public void setJourney(Journey journey) {
+		attributes.put("journey", journey);
 	}
 
 	public Port getPort() {
-		return port;
-	}
-	
-	private void setPort(Port port) {
-		this.port = port;
-		
+		return (Port) attributes.get("port");
 	}
 	
 
@@ -57,25 +50,34 @@ public class Container implements Element {
 	}
 	
 	public boolean isContainerAvailable(Port startport) {
-		return startport == this.port && !hasJourney();
+		return startport == getPort() && !hasJourney();
 
 	}
 	
+//	@Override
+//	public boolean hasKeyword(String... keywords) {
+//		for (String keyword : keywords) {
+//			if (port.equals(keyword) | (hasJourney() && journey.hasKeyword(keyword))) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	@Override
 	public boolean hasKeyword(String... keywords) {
-		for (String keyword : keywords) {
-			if (port.equals(keyword) | (hasJourney() && journey.hasKeyword(keyword))) {
+		for (Element e : attributes.values()) {
+			if (e.hasKeyword(keywords)) {
 				return true;
 			}
 		}
 		return false;
 	}
-
+	
 	public void updateJourney(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
-		journey.update(times, locations, temperatures, humidities, pressures);
-		port.removeContainer(this);
-		setPort(journey.getLastLocation());
-		port.addContainer(this);
+		getJourney().update(times, locations, temperatures, humidities, pressures);
+		getPort().removeContainer(this);
+		attributes.put("port",getJourney().getLastLocation());
+		getPort().addContainer(this);
 		if (isLocationDestination()) {
 			endJourney();
 		}		
@@ -83,18 +85,18 @@ public class Container implements Element {
 	}
 
 	private void endJourney() {
-		journeys.add(journey);
-		((Client) journey.get("user")).getClientContainers().remove(this);
-		journey = null;
+		journeys.add(getJourney());
+		((Client) getJourney().get("user")).getClientContainers().remove(this);
+		attributes.remove("journey");
 
 	}
 
 	private boolean isLocationDestination() {
-		return port == journey.get("destination");
+		return getPort() == getJourney().get("destination");
 	}
 
 	public boolean hasJourney() {
-		return journey != null;
+		return getJourney() != null;
 	}
 
 	public int getDistance() {
@@ -103,7 +105,7 @@ public class Container implements Element {
 			distance = journeys.stream().mapToInt(journey->journey.getDistance()).sum();
 		}
 		if (hasJourney()) {
-			distance+=journey.getDistance();
+			distance+=getJourney().getDistance();
 		}
 		return distance;
 
@@ -123,7 +125,7 @@ public class Container implements Element {
 			numberOfPorts = journeys.stream().mapToInt(journey->journey.getNumberOfPorts()).sum();
 		}
 		if (hasJourney()) {
-			numberOfPorts+=journey.getNumberOfPorts();
+			numberOfPorts+=getJourney().getNumberOfPorts();
 		}
 		return numberOfPorts;
 	}

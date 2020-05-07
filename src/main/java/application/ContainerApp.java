@@ -36,15 +36,15 @@ public class ContainerApp {
 	}
 	
 	public User loginUser(String username, String password) throws Exception {
-		Optional<User> user = users.stream().filter((user1)->user1.get("clientName").equals(username)).findFirst();
-		if (user.isEmpty()) {
+		User user = users.findElement(password);
+		if (user == null) {
 			throw new Exception("Username is incorrect");
 		}
-		else if (!user.get().get("password").equals(password)) {
+		else if (!user.get("password").equals(password)) {
 			throw new Exception("Password is incorrect");
 		}
 		else {
-			return user.get();
+			return user;
 		}
 	}
 	

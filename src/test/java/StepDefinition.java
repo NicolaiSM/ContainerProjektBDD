@@ -325,11 +325,11 @@ public class StepDefinition {
 
 	@Given("New internal information")
 	public void new_internal_information(io.cucumber.datatable.DataTable dataTable) {
-		this.times.add(dataTable.cell(1, 0));
-	    this.locations.add(dataTable.cell(1, 1));
-	    this.temperatures.add(Integer.parseInt(dataTable.cell(1, 2)));
-	    this.humidities.add(Integer.parseInt(dataTable.cell(1, 3)));
-	    this.pressures.add(Integer.parseInt(dataTable.cell(1, 4)));
+		times.add(dataTable.cell(1, 0));
+	    locations.add(dataTable.cell(1, 1));
+	    temperatures.add(Integer.parseInt(dataTable.cell(1, 2)));
+	    humidities.add(Integer.parseInt(dataTable.cell(1, 3)));
+	    pressures.add(Integer.parseInt(dataTable.cell(1, 4)));
 	}
 
 	@Given("A container")
@@ -519,11 +519,11 @@ public class StepDefinition {
 	@Given("Internal information")
 	public void internal_information(io.cucumber.datatable.DataTable dataTable) throws Exception {
 		for (int i=1; i<dataTable.height(); i++) {
-			this.times.add(dataTable.cell(i, 0));
-		    this.locations.add(dataTable.cell(i, 1));
-		    this.temperatures.add(Integer.parseInt(dataTable.cell(i, 2)));
-		    this.humidities.add(Integer.parseInt(dataTable.cell(i, 3)));
-		    this.pressures.add(Integer.parseInt(dataTable.cell(i, 4)));
+			times.add(dataTable.cell(i, 0));
+		    locations.add(dataTable.cell(i, 1));
+		    temperatures.add(Integer.parseInt(dataTable.cell(i, 2)));
+		    humidities.add(Integer.parseInt(dataTable.cell(i, 3)));
+		    pressures.add(Integer.parseInt(dataTable.cell(i, 4)));
 		}
 	    containerApp.updateJourney(container, times, locations, temperatures, humidities, pressures);
 	}

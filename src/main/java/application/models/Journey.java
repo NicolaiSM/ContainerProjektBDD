@@ -37,12 +37,7 @@ public class Journey implements Element {
 	
 	private Map<String, Element> attributes = new HashMap<>();
 
-//	public Journey(Port portOfOrigin, Port destination, String content, User user) {
-//		this.portOfOrigin = portOfOrigin;
-//		this.destination = destination;
-//		this.content = content;
-//		this.client = user;
-//	}
+
 	public Journey(Port portOfOrigin, Port destination, String content, User user) {
 		attributes.put("portOfOrigin",portOfOrigin);
 		attributes.put("destination",destination);
@@ -100,7 +95,7 @@ public class Journey implements Element {
 	}
 	
 	public void update(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
-		this.times.addAll(0,times);
+		this.times.addAll(times);
 		this.locations.addAll(locations);
 		this.temperatures.addAll(temperatures);
 		this.humidities.addAll(humidities);
