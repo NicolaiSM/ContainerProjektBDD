@@ -9,6 +9,11 @@ import application.data.QueryLinkedList;
 public class Client extends User {
 	
 	
+	public Client(String clientName) {
+		clientInfo.put("clientName",clientName);
+
+	}
+	
 	public Client(String clientName, String address, String contactPerson, String email, String password) {
 		super();
 		clientInfo.put("clientName",clientName);
@@ -23,18 +28,8 @@ public class Client extends User {
 	public List<Container> getClientContainers() {
 		return clientContainers;
 	}
+
 	
-	@Override
-	public boolean equals(Object user) {
-		return get("clientName").equals(((User) user).get("clientName"));
-		
-	}
-	
-	
-	@Override
-	public int hashCode() {
-		return get("clientName").hashCode();
-	}
 
 	
 	

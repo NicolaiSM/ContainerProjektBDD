@@ -99,31 +99,6 @@ public class Journey implements Element {
 		return id;
 	}
 	
-//	public Port getPortOfOrigin() {
-//		return portOfOrigin;
-//	}
-//
-//	public Port getDestination() {
-//		return destination;
-//	}
-//
-//	public String getContent() {
-//		return content;
-//	}
-//	
-//	public User getClient() {
-//		return client;
-//	}
-//
-//	public boolean hasKeyword(String... keywords) {
-//		for (String keyword : keywords) {
-//			if(portOfOrigin.equals(keyword) | destination.equals(keyword) | content.equals(keyword) | client.hasKeyword(keyword)) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-
 	public void update(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
 		this.times.addAll(0,times);
 		this.locations.addAll(locations);

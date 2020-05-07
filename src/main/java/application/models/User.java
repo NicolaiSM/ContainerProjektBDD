@@ -42,8 +42,14 @@ public class User implements Element {
 	public Long getId() {
 		return this.id;
 	}
-
-
 	
-	
+	@Override
+	public int hashCode() {
+		return get("clientName").hashCode();
+	}
+
+	@Override
+	public boolean equals(Object user) {
+		return get("clientName").equals(((User) user).get("clientName"));	
+	}
 }

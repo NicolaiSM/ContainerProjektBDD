@@ -5,7 +5,6 @@ import java.util.stream.*;
 
 import application.data.QueryHashSet;
 import application.data.QueryLinkedList;
-import application.data.SingletonPortsHashSet;
 import application.models.Client;
 import application.models.Container;
 import application.models.Journey;
@@ -25,11 +24,7 @@ public class ContainerApp {
 		return instance;
 	}
 	
-	public void clearPorts() {
-		SingletonPortsHashSet.getInstance().clear();
-	}
-	
-//	private QueryHashSet<Port>...;
+	private QueryHashSet<Port> ports = new QueryHashSet<Port>();
 	private QueryHashSet<User> users = new QueryHashSet<User>();
 	private QueryLinkedList<Container> containers = new QueryLinkedList<Container>();
 	private QueryLinkedList<Journey> journeys = new QueryLinkedList<Journey>();
@@ -77,50 +72,41 @@ public class ContainerApp {
 	}
 
 	private boolean isClientAvailable(String clientName) {
-		return users.stream().noneMatch((client)->client.get("clientName").equals(clientName));
+		return !users.contains(new Client(clientName));
 	}
 
-
+	public List<Port> findPorts(String... keywords) {
+		return ports.findElements(keywords);
+	}
 
 	public void registerPort(String port) throws Exception {
-		if (!SingletonPortsHashSet.getInstance().add(new Port(port))) {
+		if (!ports.add(new Port(port))) {
 			throw new Exception("Port is already registered");
 		}
 	}
 
 	private boolean portIsRegistered(String port) {
-		return SingletonPortsHashSet.getInstance().contains(new Port(port));
+		return ports.contains(new Port(port));
 		
-	}
-	
-
-	public Port findPort(String port){
-		return SingletonPortsHashSet.getInstance().findElement(port);
-	}
-	
-	public List<Port> findPorts(String port){
-		return SingletonPortsHashSet.getInstance().findElements(port);
 	}
 	
 	public void createContainer(String port) throws Exception {
 		if (!portIsRegistered(port)) {
 			throw new Exception("Port is not registered");
 		}
-		Port p = findPort(port);
+		Port p = ports.findElement(port);
 		Container container = new Container(p);
 		containers.add(container);
 		p.addContainer(container);
 		
 	}
 
-	public void registerContainer(String portOfOrigin, String destination, String content, Client client) throws Exception {
-		Port startport = findPort(portOfOrigin);
-		Port finalport = findPort(destination);
-		
-		if (startport == null || finalport == null) {
+	public void registerContainer(String portOfOrigin, String destination, String content, User client) throws Exception {
+		if (!portIsRegistered(portOfOrigin) || !portIsRegistered(destination)) {
 			throw new Exception ("No valid ports");
 		}
-		
+		Port startport = ports.findElement(portOfOrigin);
+		Port finalport = ports.findElement(destination);
 		Container availableContainer = getAvailableContainer(startport);
 		if(availableContainer == null) {
 			throw new Exception ("No available containers in port");
@@ -130,7 +116,7 @@ public class ContainerApp {
 		journeys.add(journey);
 		availableContainer.setJourney(journey);
 		availableContainer.getJourneys().add(journey);
-		client.getClientContainers().add(availableContainer);
+		((Client) client).getClientContainers().add(availableContainer);
 				
 	}
 
@@ -169,7 +155,7 @@ public class ContainerApp {
 	}
 
 	private List<Port> convertLocations(List<String> locations) {
-		return locations.stream().map((location)->findPort(location)).collect(Collectors.toList());
+		return locations.stream().map((location)->ports.findElement(location)).collect(Collectors.toList());
 	}
 
 	private boolean isLocationNotValid(List<String> locations) {
@@ -249,6 +235,10 @@ public class ContainerApp {
 	
 	public QueryLinkedList<Container> getContainers() {
 		return containers;
+	}
+
+	public Collection<? extends Object> getPorts() {
+		return ports;
 	}
 	
 	

@@ -169,7 +169,6 @@ public class StepDefinition {
 	
 	@Given("A port {string}")
 	public void a_port(String port) {
-		containerApp.clearPorts();
 	    this.port = port;
 	}
 
@@ -340,7 +339,6 @@ public class StepDefinition {
 	}
 	@Given("Ports")
 	public void ports(io.cucumber.datatable.DataTable dataTable) throws Exception {
-		containerApp.clearPorts();
 	    for (int i=1; i<dataTable.height(); i++) {
 			containerApp.registerPort(dataTable.cell(i, 0));
 	    }

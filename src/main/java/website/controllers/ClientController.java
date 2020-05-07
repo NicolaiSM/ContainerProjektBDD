@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import application.ContainerApp;
-import application.data.Elements;
+import application.data.Element;
 import application.data.QueryHashSet;
-import application.data.SingletonPortsHashSet;
 import application.models.Client;
 import application.models.Container;
 import application.models.LogisticCompany;
@@ -37,7 +36,7 @@ import website.model.UserForm;
 public class ClientController {
 	
 	@Autowired
-	QueryList list = new QueryList(SingletonPortsHashSet.getInstance());
+	QueryList list = new QueryList(ContainerApp.getInstance().getPorts());
 	QueryList list2;
 	
 	@ModelAttribute("userForm")
