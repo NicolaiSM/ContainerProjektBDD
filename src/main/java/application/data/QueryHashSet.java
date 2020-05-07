@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class QueryHashSet<A extends Elements> extends HashSet<A> {
+public class QueryHashSet<A extends Element> extends HashSet<A> {
 
 	
 	/**

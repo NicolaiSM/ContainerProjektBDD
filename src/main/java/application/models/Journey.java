@@ -1,29 +1,29 @@
 package application.models;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.*;
 
-import application.data.Elements;
+import application.data.Element;
+import application.data.StringAttribute;
 
 
 
-public class Journey implements Elements {
+public class Journey implements Element {
 	
 
 	private long id;
 	
-	@OneToOne
-	private final Port portOfOrigin;
-	
-	@OneToOne
-	private final Port destination;
-	
-	@Column
-	private final String content;
-	
-	@ManyToOne
-	private final User client;
+//	@OneToOne
+//	private final Port portOfOrigin;
+//	
+//	@OneToOne
+//	private final Port destination;
+//	
+//	@Column
+//	private final String content;
+//	
+//	@ManyToOne
+//	private final User client;
 	
 	private List<String> times = new LinkedList<String>();
 	
@@ -32,24 +32,41 @@ public class Journey implements Elements {
 	private List<Integer> temperatures = new LinkedList<Integer>();
 	
 	private List<Integer> humidities = new LinkedList<Integer>();
-	
+	 
 	private List<Integer> pressures = new LinkedList<Integer>();
 	
-	public Journey(Port portOfOrigin, Port destination, String content, User user) {
-		this.portOfOrigin = portOfOrigin;
-		this.destination = destination;
-		this.content = content;
-		this.client = user;
-	}
+	private Map<String, Element> attributes = new HashMap<>();
 
+//	public Journey(Port portOfOrigin, Port destination, String content, User user) {
+//		this.portOfOrigin = portOfOrigin;
+//		this.destination = destination;
+//		this.content = content;
+//		this.client = user;
+//	}
+	public Journey(Port portOfOrigin, Port destination, String content, User user) {
+		attributes.put("portOfOrigin",portOfOrigin);
+		attributes.put("destination",destination);
+		attributes.put("content",new StringAttribute(content));
+		attributes.put("user", user);
+		
+	}
+	
+	@Override
+	public boolean hasKeyword(String... keywords) {
+		for (Element e : attributes.values()) {
+			if (e.hasKeyword(keywords)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Element get(String key) {
+		return attributes.get(key);
+	}
 	
 	public List<String> getTimes() {
 		return times;
-	}
-
-
-	public void setTimes(List<String> times) {
-		this.times = times;
 	}
 
 
@@ -58,18 +75,8 @@ public class Journey implements Elements {
 	}
 
 
-	public void setLocations(List<Port> locations) {
-		this.locations = locations;
-	}
-
-
 	public List<Integer> getTemperatures() {
 		return temperatures;
-	}
-
-
-	public void setTemperatures(List<Integer> temperatures) {
-		this.temperatures = temperatures;
 	}
 
 
@@ -78,18 +85,8 @@ public class Journey implements Elements {
 	}
 
 
-	public void setHumidities(List<Integer> humidities) {
-		this.humidities = humidities;
-	}
-
-
 	public List<Integer> getPressures() {
 		return pressures;
-	}
-
-
-	public void setPressures(List<Integer> pressures) {
-		this.pressures = pressures;
 	}
 
 
@@ -102,30 +99,30 @@ public class Journey implements Elements {
 		return id;
 	}
 	
-	public Port getPortOfOrigin() {
-		return portOfOrigin;
-	}
-
-	public Port getDestination() {
-		return destination;
-	}
-
-	public String getContent() {
-		return content;
-	}
-	
-	public User getClient() {
-		return client;
-	}
-
-	public boolean hasKeyword(String... keywords) {
-		for (String keyword : keywords) {
-			if(portOfOrigin.equals(keyword) | destination.equals(keyword) | content.equals(keyword) | client.hasKeyword(keyword)) {
-				return true;
-			}
-		}
-		return false;
-	}
+//	public Port getPortOfOrigin() {
+//		return portOfOrigin;
+//	}
+//
+//	public Port getDestination() {
+//		return destination;
+//	}
+//
+//	public String getContent() {
+//		return content;
+//	}
+//	
+//	public User getClient() {
+//		return client;
+//	}
+//
+//	public boolean hasKeyword(String... keywords) {
+//		for (String keyword : keywords) {
+//			if(portOfOrigin.equals(keyword) | destination.equals(keyword) | content.equals(keyword) | client.hasKeyword(keyword)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	public void update(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
 		this.times.addAll(0,times);
@@ -143,8 +140,10 @@ public class Journey implements Elements {
 		int numberOfLocations = locations.size();
 		double distance = 0;
 		if (!(numberOfLocations<1)) {
-			double x = locations.get(0).getXCoordinate()-portOfOrigin.getXCoordinate();
-			double y = locations.get(0).getYCoordinate()-portOfOrigin.getYCoordinate();
+//			double x = locations.get(0).getXCoordinate()-portOfOrigin.getXCoordinate();
+//			double y = locations.get(0).getYCoordinate()-portOfOrigin.getYCoordinate();
+			double x = locations.get(0).getXCoordinate() - ((Port) attributes.get("portOfOrigin")).getXCoordinate();
+			double y = locations.get(0).getYCoordinate() - ((Port) attributes.get("portOfOrigin")).getYCoordinate();
 			distance+=Math.sqrt(x*x+y*y);
 			for (int i=0; i<numberOfLocations-1; i++) {
 				x = locations.get(i+1).getXCoordinate()-locations.get(i).getXCoordinate();

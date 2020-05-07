@@ -1,6 +1,6 @@
 package application.data;
 
-public interface Elements {
+public interface Element {
 
 	public boolean hasKeyword(String... keywords);
 

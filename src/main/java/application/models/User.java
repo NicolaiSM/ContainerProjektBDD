@@ -3,10 +3,10 @@ package application.models;
 import java.util.HashMap;
 import java.util.Map;
 
-import application.data.Elements;
+import application.data.Element;
 import application.models.id.UserId;
 
-public class User implements Elements {
+public class User implements Element {
 	
 	private  Long id;
 	

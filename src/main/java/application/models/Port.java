@@ -7,11 +7,11 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import application.data.Elements;
+import application.data.Element;
 
 
 
-public class Port implements Elements {
+public class Port implements Element {
 	
 	@Id
 	@Column(name = "port")

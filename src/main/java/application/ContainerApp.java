@@ -9,6 +9,7 @@ import application.data.SingletonPortsHashSet;
 import application.models.Client;
 import application.models.Container;
 import application.models.Journey;
+import application.models.LogisticCompany;
 import application.models.Pair;
 import application.models.Port;
 import application.models.User;
@@ -28,7 +29,7 @@ public class ContainerApp {
 		SingletonPortsHashSet.getInstance().clear();
 	}
 	
-	
+//	private QueryHashSet<Port>...;
 	private QueryHashSet<User> users = new QueryHashSet<User>();
 	private QueryLinkedList<Container> containers = new QueryLinkedList<Container>();
 	private QueryLinkedList<Journey> journeys = new QueryLinkedList<Journey>();
@@ -116,12 +117,11 @@ public class ContainerApp {
 		Port startport = findPort(portOfOrigin);
 		Port finalport = findPort(destination);
 		
-		if (!SingletonPortsHashSet.getInstance().contains(new Port(portOfOrigin)) || !SingletonPortsHashSet.getInstance().contains(new Port(destination))) {
+		if (startport == null || finalport == null) {
 			throw new Exception ("No valid ports");
 		}
 		
 		Container availableContainer = getAvailableContainer(startport);
-		
 		if(availableContainer == null) {
 			throw new Exception ("No available containers in port");
 		}
@@ -135,12 +135,11 @@ public class ContainerApp {
 	}
 
 	private Container getAvailableContainer(Port startport) {
-		
 		return containers.stream().filter((container)->container.isContainerAvailable(startport)).findFirst().orElse(null);
 	}
 
 	public List<Container> findContainer(String... keywords) throws Exception {
-		List<Container> resultingContainers = getContainers(keywords);
+		List<Container> resultingContainers = containers.findElements(keywords);
 		if (resultingContainers.isEmpty()) {
 			throw new Exception("No containers found");
 
@@ -148,34 +147,15 @@ public class ContainerApp {
 		return resultingContainers;
 	}
 
-	private List<Container> getContainers(String[] keywords) {
-		return containers.stream().filter((container)->container.hasKeyword(keywords)).collect(Collectors.toList());
-	}
-
 
 	public List<Journey> findJourney(String... keywords) throws Exception {
-		List<Journey> resultingJourneys = getJourneys(keywords);
+		List<Journey> resultingJourneys = journeys.findElements(keywords);
 		if (resultingJourneys.isEmpty()) {
 			throw new Exception("No journeys found");
 			
 		}
 		
 		return resultingJourneys;
-	}
-
-	private List<Journey> getJourneys(String[] keywords) {
-		return journeys.stream().filter((journey)->journeyHasKeyword(keywords, journey)).collect(Collectors.toList());
-	}
-
-	private boolean journeyHasKeyword(String[] keywords, Journey journey) {
-		for(String keyword : keywords) {
-			if(journey.hasKeyword(keyword)) {
-				return true;
-			}
-			
-		}
-		return false;
-		
 	}
 
 	public void updateJourney(Container container, List<String> times, List<String> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) throws Exception {
@@ -187,14 +167,8 @@ public class ContainerApp {
 		}
 		container.updateJourney(times, convertLocations(locations), temperatures, humidities, pressures);
 	}
-	
-	
-	
-	
-	
 
 	private List<Port> convertLocations(List<String> locations) {
-		
 		return locations.stream().map((location)->findPort(location)).collect(Collectors.toList());
 	}
 

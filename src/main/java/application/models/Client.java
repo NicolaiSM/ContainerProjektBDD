@@ -20,7 +20,6 @@ public class Client extends User {
 
 	private List<Container> clientContainers = new QueryLinkedList<Container>();
 
-
 	public List<Container> getClientContainers() {
 		return clientContainers;
 	}

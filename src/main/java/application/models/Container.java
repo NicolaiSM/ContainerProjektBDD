@@ -4,11 +4,11 @@ package application.models;
 import java.util.LinkedList;
 import java.util.List;
 
-import application.data.Elements;
+import application.data.Element;
 import application.models.id.ContainerId;
 
 
-public class Container implements Elements {
+public class Container implements Element {
 	
 	private Long id;
 	
@@ -90,7 +90,7 @@ public class Container implements Elements {
 	}
 
 	private boolean isLocationDestination() {
-		return port == journey.getDestination();
+		return port == journey.get("destination");
 	}
 
 	public boolean hasJourney() {
