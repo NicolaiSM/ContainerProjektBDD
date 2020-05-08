@@ -3,6 +3,7 @@ package application;
 import java.util.*;
 import java.util.stream.*;
 
+import application.data.Element;
 import application.data.QueryHashSet;
 import application.data.QueryLinkedList;
 import application.models.Client;
@@ -26,8 +27,8 @@ public class ContainerApp {
 	
 	private QueryHashSet<Port> ports = new QueryHashSet<Port>();
 	private QueryHashSet<User> users = new QueryHashSet<User>();
-	private QueryLinkedList<Container> containers = new QueryLinkedList<Container>();
 	private QueryLinkedList<Journey> journeys = new QueryLinkedList<Journey>();
+	private QueryLinkedList<Container> containers = new QueryLinkedList<Container>();
 	
 	public Client registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
 		Client a = new Client(clientName, address, contactPerson, email, password);
@@ -242,6 +243,11 @@ public class ContainerApp {
 
 	public Collection<? extends Object> getPorts() {
 		return ports;
+	}
+
+	public QueryHashSet<User> getUsers() {
+		// TODO Auto-generated method stub
+		return users;
 	}
 	
 	

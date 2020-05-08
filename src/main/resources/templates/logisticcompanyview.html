@@ -4,7 +4,39 @@
 <title>Container Tracker</title>
 </head>
 
-	<h1> LogisticCompnayView</h1>
+	<h1> Logistic Company View</h1>
 
-
+	<h2>Find container</h2>	 
+	<form th:action="@{/findcontainer}" method="post" th:object="${keywordForm}">
+	<p th:text="${findcontainermessage}"> </p>
+	<label>Keywords :
+   		<input type="text" name="keyword" th:field="*{keyword}" />
+   	</label>
+   	<p th:if="${#fields.hasErrors('keyword')}" th:errors="*{keyword}"></p>
+   	<br />
+	<input type="submit" value="Find" />
+	</form>
+	<table>
+	  <thead>
+	    <tr>
+	      <th>Content</th>
+	      <th>Container ID</th>
+	      <th>Journey ID</th>
+	      <th>Port</th>
+	      <th>Port of origin</th>
+	      <th>Destination</th>
+	    </tr>
+	  </thead>
+	  <tbody>	  
+	    <tr th:each="container : ${containers}">
+	    <td th:text="${container.journey.get('content').attribute}">
+	    <td th:text="${container.id}">
+	    <td th:text="${container.journey.id}">
+	    <td th:text="${container.port.port}">
+	    <td th:text="${container.journey.get('portOfOrigin').port}">
+	    <td th:text="${container.journey.get('destination').port}">
+	    </tr>
+	  </tbody>
+	</table>
+	
 </html>

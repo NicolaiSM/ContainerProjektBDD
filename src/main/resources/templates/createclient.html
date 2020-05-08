@@ -5,7 +5,7 @@
 </head>
 
 	<h1> Create client:</h1>
-	
+
 	<form th:action="@{/createclient}" method="post" th:object="${userForm}">
 		<p th:text="${message}"></p>
 	  	<label> Client Name
@@ -38,7 +38,8 @@
   		
 
 	</form>
-
-
+	<form th:action = "@{/login}">
+		<input type="submit" value="Cancel" />
+	</form>
 
 </html>

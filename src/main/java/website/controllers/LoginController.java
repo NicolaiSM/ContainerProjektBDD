@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import application.ContainerApp;
+import application.models.LogisticCompany;
 import website.model.CredentialForm;
 import website.model.UserForm;
 
@@ -54,13 +55,14 @@ public class LoginController {
 		model.addAttribute("credentialForm", new CredentialForm());
 		
 		try {
-			ContainerApp.getInstance().registerClient("a","a" ,"a","a@a.com","a");
-		
+		ContainerApp.getInstance().registerClient("a","a" ,"a","a@a.com","a");
+		ContainerApp.getInstance().getUsers().add(new LogisticCompany("admin", "admin"));
 		ContainerApp.getInstance().registerPort("a");
 		ContainerApp.getInstance().registerPort("b");
 		ContainerApp.getInstance().createContainer("a");
 		ContainerApp.getInstance().createContainer("b");
 		ContainerApp.getInstance().registerPort("c");
+		System.out.println(ContainerApp.getInstance().getUsers());
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -81,17 +83,15 @@ public class LoginController {
 			return "login";
 		}
 		try {
-//			user = ContainerApp.loggedInLC
-//			if (user==null) 
 				ActiveUser.setUser(ContainerApp.getInstance().loginUser(credentialForm.getClientName(),credentialForm.getPassword()));
 		} catch (Exception e) {
 			model.addAttribute("message", e.getMessage());
 			
 			return "login";
 		}
-//		if (user instanceof LogisticCompany) {
-//			return "redirect:/logisticcompanyview";
-//		}
+		if (ActiveUser.getUser() instanceof LogisticCompany) {
+			return "redirect:/logisticcompanyview";
+		}
 		return "redirect:/clientview";
 		
 		
