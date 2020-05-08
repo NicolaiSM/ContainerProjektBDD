@@ -37,7 +37,14 @@ public class Journey implements Element {
 	
 	private Map<String, Element> attributes = new HashMap<>();
 
-
+//	public Journey(Port portOfOrigin, Port destination, String content, User user) {
+//		this.portOfOrigin = portOfOrigin;
+//		this.destination = destination;
+//		this.content = content;
+//		this.client = user;
+//	}
+	
+	
 	public Journey(Port portOfOrigin, Port destination, String content, User user) {
 		attributes.put("portOfOrigin",portOfOrigin);
 		attributes.put("destination",destination);
@@ -46,6 +53,14 @@ public class Journey implements Element {
 		
 	}
 	
+	public Map<String, Element> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(Map<String, Element> attributes) {
+		this.attributes = attributes;
+	}
+
 	@Override
 	public boolean hasKeyword(String... keywords) {
 		for (Element e : attributes.values()) {

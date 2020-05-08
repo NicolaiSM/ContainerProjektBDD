@@ -31,13 +31,12 @@ import website.model.JourneyForm;
 import website.model.KeywordForm;
 import website.model.QueryList;
 import website.model.UserForm;
-
+/**/
 @Controller
 public class ClientController {
 	
-	@Autowired
 	QueryList list = new QueryList(ContainerApp.getInstance().getPorts());
-	QueryList list2;
+	QueryList list2 = new QueryList(((Client)ActiveUser.getUser()).getClientContainers());
 	
 	@ModelAttribute("userForm")
 	public UserForm populateUser() {
@@ -123,7 +122,7 @@ public class ClientController {
 	public String findPort(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
 		try {
 			list.clear();
-			list.addAll(ContainerApp.getInstance().findPorts(keywordForm.getKeyword()));
+			list.addAll(ContainerApp.getInstance().findPorts(keywordForm.getKeyword().split(" ")));
 			
 		} catch (Exception e) {
 			model.addAttribute("findportmessage", e.getMessage());
@@ -134,13 +133,13 @@ public class ClientController {
 	}
 	
 //	@PostMapping("/findcontainer")
-//	public String findPort(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
+//	public String findContainer(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
 //		try {
-//			model.addAttribute("ports",ContainerApp.getInstance().findPort(keywordForm.getKeyword()));
-//			
-//			
+//			list2.clear();
+//			list2.addAll(((Client)ActiveUser.getUser()).getClientContainers().findElements(keywordForm.getKeyword().split(" ")));
+//		
 //		} catch (Exception e) {
-//			model.addAttribute("findportmessage", e.getMessage());
+//			model.addAttribute("findcontainermessage", e.getMessage());
 //			return "clientview";
 //		}
 //		
