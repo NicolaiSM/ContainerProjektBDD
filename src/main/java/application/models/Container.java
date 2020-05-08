@@ -20,7 +20,7 @@ public class Container implements Element {
 //	
 	private List<Journey> journeys = new LinkedList<Journey>();
 	private Map<String, Element> attributes = new HashMap<>();
-
+	
 
 	public Container(Port port) {
 		attributes.put("port", port);

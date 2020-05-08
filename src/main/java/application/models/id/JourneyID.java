@@ -1,11 +1,11 @@
 package application.models.id;
 
-public class ContainerId {
+public class JourneyID {
 	
 	private static Long id = 1L;
 	
-	public static Long newContainerId() {
+	public static Long newJourneyId() {
 		return id++;
 	}
-	
+
 }

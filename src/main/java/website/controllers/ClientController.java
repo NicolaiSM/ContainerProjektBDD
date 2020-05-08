@@ -5,6 +5,7 @@ package website.controllers;
 
 import java.lang.module.FindException;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import application.ContainerApp;
 import application.data.Element;
 import application.data.QueryHashSet;
+import application.data.QueryLinkedList;
 import application.models.Client;
 import application.models.Container;
 import application.models.LogisticCompany;
@@ -29,14 +31,13 @@ import application.models.User;
 import website.model.CredentialForm;
 import website.model.JourneyForm;
 import website.model.KeywordForm;
-import website.model.QueryList;
 import website.model.UserForm;
 /**/
 @Controller
 public class ClientController {
 	
-	QueryList list = new QueryList(ContainerApp.getInstance().getPorts());
-	QueryList list2 = new QueryList(((Client)ActiveUser.getUser()).getClientContainers());
+	Collection<Element> list = new LinkedList<Element>((Collection<? extends Element>) ContainerApp.getInstance().getPorts());
+	Collection<Element> list2 = new LinkedList<Element>(((Client)ActiveUser.getUser()).getClientContainers());
 	
 	@ModelAttribute("userForm")
 	public UserForm populateUser() {
@@ -45,12 +46,12 @@ public class ClientController {
 	}
 	
 	@ModelAttribute("ports")
-	public QueryList portList() {
+	public Collection<Element> portList() {
 		return list;
 	}
 	
 	@ModelAttribute("containers")
-	public QueryList containerList() {
+	public Collection<Element> containerList() {
 	  return list2;
 	}
 	
@@ -132,19 +133,19 @@ public class ClientController {
 		return "redirect:/clientview";
 	}
 	
-//	@PostMapping("/findcontainer")
-//	public String findContainer(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
-//		try {
-//			list2.clear();
-//			list2.addAll(((Client)ActiveUser.getUser()).getClientContainers().findElements(keywordForm.getKeyword().split(" ")));
-//		
-//		} catch (Exception e) {
-//			model.addAttribute("findcontainermessage", e.getMessage());
-//			return "clientview";
-//		}
-//		
-//		return "redirect:/clientview";
-//	}
+	@PostMapping("/findcontainer")
+	public String findContainer(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
+		try {
+			list2.clear();
+			list2.addAll(((QueryLinkedList<Element>) ((Client)ActiveUser.getUser()).getClientContainers()).findElements(keywordForm.getKeyword().split(" ")));
+			System.out.println(list2);
+		} catch (Exception e) {
+			model.addAttribute("findcontainermessage", e.getMessage());
+			return "clientview";
+		}
+		
+		return "clientview";
+	}
 	
 	
 	

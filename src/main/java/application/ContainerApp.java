@@ -29,10 +29,13 @@ public class ContainerApp {
 	private QueryLinkedList<Container> containers = new QueryLinkedList<Container>();
 	private QueryLinkedList<Journey> journeys = new QueryLinkedList<Journey>();
 	
-	public void registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
+	public Client registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
+		Client a = new Client(clientName, address, contactPerson, email, password);
 		if (!users.add(new Client(clientName, address, contactPerson, email, password))) {
+			
 			throw new Exception("Client already registered");
 		}
+		return a;
 	}
 	
 	public User loginUser(String username, String password) throws Exception {

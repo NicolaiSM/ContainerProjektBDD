@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import application.data.Element;
 import application.data.QueryLinkedList;
 
 public class Client extends User {
@@ -26,9 +27,9 @@ public class Client extends User {
 		userInfo.put("password",password);
 	}
 
-	private List<Container> clientContainers = new QueryLinkedList<Container>();
+	private Collection<Element> clientContainers = new QueryLinkedList<Element>();
 
-	public List<Container> getClientContainers() {
+	public Collection<Element> getClientContainers() {
 		return clientContainers;
 	}
 

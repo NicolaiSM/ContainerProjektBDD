@@ -60,6 +60,7 @@ public class LoginController {
 		ContainerApp.getInstance().registerPort("b");
 		ContainerApp.getInstance().createContainer("a");
 		ContainerApp.getInstance().createContainer("b");
+		ContainerApp.getInstance().registerPort("c");
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
