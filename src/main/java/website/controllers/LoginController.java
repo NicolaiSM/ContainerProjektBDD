@@ -56,12 +56,21 @@ public class LoginController {
 		
 		try {
 		ContainerApp.getInstance().registerClient("a","a" ,"a","a@a.com","a");
+		ContainerApp.getInstance().registerClient("GuideUser","GuideStreet 13" ,"Group B","Guide@user.com","1234");
 		ContainerApp.getInstance().getUsers().add(new LogisticCompany("admin", "admin"));
+		
 		ContainerApp.getInstance().registerPort("a");
 		ContainerApp.getInstance().registerPort("b");
+		ContainerApp.getInstance().registerPort("c");
+		ContainerApp.getInstance().registerPort("Shanghai");
+		ContainerApp.getInstance().registerPort("Antwerp");
+		ContainerApp.getInstance().registerPort("Singapore");
+				
 		ContainerApp.getInstance().createContainer("a");
 		ContainerApp.getInstance().createContainer("b");
-		ContainerApp.getInstance().registerPort("c");
+		ContainerApp.getInstance().createContainer("Shanghai");
+		ContainerApp.getInstance().createContainer("Antwerp");
+		
 		System.out.println(ContainerApp.getInstance().getUsers());
 		
 		} catch (Exception e) {

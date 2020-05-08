@@ -41,7 +41,7 @@ public class ContainerApp {
 	
 	public User loginUser(String username, String password) throws Exception {
 		User user = users.findElement(username);
-		if (user == null) {
+		if (user == null /*|| !user.get("username").equals(username)*/) {
 			throw new Exception("Username is incorrect");
 		}
 		else if (!user.get("password").equals(password)) {
