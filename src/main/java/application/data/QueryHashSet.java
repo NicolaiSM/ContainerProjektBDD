@@ -22,7 +22,5 @@ public class QueryHashSet<A extends Element> extends HashSet<A> {
 		
 	}
 	
-	public boolean anyMatch(String...keywords) {
-		return this.stream().anyMatch((element)->element.hasKeyword(keywords));
-	}
+
 }

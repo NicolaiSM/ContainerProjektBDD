@@ -15,14 +15,14 @@ public class User implements Element {
 	}
 	
 	
-	protected Map<String,String> clientInfo = new HashMap<>();
+	protected Map<String,String> userInfo = new HashMap<>();
 
 	public String get(String key) {
-		return clientInfo.get(key);
+		return userInfo.get(key);
 	}
 	
 	public boolean hasKeyword(String key) {
-		return clientInfo.containsValue(key);
+		return userInfo.containsValue(key);
 	}
 	
 	@Override
@@ -34,22 +34,9 @@ public class User implements Element {
 		}
 		return false;
 	}
-
-	public void setClientInfo(String key, String value) {
-		clientInfo.put(key, value);		
-	}
 	
 	public Long getId() {
 		return this.id;
 	}
 	
-	@Override
-	public int hashCode() {
-		return get("clientName").hashCode();
-	}
-
-	@Override
-	public boolean equals(Object user) {
-		return get("clientName").equals(((User) user).get("clientName"));	
-	}
 }

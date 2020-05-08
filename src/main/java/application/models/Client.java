@@ -10,17 +10,17 @@ public class Client extends User {
 	
 	
 	public Client(String clientName) {
-		clientInfo.put("clientName",clientName);
+		userInfo.put("clientName",clientName);
 
 	}
 	
 	public Client(String clientName, String address, String contactPerson, String email, String password) {
 		super();
-		clientInfo.put("clientName",clientName);
-		clientInfo.put("address", address);
-		clientInfo.put("contactPerson", contactPerson);
-		clientInfo.put("email", email);
-		clientInfo.put("password",password);
+		userInfo.put("clientName",clientName);
+		userInfo.put("address", address);
+		userInfo.put("contactPerson", contactPerson);
+		userInfo.put("email", email);
+		userInfo.put("password",password);
 	}
 
 	private List<Container> clientContainers = new QueryLinkedList<Container>();
@@ -29,7 +29,18 @@ public class Client extends User {
 		return clientContainers;
 	}
 
-	
+	public void setClientInfo(String key, String value) {
+		userInfo.put(key, value);		
+	}
+	@Override
+	public int hashCode() {
+		return get("clientName").hashCode();
+	}
+
+	@Override
+	public boolean equals(Object user) {
+		return get("clientName").equals(((User) user).get("clientName"));	
+	}
 
 	
 	

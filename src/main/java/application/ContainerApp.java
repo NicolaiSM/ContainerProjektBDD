@@ -36,7 +36,7 @@ public class ContainerApp {
 	}
 	
 	public User loginUser(String username, String password) throws Exception {
-		User user = users.findElement(password);
+		User user = users.findElement(username);
 		if (user == null) {
 			throw new Exception("Username is incorrect");
 		}
@@ -58,7 +58,7 @@ public class ContainerApp {
 	}
 
 
-	public void updateClient(User client, String key, String value) throws Exception {
+	public void updateClient(Client client, String key, String value) throws Exception {
 		if (key.equals("clientName")) {
 			if (isClientAvailable(value)) {
 				client.setClientInfo(key, value);

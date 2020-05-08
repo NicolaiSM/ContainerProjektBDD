@@ -92,12 +92,11 @@ public class StepDefinition {
 	//
 	
 	// UPDATE CLIENT INFORMATION
-	private User client;
-	
+	private Client client;
 	@Given("A client")
 	public void a_client(io.cucumber.datatable.DataTable dataTable) throws Exception {
 		containerApp.registerClient(dataTable.cell(1, 0),dataTable.cell(1, 1),dataTable.cell(1, 2),dataTable.cell(1, 3),dataTable.cell(1, 4));
-		client = containerApp.findClient(dataTable.cell(1, 0)).get(0);
+		client = (Client) containerApp.findClient(dataTable.cell(1, 0)).get(0);
 	}
 	@Given("Information that should be changed")
 	public void information_that_should_be_changed(io.cucumber.datatable.DataTable dataTable) {

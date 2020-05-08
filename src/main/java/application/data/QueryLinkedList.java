@@ -10,20 +10,9 @@ public class QueryLinkedList<A extends Element> extends LinkedList<A> {
 	 * 
 	 */
 	private static final long serialVersionUID = -7699425566372948024L;
-
-
-	public A findElement(String...keywords) {
-		return this.stream().filter((element)->element.hasKeyword(keywords)).findFirst().orElse(null);
-		
-	}
 	
 	public List<A> findElements(String...keywords) {
 		return this.stream().filter((element)->element.hasKeyword(keywords)).collect(Collectors.toList());
 		
 	}
-	
-	public boolean anyMatch(String...keywords) {
-		return this.stream().anyMatch((element)->element.hasKeyword(keywords));
-	}
-
 }

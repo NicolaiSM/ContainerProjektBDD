@@ -105,11 +105,11 @@ public class ClientController {
 	@PostMapping("/updateclient")
 	public String updateClient(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
 		try {
-			ContainerApp.getInstance().updateClient(ActiveUser.getUser(), "clientName", userForm.getClientName());
-			ContainerApp.getInstance().updateClient(ActiveUser.getUser(), "address", userForm.getAddress());
-			ContainerApp.getInstance().updateClient(ActiveUser.getUser(), "email", userForm.getEmail());
-			ContainerApp.getInstance().updateClient(ActiveUser.getUser(), "contactPerson", userForm.getContactPerson());
-			ContainerApp.getInstance().updateClient(ActiveUser.getUser(), "password", userForm.getPassword());
+			ContainerApp.getInstance().updateClient((Client) ActiveUser.getUser(), "clientName", userForm.getClientName());
+			ContainerApp.getInstance().updateClient((Client) ActiveUser.getUser(), "address", userForm.getAddress());
+			ContainerApp.getInstance().updateClient((Client) ActiveUser.getUser(), "email", userForm.getEmail());
+			ContainerApp.getInstance().updateClient((Client) ActiveUser.getUser(), "contactPerson", userForm.getContactPerson());
+			ContainerApp.getInstance().updateClient((Client) ActiveUser.getUser(), "password", userForm.getPassword());
 		} catch (Exception e) {
 			model.addAttribute("updateclientmessage", e.getMessage());
 			e.printStackTrace();
