@@ -8,6 +8,9 @@ import application.data.QueryLinkedList;
 
 public class Client extends User {
 	
+	public Client() {
+		
+	}
 	
 	public Client(String clientName) {
 		userInfo.put("clientName",clientName);
