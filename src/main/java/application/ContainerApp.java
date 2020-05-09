@@ -3,6 +3,7 @@ package application;
 import java.util.*;
 import java.util.stream.*;
 
+import application.data.Element;
 import application.data.QueryHashSet;
 import application.data.QueryLinkedList;
 import application.models.Client;
@@ -27,18 +28,21 @@ public class ContainerApp {
 	
 	private QueryHashSet<Port> ports = new QueryHashSet<Port>();
 	private QueryHashSet<User> users = new QueryHashSet<User>();
-	private QueryLinkedList<Container> containers = new QueryLinkedList<Container>();
 	private QueryLinkedList<Journey> journeys = new QueryLinkedList<Journey>();
+	private QueryLinkedList<Container> containers = new QueryLinkedList<Container>();
 	
-	public void registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
+	public Client registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
+		Client a = new Client(clientName, address, contactPerson, email, password);
 		if (!users.add(new Client(clientName, address, contactPerson, email, password))) {
+			
 			throw new Exception("Client already registered");
 		}
+		return a;
 	}
 	
 	public User loginUser(String username, String password) throws Exception {
 		User user = users.findElement(username);
-		if (user == null) {
+		if (user == null /*|| !user.get("username").equals(username)*/) {
 			throw new Exception("Username is incorrect");
 		}
 		else if (!user.get("password").equals(password)) {
@@ -86,13 +90,13 @@ public class ContainerApp {
 		}
 	}
 
-	private boolean portIsRegistered(String port) {
+	private boolean isPortRegistered(String port) {
 		return ports.contains(new Port(port));
 		
 	}
 	
 	public void createContainer(String port) throws Exception {
-		if (!portIsRegistered(port)) {
+		if (!isPortRegistered(port)) {
 			throw new Exception("Port is not registered");
 		}
 		Port p = ports.findElement(port);
@@ -103,7 +107,7 @@ public class ContainerApp {
 	}
 
 	public void registerContainer(String portOfOrigin, String destination, String content, User client) throws Exception {
-		if (!portIsRegistered(portOfOrigin) || !portIsRegistered(destination)) {
+		if (!isPortRegistered(portOfOrigin) || !isPortRegistered(destination)) {
 			throw new Exception ("No valid ports");
 		}
 		Port startport = ports.findElement(portOfOrigin);
@@ -114,6 +118,7 @@ public class ContainerApp {
 		}
 		
 		Journey journey = new Journey (startport, finalport, content, client);
+		client.addJourney(journey);
 		journeys.add(journey);
 		availableContainer.setJourney(journey);
 		availableContainer.getJourneys().add(journey);
@@ -160,7 +165,7 @@ public class ContainerApp {
 	}
 
 	private boolean isLocationNotValid(List<String> locations) {
-		return locations.stream().anyMatch((location)->!portIsRegistered(location));
+		return locations.stream().anyMatch((location)->!isPortRegistered(location));
 	}
 	
 	
@@ -246,6 +251,11 @@ public class ContainerApp {
 
 	public Collection<? extends Object> getPorts() {
 		return ports;
+	}
+
+	public QueryHashSet<User> getUsers() {
+		// TODO Auto-generated method stub
+		return users;
 	}
 	
 	

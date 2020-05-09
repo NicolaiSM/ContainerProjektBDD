@@ -21,14 +21,10 @@ public class User implements Element {
 		return userInfo.get(key);
 	}
 	
-	public boolean hasKeyword(String key) {
-		return userInfo.containsValue(key);
-	}
-	
 	@Override
 	public boolean hasKeyword(String... keywords) {
 		for (String keyword : keywords) {
-			if (hasKeyword(keyword)) {
+			if (userInfo.containsValue(keyword)) {
 				return true;
 			}
 		}

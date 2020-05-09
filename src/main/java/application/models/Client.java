@@ -4,9 +4,12 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import application.data.Element;
 import application.data.QueryLinkedList;
 
 public class Client extends User {
+	private List<Container> clientContainers = new QueryLinkedList<Container>();
+
 	
 	public Client() {
 		
@@ -26,9 +29,11 @@ public class Client extends User {
 		userInfo.put("password",password);
 	}
 
-	private List<Container> clientContainers = new QueryLinkedList<Container>();
+	private Collection<Element> clientContainers = new QueryLinkedList<Element>();
 
-	public List<Container> getClientContainers() {
+	public Collection<Journey> clientJourneys = new HashSet<Journey>();
+	
+	public Collection<Element> getClientContainers() {
 		return clientContainers;
 	}
 
@@ -43,6 +48,20 @@ public class Client extends User {
 	@Override
 	public boolean equals(Object user) {
 		return get("clientName").equals(((User) user).get("clientName"));	
+	}
+	
+	public void addJourney(Journey journey) {
+		clientJourneys.add(journey);
+	}
+
+	public void removeJourney(Long id) {
+		for (Journey j :clientJourneys) {
+			if (j.getId() == id) {
+				clientJourneys.remove(j);				
+			}
+		}
+		
+		
 	}
 
 	

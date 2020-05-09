@@ -16,7 +16,13 @@ public class StringAttribute implements Element{
 	}
 	@Override
 	public boolean hasKeyword(String... keywords) {
-		return attribute.equals(keywords);
+		for (String keyword: keywords ) { 
+			if (attribute.equals(keywords)) {
+				return true;
+			}
+		}
+		return false;
+		
 	}
 	
 }
