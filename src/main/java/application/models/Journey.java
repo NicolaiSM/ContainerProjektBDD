@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import application.data.Element;
 import application.data.StringAttribute;
+import application.models.id.JourneyID;
 
 
 
@@ -31,6 +32,9 @@ public class Journey implements Element {
 		attributes.put("destination",destination);
 		attributes.put("content",new StringAttribute(content));
 		attributes.put("user", user);
+//		attributes.compute("id", id)
+		
+		id = JourneyID.newJourneyId();
 		
 	}
 	

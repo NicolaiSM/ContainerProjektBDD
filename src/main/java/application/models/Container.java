@@ -16,7 +16,7 @@ public class Container implements Element {
 	
 	private List<Journey> journeys = new LinkedList<Journey>();
 	private Map<String, Element> attributes = new HashMap<>();
-
+	
 
 	public Container(Port port) {
 		attributes.put("port", port);
@@ -72,6 +72,7 @@ public class Container implements Element {
 	}
 
 	private void endJourney() {
+		((Client) getJourney().get("user")).removeJourney(id);
 		journeys.add(getJourney());
 		((Client) getJourney().get("user")).getClientContainers().remove(this);
 		attributes.remove("journey");
