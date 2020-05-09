@@ -85,13 +85,13 @@ public class ContainerApp {
 		}
 	}
 
-	private boolean portIsRegistered(String port) {
+	private boolean isPortRegistered(String port) {
 		return ports.contains(new Port(port));
 		
 	}
 	
 	public void createContainer(String port) throws Exception {
-		if (!portIsRegistered(port)) {
+		if (!isPortRegistered(port)) {
 			throw new Exception("Port is not registered");
 		}
 		Port p = ports.findElement(port);
@@ -102,7 +102,7 @@ public class ContainerApp {
 	}
 
 	public void registerContainer(String portOfOrigin, String destination, String content, User client) throws Exception {
-		if (!portIsRegistered(portOfOrigin) || !portIsRegistered(destination)) {
+		if (!isPortRegistered(portOfOrigin) || !isPortRegistered(destination)) {
 			throw new Exception ("No valid ports");
 		}
 		Port startport = ports.findElement(portOfOrigin);
@@ -159,7 +159,7 @@ public class ContainerApp {
 	}
 
 	private boolean isLocationNotValid(List<String> locations) {
-		return locations.stream().anyMatch((location)->!portIsRegistered(location));
+		return locations.stream().anyMatch((location)->!isPortRegistered(location));
 	}
 	
 	

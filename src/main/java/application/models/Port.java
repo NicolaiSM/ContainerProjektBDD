@@ -13,12 +13,11 @@ import application.data.Element;
 
 public class Port implements Element {
 	
-	@Id
 	@Column(name = "port")
 	private final String port;
 	
 	private Set<Container> containers = new HashSet<Container>();
-	
+
 	private final int xCoordinate;
 
 	private final int yCoordinate;

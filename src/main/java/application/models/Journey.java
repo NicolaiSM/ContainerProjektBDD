@@ -12,19 +12,7 @@ public class Journey implements Element {
 	
 
 	private long id;
-	
-//	@OneToOne
-//	private final Port portOfOrigin;
-//	
-//	@OneToOne
-//	private final Port destination;
-//	
-//	@Column
-//	private final String content;
-//	
-//	@ManyToOne
-//	private final User client;
-	
+
 	private List<String> times = new LinkedList<String>();
 	
 	private List<Port> locations = new LinkedList<Port>();
@@ -36,13 +24,6 @@ public class Journey implements Element {
 	private List<Integer> pressures = new LinkedList<Integer>();
 	
 	private Map<String, Element> attributes = new HashMap<>();
-
-//	public Journey(Port portOfOrigin, Port destination, String content, User user) {
-//		this.portOfOrigin = portOfOrigin;
-//		this.destination = destination;
-//		this.content = content;
-//		this.client = user;
-//	}
 	
 	
 	public Journey(Port portOfOrigin, Port destination, String content, User user) {

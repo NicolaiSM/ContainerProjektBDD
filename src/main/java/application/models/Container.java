@@ -14,10 +14,6 @@ public class Container implements Element {
 	
 	private Long id;
 	
-//	private Port port;
-//	
-//	private Journey journey;
-//	
 	private List<Journey> journeys = new LinkedList<Journey>();
 	private Map<String, Element> attributes = new HashMap<>();
 
@@ -54,15 +50,6 @@ public class Container implements Element {
 
 	}
 	
-//	@Override
-//	public boolean hasKeyword(String... keywords) {
-//		for (String keyword : keywords) {
-//			if (port.equals(keyword) | (hasJourney() && journey.hasKeyword(keyword))) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 	@Override
 	public boolean hasKeyword(String... keywords) {
 		for (Element e : attributes.values()) {
