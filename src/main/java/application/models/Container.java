@@ -85,6 +85,7 @@ public class Container implements Element {
 	}
 
 	private void endJourney() {
+		((Client) getJourney().get("user")).removeJourney(id);
 		journeys.add(getJourney());
 		((Client) getJourney().get("user")).getClientContainers().remove(this);
 		attributes.remove("journey");

@@ -105,7 +105,7 @@ public class ContainerApp {
 		
 	}
 
-	public void registerContainer(String portOfOrigin, String destination, String content, User client) throws Exception {
+	public void registerContainer(String portOfOrigin, String destination, String content, Client client) throws Exception {
 		if (!portIsRegistered(portOfOrigin) || !portIsRegistered(destination)) {
 			throw new Exception ("No valid ports");
 		}
@@ -117,6 +117,7 @@ public class ContainerApp {
 		}
 		
 		Journey journey = new Journey (startport, finalport, content, client);
+		client.addJourney(journey);
 		journeys.add(journey);
 		availableContainer.setJourney(journey);
 		availableContainer.getJourneys().add(journey);
