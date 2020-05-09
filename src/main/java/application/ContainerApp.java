@@ -7,6 +7,7 @@ import application.data.QueryHashSet;
 import application.data.QueryLinkedList;
 import application.models.Client;
 import application.models.Container;
+import application.models.ContainerAdvancedQuery;
 import application.models.Journey;
 import application.models.LogisticCompany;
 import application.models.Pair;
@@ -170,48 +171,54 @@ public class ContainerApp {
 
 	public Pair<Container,Integer> mostKilometersTraveled() throws Exception {
 		if (!containers.isEmpty()) {
-			Container container = Collections.max(containers,Comparator.comparing(c -> c.getDistance()));
-			return new Pair<Container,Integer>(container,container.getDistance());
+			ContainerAdvancedQuery containerAdvancedQuery = new ContainerAdvancedQuery();
+			Container container = Collections.max(containers,Comparator.comparing(c -> containerAdvancedQuery.getDistance(c)));
+			return new Pair<Container,Integer>(container,containerAdvancedQuery.getDistance(container));
 		}
 		throw new Exception("No containers exist");
 	}
 
 	public Pair<Container,Integer> mostJourneys() throws Exception {
 		if (!containers.isEmpty()) {
-			Container container = Collections.max(containers,Comparator.comparing(c -> c.getNumberOfJourneys()));
-			return new Pair<Container,Integer>(container,container.getDistance());
+			ContainerAdvancedQuery containerAdvancedQuery = new ContainerAdvancedQuery();
+			Container container = Collections.max(containers,Comparator.comparing(c -> containerAdvancedQuery.getNumberOfJourneys(c)));
+			return new Pair<Container,Integer>(container,containerAdvancedQuery.getNumberOfJourneys(container));
 		}
 		throw new Exception("No containers exist");
 	}
 	
 	public Pair<Container,Integer> mostPorts() throws Exception {
 		if (!containers.isEmpty()) {
-			Container container = Collections.max(containers,Comparator.comparing(c -> c.getNumberOfPorts()));
-			return new Pair<Container,Integer>(container,container.getDistance());
+			ContainerAdvancedQuery containerAdvancedQuery = new ContainerAdvancedQuery();
+			Container container = Collections.max(containers,Comparator.comparing(c -> containerAdvancedQuery.getNumberOfPorts(c)));
+			return new Pair<Container,Integer>(container,containerAdvancedQuery.getNumberOfPorts(container));
 		}
 		throw new Exception("No containers exist");
 	}
 
 	public Pair<Container,Integer> leastKilometersTraveled() throws Exception {
 		if (!containers.isEmpty()) {
-			Container container = Collections.min(containers,Comparator.comparing(c -> c.getDistance()));
-			return new Pair<Container,Integer>(container,container.getDistance());
+			ContainerAdvancedQuery containerAdvancedQuery = new ContainerAdvancedQuery();
+			Container container = Collections.min(containers,Comparator.comparing(c -> containerAdvancedQuery.getDistance(c)));
+			return new Pair<Container,Integer>(container,containerAdvancedQuery.getDistance(container));
 		}
 		throw new Exception("No containers exist");		
 	}
 
 	public Pair<Container,Integer> leastJourneys() throws Exception {
 		if (!containers.isEmpty()) {
-			Container container = Collections.min(containers,Comparator.comparing(c -> c.getNumberOfJourneys()));
-			return new Pair<Container,Integer>(container,container.getDistance());
+			ContainerAdvancedQuery containerAdvancedQuery = new ContainerAdvancedQuery();
+			Container container = Collections.min(containers,Comparator.comparing(c -> containerAdvancedQuery.getNumberOfJourneys(c)));
+			return new Pair<Container,Integer>(container,containerAdvancedQuery.getNumberOfJourneys(container));
 		}
 		throw new Exception("No containers exist");			
 	}
 
 	public Pair<Container,Integer> leastPorts() throws Exception {
 		if (!containers.isEmpty()) {
-			Container container = Collections.min(containers,Comparator.comparing(c -> c.getNumberOfPorts()));
-			return new Pair<Container,Integer>(container,container.getDistance());
+			ContainerAdvancedQuery containerAdvancedQuery = new ContainerAdvancedQuery();
+			Container container = Collections.min(containers,Comparator.comparing(c -> containerAdvancedQuery.getNumberOfPorts(c)));
+			return new Pair<Container,Integer>(container,containerAdvancedQuery.getNumberOfPorts(container));
 		}
 		throw new Exception("No containers exist");			
 	}
