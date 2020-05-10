@@ -42,10 +42,6 @@ public class Journey implements Element {
 		return attributes;
 	}
 
-	public void setAttributes(Map<String, Element> attributes) {
-		this.attributes = attributes;
-	}
-
 	@Override
 	public boolean hasKeyword(String... keywords) {
 		for (Element e : attributes.values()) {
@@ -69,26 +65,17 @@ public class Journey implements Element {
 		return locations;
 	}
 
-
 	public List<Integer> getTemperatures() {
 		return temperatures;
 	}
-
 
 	public List<Integer> getHumidities() {
 		return humidities;
 	}
 
-
 	public List<Integer> getPressures() {
 		return pressures;
 	}
-
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 
 	public Long getId() {
 		return id;

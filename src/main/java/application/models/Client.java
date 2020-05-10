@@ -31,6 +31,12 @@ public class Client extends User {
 		userInfo.put("password",password);
 	}
 
+<<<<<<< HEAD
+=======
+	private Collection<Container> clientContainers = new QueryHashSet<Container>();
+
+	private Collection<Journey> clientJourneys = new QueryLinkedList<Journey>();
+>>>>>>> master
 	
 	public Collection<Container> getClientContainers() {
 		return clientContainers;

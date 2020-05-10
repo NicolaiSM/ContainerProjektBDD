@@ -205,6 +205,22 @@
 	  </tbody>
 	</table>
 	
-
+	<h2>Create port</h2>
+	<form th:action="@{/createport}" method="post" th:object="${portForm}">
+		<label>Port :
+	   		<input type="text" name="port" th:field="*{port}" />
+	   	</label>
+	   	<br />
+		<input type="submit" value="Create" />
+	</form>
+	
+	
+	
+	
+	<form th:action="@{/logout}" method="get">
+		<input type="submit" value="logout">
+	</form>
+	
+	
 	
 </html>

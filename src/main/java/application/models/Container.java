@@ -12,13 +12,7 @@ import application.models.id.ContainerId;
 
 
 public class Container implements Element {
-	
-	private Long id;
-	
-//	private Port port;
-//	
-//	private Journey journey;
-//	
+		
 	private List<Journey> journeys = new LinkedList<Journey>();
 	private Map<String, Element> attributes = new HashMap<>();
 	
@@ -64,8 +58,6 @@ public class Container implements Element {
 		return getJourney() != null;
 	}
 	
-	//manange journeys
-	
 	public void updateJourney(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
 		getJourney().update(times, locations, temperatures, humidities, pressures);
 		getPort().removeContainer(this);
@@ -91,17 +83,6 @@ public class Container implements Element {
 	public boolean isContainerAvailable(Port startport) {
 		return startport == getPort() && !hasJourney();
 
-	}
-	
-	public int getNumberOfPorts() {
-		int numberOfPorts = 0;
-		if (!journeys.isEmpty()) {
-			numberOfPorts = journeys.stream().mapToInt(journey->journey.getNumberOfPorts()).sum();
-		}
-		if (hasJourney()) {
-			numberOfPorts+=getJourney().getNumberOfPorts();
-		}
-		return numberOfPorts;
 	}
 	
 	

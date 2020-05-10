@@ -24,38 +24,25 @@ public class LoginController {
 		return new CredentialForm();
 	}
 	
+	@GetMapping("/logout")
+	public String logout() {
+		ActiveUser.setEmptyUser();
+		return "redirect:/";
+	}
+	
 	
 	@GetMapping("/")
 	public String login(CredentialForm credentialForm , Model model) {
 		
-//		try {
-//		ContainerApp.getInstance().registerClient("a","a" ,"a","a@a.com","a");
-//		ContainerApp.getInstance().registerClient("GuideUser","GuideStreet 13" ,"Group B","Guide@user.com","1234");
-//		ContainerApp.getInstance().getUsers().add(new LogisticCompany("admin", "admin"));
-//		
-//		ContainerApp.getInstance().registerPort("a");
-//		ContainerApp.getInstance().registerPort("b");
-//		ContainerApp.getInstance().registerPort("c");
-//		ContainerApp.getInstance().registerPort("Shanghai");
-//		ContainerApp.getInstance().registerPort("Antwerp");
-//		ContainerApp.getInstance().registerPort("Singapore");
-//				
-//		ContainerApp.getInstance().createContainer("a");
-//		ContainerApp.getInstance().createContainer("b");
-//		ContainerApp.getInstance().createContainer("Shanghai");
-//		ContainerApp.getInstance().createContainer("Antwerp");
-//		
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
 		return "login";
 	}
+	
 	@GetMapping("/login")
 	public String login2(CredentialForm credentialForm , Model model) {
 		return "login";
 	}
+	
+	
 	@PostMapping("/login")
 	public String login(@Valid CredentialForm credentialForm, BindingResult result, Model model) {	
 		if(result.hasErrors()) {

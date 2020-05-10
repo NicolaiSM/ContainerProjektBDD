@@ -11,9 +11,6 @@ public class StringAttribute implements Element{
 		return attribute;
 	}
 	
-	public void set(String attribute) {
-		this.attribute = attribute;
-	}
 	@Override
 	public boolean hasKeyword(String... keywords) {
 		for (String keyword: keywords ) { 
