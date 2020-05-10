@@ -9,8 +9,9 @@ import application.data.QueryHashSet;
 import application.data.QueryLinkedList;
 
 public class Client extends User {
-	private List<Container> clientContainers = new QueryLinkedList<Container>();
+	private Collection<Element> clientContainers = new QueryLinkedList<Element>();
 
+	private Collection<Journey> clientJourneys = new HashSet<Journey>();
 	
 	public Client() {
 		
@@ -30,9 +31,6 @@ public class Client extends User {
 		userInfo.put("password",password);
 	}
 
-	private Collection<Container> clientContainers = new QueryHashSet<Container>();
-
-	public Collection<Journey> clientJourneys = new QueryLinkedList<Journey>();
 	
 	public Collection<Container> getClientContainers() {
 		return clientContainers;
