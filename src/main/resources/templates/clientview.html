@@ -33,7 +33,6 @@
 	<label>Keywords :
    		<input type="text" name="keyword" th:field="*{keyword}" />
    	</label>
-   	<p th:if="${#fields.hasErrors('keyword')}" th:errors="*{keyword}"></p>
    	<br />
 	<input type="submit" value="Find" />
 	</form>
@@ -128,7 +127,6 @@
 	 		<label>Keywords :
 	     		<input type="text" name="keyword" th:field="*{keyword}" />
 	     	</label>
-	     	<p th:if="${#fields.hasErrors('keyword')}" th:errors="*{keyword}"></p>
 	     	<br />
 	 		<input type="submit" value="Find" />
 		</form>
@@ -147,11 +145,10 @@
 				  
 	<h2>Find journey</h2>
 		<form th:action="@{/findjourney}" method="post" th:object="${keywordForm}">
-	<p th:text="${findcontainermessage}"> </p>
+	<p th:text="${findjourneymessage}"> </p>
 	<label>Keywords :
    		<input type="text" name="keyword" th:field="*{keyword}" />
    	</label>
-   	<p th:if="${#fields.hasErrors('keyword')}" th:errors="*{keyword}"></p>
    	<br />
 	<input type="submit" value="Find" />
 	</form>

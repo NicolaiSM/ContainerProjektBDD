@@ -87,8 +87,7 @@ public class ClientController {
 		} catch (Exception e) {
 			model.addAttribute("registercontainermessage", e.getMessage());
 			e.printStackTrace();
-			System.out.println(ActiveUser.getUser().get("clientName"));
-			return "redirect:/clientview";
+			return "clientview";
 		}
 		
 		model.addAttribute("registercontainermessage", "Container successfully registered");
@@ -106,6 +105,7 @@ public class ClientController {
 		} catch (Exception e) {
 			model.addAttribute("updateclientmessage", e.getMessage());
 			e.printStackTrace();
+			return "clientview";
 		}
 		model.addAttribute("updateclientmessage", "Your information has been updated");
 		return "redirect:/clientview";
@@ -114,26 +114,16 @@ public class ClientController {
 	
 	@PostMapping("/findport")
 	public String findPort( KeywordForm keywordForm, BindingResult result, Model model) {
-		try {
-			list.clear();
-			list.addAll(ContainerApp.getInstance().findPorts(keywordForm.getKeyword().split(" ")));
-			
-		} catch (Exception e) {
-			return "redirect:/clientview";
-		}
+		
+		list = ContainerApp.getInstance().findPorts(keywordForm.getKeyword().split(" "));
 		
 		return "redirect:/clientview";
 	}
 	
 	@PostMapping("/findcontainer")
 	public String findContainer(KeywordForm keywordForm, BindingResult result, Model model) {
-		try {
-			list2 = ((QueryHashSet<Container>) ((Client)ActiveUser.getUser()).getClientContainers()).findElements(keywordForm.getKeyword().split(" "));
-			System.out.println(list2);
-		} catch (Exception e) {
-			model.addAttribute("findcontainermessage", e.getMessage());
-			return "redirect:/clientview";
-		}
+		
+		list2 = ((QueryLinkedList<Container>) ((Client)ActiveUser.getUser()).getClientContainers()).findElements(keywordForm.getKeyword().split(" "));
 		
 		return "redirect:/clientview";
 	}
@@ -148,6 +138,7 @@ public class ClientController {
 			e.printStackTrace();
 		}
 		
+		
 		return "redirect:/clientview";
 	}
 	
@@ -161,8 +152,8 @@ public class ClientController {
 			try {
 				list3 = ((QueryLinkedList<Journey>) ((Client) ActiveUser.getUser()).getClientJourneys()).findElements(keywordForm.getKeyword().split(" "));
 			} catch (Exception e) {
-				model.addAttribute("findcontainermessage", e.getMessage());
-				return "redirect:/clientview";
+				model.addAttribute("findjourneymessage", e.getMessage());
+				return "clientview";
 			}
 		
 		}
