@@ -112,8 +112,8 @@ public class ContainerApp {
 	}
 
 	public void registerContainer(String portOfOrigin, String destination, String content, Client client) throws Exception {
-		if (!isPortRegistered(portOfOrigin) || !isPortRegistered(destination)) {
-			throw new Exception ("No valid ports");
+		if (!isPortRegistered(portOfOrigin) || !isPortRegistered(destination) || portOfOrigin.equals(destination)) {
+			throw new Exception ("Ports are not valid");
 		}
 		Port startport = ports.findElement(portOfOrigin);
 		Port finalport = ports.findElement(destination);

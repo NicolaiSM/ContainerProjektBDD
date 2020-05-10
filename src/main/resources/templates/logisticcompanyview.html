@@ -53,6 +53,49 @@
 	  </tbody>
 	</table>
 	 
+	<h2>Advanced query</h2>
+	<form th:action="@{/mostkilometerstraveled}" method="get">
+		<input type="submit" value="Most kilometers traveled">
+	</form>
+	<form th:action="@{/leastkilometerstraveled}" method="get">
+		<input type="submit" value="Least kilometers traveled">
+	</form>
+	<form th:action="@{/mostjourneys}" method="get">
+		<input type="submit" value="Most journeys">
+	</form>
+	<form th:action="@{/leastjourneys}" method="get">
+		<input type="submit" value="Least journeys">
+	</form>
+	<form th:action="@{/mostports}" method="get">
+		<input type="submit" value="Most ports">
+	</form>
+	<form th:action="@{/leastports}" method="get">
+		<input type="submit" value="Least ports">
+	</form>
+	<form th:action="@{/longestjourney}" method="get">
+		<input type="submit" value="Longest journey">
+	</form>
+	<form th:action="@{/shortestjourney}" method="get">
+		<input type="submit" value="Shortest journey">
+	</form>
+	<p th:text="${advancedquerymessage}">
+	<table>
+		<thead>
+			<tr>
+				<td> ID </td>
+				<td> Distance </td>
+			</tr>
+		</thead>
+		<div th:if="${pair != null}">
+		<tbody>
+			<tr>
+				<td th:text="${pair.first.id.attribute}">
+				<td th:text="${pair.second}">
+			</tr>
+		</tbody>
+		</div>
+	</table>
+	
 	<h2> Container Internal information</h2>
 	<table>
 		<thead>
@@ -105,7 +148,7 @@
 		<label> Times
       	<input type="text" name="times" th:field="*{times}"/>
       	</label>
-      	<p th:if="${#fields.hasErrors('locations')}" th:errors="*{locations}"></p>
+      	<p th:if="${#fields.hasErrors('times')}" th:errors="*{times}"></p>
       	<br/>
       	
       	<label> Locations
@@ -217,6 +260,7 @@
 	   	<br />
 		<input type="submit" value="Create" />
 	</form>
+	
 	
 	
 	<form th:action="@{/logout}" method="get">

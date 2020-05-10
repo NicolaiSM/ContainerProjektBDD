@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import application.ContainerApp;
 import application.models.Container;
+import application.models.Pair;
 import application.models.User;
 import website.model.ContainerForm;
 import website.model.JourneyForm;
@@ -29,6 +30,7 @@ public class LogisticCompanyController {
 	Collection<User> list = (Collection<User>) ContainerApp.getInstance().getUsers();
 	Collection<Container> list2 = ContainerApp.getInstance().getContainers();
 	Container container = null;
+	Pair pair;
 
 	@ModelAttribute("clients")
 	public Collection<User> clientList() {
@@ -70,6 +72,10 @@ public class LogisticCompanyController {
 		return new PortForm();
 	}
 	
+	@ModelAttribute("pair")
+	public Pair pair() {
+		return pair;
+	}
 	
 	
 	@GetMapping("/logisticcompanyview")
@@ -196,15 +202,89 @@ public class LogisticCompanyController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@GetMapping("/mostkilometerstraveled")
+	public String mostKilometersTraveled(Model model) {
+		try {
+			pair = ContainerApp.getInstance().mostKilometersTraveled();
+		} catch (Exception e) {
+			model.addAttribute("advancedquerymessage", e.getMessage());
+			return "logisticcompanyview";
+		}
+		return "redirect:/logisticcompanyview";
+	}
+	@GetMapping("/leastkilometerstraveled")
+	public String leastKilometersTraveled(Model model) {
+		try {
+			pair = ContainerApp.getInstance().leastKilometersTraveled();
+		} catch (Exception e) {
+			model.addAttribute("advancedquerymessage", e.getMessage());
+			return "logisticcompanyview";
+		}
+		return "redirect:/logisticcompanyview";
+	}
+	@GetMapping("/mostjourneys")
+	public String mostJourneys(Model model) {
+		try {
+			pair = ContainerApp.getInstance().mostJourneys();
+		} catch (Exception e) {
+			model.addAttribute("advancedquerymessage", e.getMessage());
+			return "logisticcompanyview";
+		}
+		return "redirect:/logisticcompanyview";
+	}
+	@GetMapping("/leastjourneys")
+	public String leastJourneys(Model model) {
+		try {
+			pair = ContainerApp.getInstance().leastJourneys();
+		} catch (Exception e) {
+			model.addAttribute("advancedquerymessage", e.getMessage());
+			return "logisticcompanyview";
+		}
+		return "redirect:/logisticcompanyview";
+	}
 
-		
+	@GetMapping("/mostports")
+	public String mostPorts(Model model) {
+		try {
+			pair = ContainerApp.getInstance().mostPorts();
+		} catch (Exception e) {
+			model.addAttribute("advancedquerymessage", e.getMessage());
+			return "logisticcompanyview";
+		}
+		return "redirect:/logisticcompanyview";
+	}
+	
+	@GetMapping("/leastports")
+	public String leastPorts(Model model) {
+		try {
+			pair = ContainerApp.getInstance().leastPorts();
+		} catch (Exception e) {
+			model.addAttribute("advancedquerymessage", e.getMessage());
+			return "logisticcompanyview";
+		}
+		return "redirect:/logisticcompanyview";
+	}
+	
+	@GetMapping("/longestjourney")
+	public String longestJourney(Model model) {
+		try {
+			pair = ContainerApp.getInstance().longestJourney();
+		} catch (Exception e) {
+			model.addAttribute("advancedquerymessage", e.getMessage());
+			return "logisticcompanyview";
+		}
+		return "redirect:/logisticcompanyview";
+	}
+
+	@GetMapping("/shortestjourney")
+	public String shortestJourney(Model model) {
+		try {
+			pair = ContainerApp.getInstance().shortestJourney();
+		} catch (Exception e) {
+			model.addAttribute("advancedquerymessage", e.getMessage());
+			return "logisticcompanyview";
+		}
+		return "redirect:/logisticcompanyview";
+	}
+	
 }
