@@ -143,7 +143,7 @@ public class ContainerApp {
 		}
 		
 		Journey journey = new Journey (startport, finalport, content, client);
-		client.addJourney(journey);
+		((Client) client).addJourney(journey);
 		journeys.add(journey);
 		availableContainer.setJourney(journey);
 		availableContainer.getJourneys().add(journey);
