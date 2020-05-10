@@ -13,6 +13,8 @@ import application.models.id.ContainerId;
 
 public class Container implements Element {
 	
+	private Long id;
+	
 //	private Port port;
 //	
 //	private Journey journey;
@@ -37,7 +39,7 @@ public class Container implements Element {
 	public void setJourney(Journey journey) {
 		attributes.put("journey", journey);
 	}
-
+	
 	public Port getPort() {
 		return (Port) attributes.get("port");
 	}
@@ -48,21 +50,17 @@ public class Container implements Element {
 		return attributes.get("id");
 	}
 	
-	public boolean isContainerAvailable(Port startport) {
-		return startport == getPort() && !hasJourney();
-
+	@Override
+	public boolean equals(Object object) {
+		return id.equals(((Container) object).getId());
+		
 	}
 	
-//	@Override
-//	public boolean hasKeyword(String... keywords) {
-//		for (String keyword : keywords) {
-//			if (port.equals(keyword) | (hasJourney() && journey.hasKeyword(keyword))) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+	
 	public boolean hasKeyword(String... keywords) {
 		for (Element e : attributes.values()) {
 			if (e.hasKeyword(keywords)) {
@@ -71,6 +69,12 @@ public class Container implements Element {
 		}
 		return false;
 	}
+	
+	public boolean hasJourney() {
+		return getJourney() != null;
+	}
+	
+	//manange journeys
 	
 	public void updateJourney(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
 		getJourney().update(times, locations, temperatures, humidities, pressures);
@@ -89,33 +93,14 @@ public class Container implements Element {
 		attributes.remove("journey");
 
 	}
-
+	
 	private boolean isLocationDestination() {
 		return getPort() == getJourney().get("destination");
 	}
 
-	public boolean hasJourney() {
-		return getJourney() != null;
-	}
+	public boolean isContainerAvailable(Port startport) {
+		return startport == getPort() && !hasJourney();
 
-	public int getDistance() {
-		int distance = 0;
-		if (!journeys.isEmpty()) {
-			distance = journeys.stream().mapToInt(journey->journey.getDistance()).sum();
-		}
-		if (hasJourney()) {
-			distance+=getJourney().getDistance();
-		}
-		return distance;
-
-	}
-
-	public int getNumberOfJourneys() {
-		int numberOfJourneys = journeys.size();
-		if (hasJourney()) {
-			numberOfJourneys++;
-		}
-		return numberOfJourneys;
 	}
 	
 	public int getNumberOfPorts() {

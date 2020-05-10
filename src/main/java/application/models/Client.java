@@ -9,6 +9,8 @@ import application.data.QueryHashSet;
 import application.data.QueryLinkedList;
 
 public class Client extends User {
+	private List<Container> clientContainers = new QueryLinkedList<Container>();
+
 	
 	public Client() {
 		
