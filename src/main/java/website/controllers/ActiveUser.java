@@ -5,7 +5,7 @@ import application.models.User;
 
 public class ActiveUser {
 
-	private static User user = new Client();
+	private static User user = setEmptyUser();
 
 
 	public static User getUser() {
@@ -14,6 +14,10 @@ public class ActiveUser {
 
 	public static void setUser(User user) {
 		ActiveUser.user = user;
+	}
+	
+	public static User setEmptyUser() {
+		return new Client();
 	}
 	
 	

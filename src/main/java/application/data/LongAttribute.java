@@ -2,21 +2,22 @@ package application.data;
 
 public class LongAttribute implements Element {
 
-	private String attribute;
+	private Long attribute;
 	
 	public LongAttribute(Long attribute) {
-		this.attribute = attribute.toString();
+		this.attribute = attribute;
 	}
 	
-	public String getAttribute() {
+	public Long getAttribute() {
 		return attribute;
 	}
 	
 	
 	@Override
 	public boolean hasKeyword(String... keywords) {
+		String stringAttribute = attribute.toString();
 		for (String keyword: keywords ) { 
-			if (attribute.equals(keyword)) {
+			if (stringAttribute.equals(keyword)) {
 				return true;
 			}
 		}

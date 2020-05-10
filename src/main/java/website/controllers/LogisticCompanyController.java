@@ -23,6 +23,7 @@ import website.model.ContainerForm;
 import website.model.JourneyForm;
 import website.model.JourneyInformationForm;
 import website.model.KeywordForm;
+import website.model.PortForm;
 import website.model.UserForm;
 
 @Controller
@@ -65,6 +66,11 @@ public class LogisticCompanyController {
 	@ModelAttribute("journeyInformationForm")
 	public JourneyInformationForm journeyInformationForm() {
 		return new JourneyInformationForm();
+	}
+	
+	@ModelAttribute("portForm")
+	public PortForm portForm() {
+		return new PortForm();
 	}
 	
 	
@@ -168,12 +174,25 @@ public class LogisticCompanyController {
 				list2 = (Collection<Container>)ContainerApp.getInstance().getContainers().findElements(keywordForm.getKeyword().split(" "));
 			} catch (Exception e) {
 				e.printStackTrace();
-				return "redirect:/logisticcompanyview";
+				
 			}
 		
 		}
 		
 		return "redirect:/logisticcompanyview";
+	}
+	
+	
+	@PostMapping("/createport")
+	public String createPort(PortForm portForm, BindingResult result, Model model) {
+		try {
+			ContainerApp.getInstance().registerPort(portForm.getPort());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/logisticcompanyview";
+		
+		
 	}
 	
 	
