@@ -131,7 +131,7 @@ public class ContainerApp {
 		
 	}
 
-	public void registerContainer(String portOfOrigin, String destination, String content, User client) throws Exception {
+	public void registerContainer(String portOfOrigin, String destination, String content, Client client) throws Exception {
 		if (!isPortRegistered(portOfOrigin) || !isPortRegistered(destination)) {
 			throw new Exception ("No valid ports");
 		}
