@@ -12,7 +12,7 @@ import application.models.id.JourneyID;
 public class Journey implements Element {
 	
 
-	private long id;
+	private Long id;
 	
 //	@OneToOne
 //	private final Port portOfOrigin;
@@ -109,7 +109,7 @@ public class Journey implements Element {
 	}
 
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	
@@ -145,5 +145,14 @@ public class Journey implements Element {
 
 	public int getNumberOfPorts() {
 		return locations.size()+1;
+	}
+	
+	public boolean equals(Object object) {
+		return getId().equals(((Journey) object).getId());
+	}
+	
+	@Override
+	public int hashCode() {
+		return id.hashCode();
 	}
 }

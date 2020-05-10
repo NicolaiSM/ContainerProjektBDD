@@ -6,37 +6,205 @@
 
 	<h1> Logistic Company View</h1>
 
+	<h2>Create Container</h2>	
+	<form th:action="@{/createcontainer}" th:method="post" th:object="${containerForm}">
+		<label>Port:
+	     		<input type="text" name="port" th:field="*{port}" />
+	   	</label>
+	   	<p th:if="${#fields.hasErrors('port')}" th:errors="*{port}"></p>
+	   	<br />
+		<input type="submit" value="update">
+	</form>
+	 
 	<h2>Find container</h2>	 
-	<form th:action="@{/findcontainer}" method="post" th:object="${keywordForm}">
-	<p th:text="${findcontainermessage}"> </p>
-	<label>Keywords :
-   		<input type="text" name="keyword" th:field="*{keyword}" />
-   	</label>
-   	<p th:if="${#fields.hasErrors('keyword')}" th:errors="*{keyword}"></p>
-   	<br />
-	<input type="submit" value="Find" />
+	<form th:action="@{/findcontainerlc}" method="post" th:object="${keywordForm}">
+		<p th:text="${findcontainermessage}"> </p>
+		<label>Keywords:
+	   		<input type="text" name="keyword" th:field="*{keyword}" />
+	   	</label>
+	   	<br />
+		<input type="submit" value="Find" />
 	</form>
 	<table>
 	  <thead>
 	    <tr>
-	      <th>Content</th>
 	      <th>Container ID</th>
-	      <th>Journey ID</th>
 	      <th>Port</th>
+	      <th>Journey ID</th>
+	      <th>Content</th>
 	      <th>Port of origin</th>
 	      <th>Destination</th>
+	      <th>view button</th>
 	    </tr>
 	  </thead>
 	  <tbody>	  
 	    <tr th:each="container : ${containers}">
-	    <td th:text="${container.journey.get('content').attribute}">
-	    <td th:text="${container.id}">
-	    <td th:text="${container.journey.id}">
+	    <td th:text="${container.getId().attribute}">
 	    <td th:text="${container.port.port}">
-	    <td th:text="${container.journey.get('portOfOrigin').port}">
-	    <td th:text="${container.journey.get('destination').port}">
+	    <td th:text="${container?.journey?.id}">
+	    <td th:text="${container?.journey?.get('content')?.attribute}">
+	    <td th:text="${container?.journey?.get('portOfOrigin')?.port}">
+	    <td th:text="${container?.journey?.get('destination')?.port}">
+	    <td>
+    		<span th:if="${container.journey != null}"><a th:href = "@{/viewlc/{id}(id = ${container.id.attribute})}">view</a></span>
+		</td>
 	    </tr>
 	  </tbody>
 	</table>
+	 
+	<h2> Container Internal information</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Time</th>
+				<th>Locations</th>
+				<th>Temperature</th>
+				<th>Humidity</th>
+				<th>Pressure</th>
+			</tr>
+		</thead>
+		 <div th:if="${container != null}">
+		<tbody>	
+			<tr>
+			<table>
+			<tr th:each="time : ${container.journey.times}">
+			<td th:text="${time}">
+			</tr>
+			</table> 
+			<table>  
+			<tr th:each="location : ${container.journey.locations}">
+			<td th:text="${location}">
+			</tr>
+			</table> 
+			<table>  
+			<tr th:each="temperature : ${container.journey.temperatures}">
+			<td th:text="${temperature}">
+			</tr>
+			</table> 
+			<table>  
+			<tr th:each="humiditie : ${container.journey.humidities}">
+			<td th:text="${humiditie}">
+			</tr>
+			</table> 
+			<table>  
+			<tr th:each="pressure : ${container.journey.pressures}">
+			<td th:text="${pressure}">
+			</tr>
+			</table> 
+			</tr>
+		</tbody>
+		</div>
+	</table> 
+	 
+	 
+
+	<h2>Update Container Internal data</h2>
+	<form th:action="@{/updatejourney}" th:method="post" th:object="${journeyInformationForm}">
+		<label> Times
+      	<input type="text" name="times" th:field="*{times}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('locations')}" th:errors="*{locations}"></p>
+      	<br/>
+      	
+      	<label> Locations
+      	<input type="text" name="locations" th:field="*{locations}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('locations')}" th:errors="*{locations}"></p>
+      	<br/>
+      	
+      	<label> Temperatures
+      	<input type="text" name="temperatures" th:field="*{temperatures}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('temperatures')}" th:errors="*{temperatures}"></p>
+      	<br/>
+      	
+      	<label> Humidities
+      	<input type="text" name="humidities" th:field="*{humidities}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('humidities')}" th:errors="*{humidities}"></p>
+      	<br/>
+      	
+      	<label> Pressures
+      	<input type="text" name="pressures" th:field="*{pressures}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('pressures')}" th:errors="*{pressures}"></p>
+      	<br/>
+	
+		<input type="submit" value="Update"/>
+		
+	</form>
+	
+	
+	
+	
+	
+	
+	<h2>Register Client</h2>
+	<form th:action="@{/createclient}" method="post" th:object="${userForm}">
+		<p th:text="${message}"></p>
+	  	<label> Client Name
+      	<input type="text" name="clientName" th:field="*{clientName}"/>
+      	</label>
+      	<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}"></p>
+      	<br/>
+      	<label> Address
+      	<input type="text" name="address" th:field="*{address}"/> 
+      	</label>
+      	<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+      	<br />
+      	<label> Contact person
+      	<input type="text" name="contactPerson" th:field="*{contactPerson}"/> 
+      	</label>
+      	<p th:if="${#fields.hasErrors('contactPerson')}" th:errors="*{contactPerson}"></p>
+      	<br/>
+      	<label> Email
+      	<input type="text" name="email" th:field="*{email}"/> 
+      	</label>
+      	<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+      	<br/>
+      	<label> Password
+      	<input type="text" name="password" th:field="*{password}"/> 
+      	</label>
+      	<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+      	<br/>
+      	
+  		<input type="submit" value="Create" />
+  		
+
+	</form>
+	
+	
+	<h2> Find Client</h2>
+	<form th:action="@{/findclient}" method="post" th:object="${keywordForm}">
+		<label>Keywords :
+	   		<input type="text" name="keyword" th:field="*{keyword}" />
+	   	</label>
+	   	<br />
+		<input type="submit" value="Find" />
+	</form>
+	
+
+	<table>
+	  <thead>
+	    <tr>
+	      <th>ClientName</th>
+	      <th>Address</th>
+	      <th>Contact Person</th>
+	      <th>Email</th>
+	      <th>Password</th>
+	    </tr>
+	  </thead>
+	  <tbody>	  
+	    <tr th:each="client : ${clients}">
+	    <td th:text="${client.get('clientName')}">
+	    <td th:text="${client.get('address')}">
+	    <td th:text="${client.get('contactPerson')}">
+	    <td th:text="${client.get('email')}">
+	    <td th:text="${client.get('password')}">
+	    </tr>
+	  </tbody>
+	</table>
+	
+
 	
 </html>

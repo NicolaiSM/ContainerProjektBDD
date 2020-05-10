@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import application.data.Element;
+import application.data.QueryHashSet;
 import application.data.QueryLinkedList;
 
 public class Client extends User {
@@ -27,11 +28,11 @@ public class Client extends User {
 		userInfo.put("password",password);
 	}
 
-	private Collection<Element> clientContainers = new QueryLinkedList<Element>();
+	private Collection<Container> clientContainers = new QueryHashSet<Container>();
 
-	public Collection<Journey> clientJourneys = new HashSet<Journey>();
+	public Collection<Journey> clientJourneys = new QueryLinkedList<Journey>();
 	
-	public Collection<Element> getClientContainers() {
+	public Collection<Container> getClientContainers() {
 		return clientContainers;
 	}
 
@@ -52,16 +53,9 @@ public class Client extends User {
 		clientJourneys.add(journey);
 	}
 
-	public void removeJourney(Long id) {
-		for (Journey j :clientJourneys) {
-			if (j.getId() == id) {
-				clientJourneys.remove(j);				
-			}
-		}
-		
-		
+	public Collection<Journey> getClientJourneys() {
+		return clientJourneys;
 	}
-
 	
 	
 	

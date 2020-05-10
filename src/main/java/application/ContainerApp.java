@@ -16,6 +16,31 @@ import application.models.User;
 
 public class ContainerApp {
 	
+	public ContainerApp() {
+		users.add(new LogisticCompany("admin", "admin"));
+		
+		try {
+			registerClient("a","a" ,"a","a@a.com","a");
+			registerClient("GuideUser","GuideStreet 13" ,"Group B","Guide@user.com","1234");
+			registerPort("a");
+			registerPort("b");
+			registerPort("c");
+			registerPort("Shanghai");
+			registerPort("Antwerp");
+			registerPort("Singapore");
+			createContainer("a");
+			createContainer("b");
+			createContainer("Shanghai");
+			createContainer("Antwerp");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
 	private static ContainerApp instance = null;
 	
 	public static ContainerApp getInstance() {
@@ -32,7 +57,7 @@ public class ContainerApp {
 	
 	public Client registerClient(String clientName, String address, String contactPerson, String email, String password) throws Exception {
 		Client a = new Client(clientName, address, contactPerson, email, password);
-		if (!users.add(new Client(clientName, address, contactPerson, email, password))) {
+		if (!users.add(a)) {
 			
 			throw new Exception("Client already registered");
 		}
@@ -41,7 +66,7 @@ public class ContainerApp {
 	
 	public User loginUser(String username, String password) throws Exception {
 		User user = users.findElement(username);
-		if (user == null /*|| !user.get("username").equals(username)*/) {
+		if (user == null || !user.get("clientName").equals(username)) {
 			throw new Exception("Username is incorrect");
 		}
 		else if (!user.get("password").equals(password)) {
@@ -246,8 +271,7 @@ public class ContainerApp {
 		return ports;
 	}
 
-	public QueryHashSet<User> getUsers() {
-		// TODO Auto-generated method stub
+	public Collection<? extends Object> getUsers() {
 		return users;
 	}
 	

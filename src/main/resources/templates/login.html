@@ -20,13 +20,6 @@
       	<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
       	<br />
   		<input type="submit" value="Log in" />
-	</form>
-
-	<form th:action="@{/createclient}" method="get" th:object="${credentialForm}">
-		<input type="submit" value="Create Client" />
-	</form>
-	
-	
-	
+	</form>	
 
 </html>

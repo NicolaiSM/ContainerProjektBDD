@@ -46,19 +46,56 @@
 	      <th>Port</th>
 	      <th>Port of origin</th>
 	      <th>Destination</th>
+	      <th>view button</th>
 	    </tr>
 	  </thead>
 	  <tbody>	  
 	    <tr th:each="container : ${containers}">
 	    <td th:text="${container.journey.get('content').attribute}">
-	    <td th:text="${container.id}">
+	    <td th:text="${container.getId().attribute}">
 	    <td th:text="${container.journey.id}">
 	    <td th:text="${container.port.port}">
 	    <td th:text="${container.journey.get('portOfOrigin').port}">
 	    <td th:text="${container.journey.get('destination').port}">
+	    <td><a th:href = "@{/view/{id}(id = ${container.id.attribute})}">view</a><td>
 	    </tr>
 	  </tbody>
 	</table>
+	
+	<h2> Container Internal information</h2>
+
+	<table>
+	  <thead>
+	    <tr>
+	      <th>Time</th>
+	      <th>Locations</th>
+	      <th>Temperature</th>
+	      <th>Humidity</th>
+	      <th>Pressure</th>
+	    </tr>
+	  </thead>
+	  <div th:if="${container != null}">
+		  <tbody>	  
+		    <tr th:each="time : ${container.journey.times}">
+			<td th:text="${time}">
+		    </tr>
+		   	<tr th:each="location : ${container.journey.locations}">
+			<td th:text="${location}">
+		    </tr>
+		   	<tr th:each="temperature : ${container.journey.temperatures}">
+			<td th:text="${temperature}">
+		    </tr>
+		   	<tr th:each="humiditie : ${container.journey.humidities}">
+			<td th:text="${humiditie}">
+		    </tr>
+		   	<tr th:each="pressure : ${container.journey.pressures}">
+			<td th:text="${pressure}">
+		    </tr>
+		  </tbody>
+	  </div>
+	</table>
+	
+	
 	
 	<h2>Update client</h2>
 	<form th:action="@{/updateclient}" method="post" th:object="${userForm}">
@@ -113,5 +150,36 @@
 		      </tr>
 		    </tbody>
 		  </table>
+				  
+	<h2>Find journey</h2>
+		<form th:action="@{/findjourney}" method="post" th:object="${keywordForm}">
+	<p th:text="${findcontainermessage}"> </p>
+	<label>Keywords :
+   		<input type="text" name="keyword" th:field="*{keyword}" />
+   	</label>
+   	<p th:if="${#fields.hasErrors('keyword')}" th:errors="*{keyword}"></p>
+   	<br />
+	<input type="submit" value="Find" />
+	</form>
+	<table>
+	  <thead>
+	    <tr>
+	      <th>Journey ID</th>
+	      <th>Content</th>
+	      <th>Port of origin</th>
+	      <th>Destination</th>
+	      <th>view button</th>
+	    </tr>
+	  </thead>
+	  <tbody>	  
+	    <tr th:each="journey : ${journeys}">
+	    <td th:text="${journey.id}">
+	    <td th:text="${journey.get('content').attribute}">
+	    <td th:text="${journey.get('portOfOrigin').port}">
+	    <td th:text="${journey.get('destination').port}">
+	    </tr>
+	  </tbody>
+	</table>
+		    
 
 </html>

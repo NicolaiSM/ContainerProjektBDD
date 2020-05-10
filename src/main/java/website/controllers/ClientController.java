@@ -1,22 +1,17 @@
 package website.controllers;
 
-
-
-
-import java.lang.module.FindException;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.validation.Valid;
 import website.controllers.ActiveUser;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import application.ContainerApp;
@@ -25,10 +20,8 @@ import application.data.QueryHashSet;
 import application.data.QueryLinkedList;
 import application.models.Client;
 import application.models.Container;
-import application.models.LogisticCompany;
+import application.models.Journey;
 import application.models.Port;
-import application.models.User;
-import website.model.CredentialForm;
 import website.model.JourneyForm;
 import website.model.KeywordForm;
 import website.model.UserForm;
@@ -36,8 +29,10 @@ import website.model.UserForm;
 @Controller
 public class ClientController {
 	
-	Collection<Element> list = new LinkedList<Element>((Collection<? extends Element>) ContainerApp.getInstance().getPorts());
-	Collection<Element> list2 = new LinkedList<Element>(((Client)ActiveUser.getUser()).getClientContainers());
+	Collection<Port> list = (Collection<Port>) ContainerApp.getInstance().getPorts();
+	Collection<Container> list2 = ((Client) ActiveUser.getUser()).getClientContainers();
+	Collection<Journey> list3 = ((Client) ActiveUser.getUser()).getClientJourneys();
+	Container container = null;
 	
 	@ModelAttribute("userForm")
 	public UserForm populateUser() {
@@ -46,64 +41,67 @@ public class ClientController {
 	}
 	
 	@ModelAttribute("ports")
-	public Collection<Element> portList() {
+	public Collection<Port> portList() {
 		return list;
 	}
 	
 	@ModelAttribute("containers")
-	public Collection<Element> containerList() {
-	  return list2;
+	public Collection<Container> containerList() {
+		return list2;
 	}
 	
 	@ModelAttribute("findportmessage")
 	public String findPortMessage(String string) {
-	  return string;
+		return string;
 	}
+	
+	@ModelAttribute("container")
+	public Container container() {
+		return container;
+	}
+	
+	@ModelAttribute("journeyForm")
+	public JourneyForm journeyForm() {
+		return new JourneyForm();
+	}
+	
+	@ModelAttribute("keywordForm")
+	public KeywordForm keywordForm() {
+		return new KeywordForm();
+	}
+	
+	@ModelAttribute("journeys")
+	public Collection<Journey> journeys() {
+		return list3;
+	}
+	
+	
 	
 	
 	@GetMapping("/clientview")
 	public String clientView(Model model) {
-		model.addAttribute("test", ActiveUser.getUser().get("clientName"));
-		model.addAttribute("journeyForm", new JourneyForm());
-		model.addAttribute("keywordForm", new KeywordForm());
 		
-		
-		try {
-			model.addAttribute("containers", ((Client) ActiveUser.getUser()).getClientContainers());
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return "clientview";
-		
-		
 	}
 	
-	@GetMapping("/logisitccompanyview")
-	public String logisticCompany(Model model) {
-//		model.addAttribute("logisitccompanyForm", (LogisitcCompanyForm) user);
-		
-		return "logisitccompanyview";
-	}
 	
 	@PostMapping("/registercontainer")
-	public String registerContainer(@Valid JourneyForm journeyForm, BindingResult result, Model model, UserForm userForm, KeywordForm keywordForm) {
+	public String registerContainer(@Valid JourneyForm journeyForm, BindingResult result, Model model) {
 		try { 
 			ContainerApp.getInstance().registerContainer(journeyForm.getPortOfOrigin(), journeyForm.getDestination(), journeyForm.getContent(), (Client) ActiveUser.getUser());
 		} catch (Exception e) {
 			model.addAttribute("registercontainermessage", e.getMessage());
 			e.printStackTrace();
 			System.out.println(ActiveUser.getUser().get("clientName"));
-			return "clientview";	
+			return "redirect:/clientview";
 		}
 		
 		model.addAttribute("registercontainermessage", "Container successfully registered");
-		return clientView(model);
+		return "redirect:/clientview";
 	}
 
 	@PostMapping("/updateclient")
-	public String updateClient(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
+	public String updateClient(@Valid UserForm userForm, BindingResult result, Model model) {
 		try {
 			ContainerApp.getInstance().updateClient((Client) ActiveUser.getUser(), "clientName", userForm.getClientName());
 			ContainerApp.getInstance().updateClient((Client) ActiveUser.getUser(), "address", userForm.getAddress());
@@ -115,47 +113,68 @@ public class ClientController {
 			e.printStackTrace();
 		}
 		model.addAttribute("updateclientmessage", "Your information has been updated");
-		return "clientview";
+		return "redirect:/clientview";
 		
 	}
 	
 	@PostMapping("/findport")
-	public String findPort(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
+	public String findPort( KeywordForm keywordForm, BindingResult result, Model model) {
 		try {
 			list.clear();
 			list.addAll(ContainerApp.getInstance().findPorts(keywordForm.getKeyword().split(" ")));
 			
 		} catch (Exception e) {
-			model.addAttribute("findportmessage", e.getMessage());
-			return "clientview";
+			findPortMessage(e.getMessage());
+			return "redirect:/clientview";
 		}
 		
 		return "redirect:/clientview";
 	}
 	
 	@PostMapping("/findcontainer")
-	public String findContainer(@Valid UserForm userForm, BindingResult result, Model model, JourneyForm journeyForm, KeywordForm keywordForm) {
+	public String findContainer(KeywordForm keywordForm, BindingResult result, Model model) {
 		try {
-			list2.clear();
-			list2.addAll(((QueryLinkedList<Element>) ((Client)ActiveUser.getUser()).getClientContainers()).findElements(keywordForm.getKeyword().split(" ")));
+			list2 = ((QueryHashSet<Container>) ((Client)ActiveUser.getUser()).getClientContainers()).findElements(keywordForm.getKeyword().split(" "));
 			System.out.println(list2);
 		} catch (Exception e) {
 			model.addAttribute("findcontainermessage", e.getMessage());
-			return "clientview";
+			return "redirect:/clientview";
 		}
 		
-		return "clientview";
+		return "redirect:/clientview";
 	}
 	
+	@GetMapping("/view/{id}") 
+	public String containerview(@PathVariable("id") String id, Model model) {
+		
+		try {
+			this.container = (Container) ContainerApp.getInstance().findContainer(id).get(0);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "redirect:/clientview";
+	}
 	
+	@PostMapping("/findjourney")
+	public String findJourney(KeywordForm keywordForm, BindingResult result, Model model) {
+		
+		if(keywordForm.getKeyword() == null | keywordForm.getKeyword().isEmpty()) {
+			list3 = ((Client) ActiveUser.getUser()).getClientJourneys();
+		} else {
+		
+			try {
+				list3 = ((QueryLinkedList<Journey>) ((Client) ActiveUser.getUser()).getClientJourneys()).findElements(keywordForm.getKeyword().split(" "));
+			} catch (Exception e) {
+				model.addAttribute("findcontainermessage", e.getMessage());
+				return "redirect:/clientview";
+			}
+		
+		}
+		
+		return "redirect:/clientview";
+	}
 	
-	
-	
-	 
-	
-	
-	
-	
-	
-	
+
 }

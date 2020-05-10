@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import application.data.Element;
+import application.data.LongAttribute;
 import application.models.id.ContainerId;
 
 
 public class Container implements Element {
-	
-	private Long id;
 	
 //	private Port port;
 //	
@@ -24,7 +23,7 @@ public class Container implements Element {
 
 	public Container(Port port) {
 		attributes.put("port", port);
-		id = ContainerId.newContainerId();
+		attributes.put("id", new LongAttribute(ContainerId.newContainerId()));
 	}
 	
 	public List<Journey> getJourneys() {
@@ -45,8 +44,8 @@ public class Container implements Element {
 	
 
 	
-	public long getId() {
-		return id;
+	public Element getId() {
+		return attributes.get("id");
 	}
 	
 	public boolean isContainerAvailable(Port startport) {
@@ -85,7 +84,6 @@ public class Container implements Element {
 	}
 
 	private void endJourney() {
-		((Client) getJourney().get("user")).removeJourney(id);
 		journeys.add(getJourney());
 		((Client) getJourney().get("user")).getClientContainers().remove(this);
 		attributes.remove("journey");
@@ -134,14 +132,14 @@ public class Container implements Element {
 	
 	@Override
 	public boolean equals(Object object) {
-		return id.equals(((Container) object).getId());
+		return getId().equals(((Container) object).getId());
 		
 	}
 	
 	
 	@Override
 	public int hashCode() {
-		return id.hashCode();
+		return getId().hashCode();
 	}
 	
 
