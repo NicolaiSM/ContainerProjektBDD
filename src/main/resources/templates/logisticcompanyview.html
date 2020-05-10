@@ -8,6 +8,7 @@
 
 	<h2>Create Container</h2>	
 	<form th:action="@{/createcontainer}" th:method="post" th:object="${containerForm}">
+		<p th:text="${createcontainermessage}"></p>
 		<label>Port:
 	     		<input type="text" name="port" th:field="*{port}" />
 	   	</label>
@@ -18,7 +19,7 @@
 	 
 	<h2>Find container</h2>	 
 	<form th:action="@{/findcontainerlc}" method="post" th:object="${keywordForm}">
-		<p th:text="${findcontainermessage}"> </p>
+		<p th:text="${findcontainerlcmessage}"> </p>
 		<label>Keywords:
 	   		<input type="text" name="keyword" th:field="*{keyword}" />
 	   	</label>
@@ -100,6 +101,7 @@
 
 	<h2>Update Container Internal data</h2>
 	<form th:action="@{/updatejourney}" th:method="post" th:object="${journeyInformationForm}">
+		<p th:text="${updatejourneymessage}"></p>
 		<label> Times
       	<input type="text" name="times" th:field="*{times}"/>
       	</label>
@@ -141,7 +143,7 @@
 	
 	<h2>Register Client</h2>
 	<form th:action="@{/createclient}" method="post" th:object="${userForm}">
-		<p th:text="${message}"></p>
+		<p th:text="${createclientmessage}"></p>
 	  	<label> Client Name
       	<input type="text" name="clientName" th:field="*{clientName}"/>
       	</label>
@@ -176,6 +178,7 @@
 	
 	<h2> Find Client</h2>
 	<form th:action="@{/findclient}" method="post" th:object="${keywordForm}">
+		<p th:text="${findclientmessage}"></p>
 		<label>Keywords :
 	   		<input type="text" name="keyword" th:field="*{keyword}" />
 	   	</label>
@@ -207,14 +210,13 @@
 	
 	<h2>Create port</h2>
 	<form th:action="@{/createport}" method="post" th:object="${portForm}">
+		<p th:text="${createportmessage}"></p>
 		<label>Port :
 	   		<input type="text" name="port" th:field="*{port}" />
 	   	</label>
 	   	<br />
 		<input type="submit" value="Create" />
 	</form>
-	
-	
 	
 	
 	<form th:action="@{/logout}" method="get">

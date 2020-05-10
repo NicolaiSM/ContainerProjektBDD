@@ -76,20 +76,12 @@
 	  </thead>
 	  <div th:if="${container != null}">
 		  <tbody>	  
-		    <tr th:each="time : ${container.journey.times}">
-			<td th:text="${time}">
-		    </tr>
-		   	<tr th:each="location : ${container.journey.locations}">
-			<td th:text="${location}">
-		    </tr>
-		   	<tr th:each="temperature : ${container.journey.temperatures}">
-			<td th:text="${temperature}">
-		    </tr>
-		   	<tr th:each="humiditie : ${container.journey.humidities}">
-			<td th:text="${humiditie}">
-		    </tr>
-		   	<tr th:each="pressure : ${container.journey.pressures}">
-			<td th:text="${pressure}">
+		    <tr th:each="information : ${container.journey.information}">
+			<td th:text="${information.time}">
+			<td th:text="${information.location}">
+			<td th:text="${information.temperature}">
+			<td th:text="${information.humiditie}">
+			<td th:text="${information.pressure}">
 		    </tr>
 		  </tbody>
 	  </div>
@@ -99,7 +91,9 @@
 	
 	<h2>Update client</h2>
 	<form th:action="@{/updateclient}" method="post" th:object="${userForm}">
+	
 	<p th:text="${updateclientmessage}"> </p>
+	
  		<label>Client name :
      		<input type="text" name="clientName" th:field="*{clientName}" />
      	</label>

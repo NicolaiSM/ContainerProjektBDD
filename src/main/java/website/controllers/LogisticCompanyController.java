@@ -1,7 +1,7 @@
 package website.controllers;
 
 import java.util.Collection;
-import java.util.LinkedList;
+
 
 import javax.validation.Valid;
 
@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import application.ContainerApp;
-import application.data.Element;
-import application.data.QueryHashSet;
-import application.models.Client;
 import application.models.Container;
 import application.models.User;
 import website.model.ContainerForm;
@@ -89,8 +86,8 @@ public class LogisticCompanyController {
 		try {
 			ContainerApp.getInstance().createContainer(containerForm.getPort());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			model.addAttribute("createcontainermessage", e.getMessage());
+			return "logisticcompanyview";
 		}
 		
 		return "redirect:/logisticcompanyview";
@@ -106,7 +103,7 @@ public class LogisticCompanyController {
 		try {
 			ContainerApp.getInstance().registerClient(userForm.getClientName(),userForm.getAddress(),userForm.getContactPerson(),userForm.getEmail(),userForm.getPassword());
 		} catch (Exception e) {
-			model.addAttribute("message", e.getMessage());
+			model.addAttribute("createclientmessage", e.getMessage());
 			return "logisticcompanyview";
 		}
 		
@@ -125,8 +122,8 @@ public class LogisticCompanyController {
 		try {
 			list = (ContainerApp.getInstance().findClient(keywordForm.getKeyword().split(" ")));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			model.addAttribute("findclientmessage", e.getMessage());
+			return "logisticcompanyview";
 		}
 		
 		return "redirect:/logisticcompanyview";
@@ -139,8 +136,8 @@ public class LogisticCompanyController {
 		try {
 			ContainerApp.getInstance().updateJourney(container, journeyInformationForm.getTimes(), journeyInformationForm.getLocations(), journeyInformationForm.getTemperatures(), journeyInformationForm.getHumidities(), journeyInformationForm.getPressures());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			model.addAttribute("updatejourneymessage", e.getMessage());
+			return "logisticcompanyview";
 		}
 		
 		return "redirect:/logisticcompanyview";
@@ -152,7 +149,6 @@ public class LogisticCompanyController {
 		try {
 			this.container = (Container) ContainerApp.getInstance().findContainer(id).get(0);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -174,6 +170,8 @@ public class LogisticCompanyController {
 				list2 = (Collection<Container>)ContainerApp.getInstance().getContainers().findElements(keywordForm.getKeyword().split(" "));
 			} catch (Exception e) {
 				e.printStackTrace();
+				model.addAttribute("findcontainerlcmessage", e.getMessage());
+				return "logisticcompanyview";
 				
 			}
 		
@@ -189,6 +187,8 @@ public class LogisticCompanyController {
 			ContainerApp.getInstance().registerPort(portForm.getPort());
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("createportmessage", e.getMessage());
+			return "logisticcompanyview";
 		}
 		return "redirect:/logisticcompanyview";
 		
