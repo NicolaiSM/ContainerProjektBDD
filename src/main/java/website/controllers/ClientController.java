@@ -50,11 +50,6 @@ public class ClientController {
 		return list2;
 	}
 	
-	@ModelAttribute("findportmessage")
-	public String findPortMessage(String string) {
-		return string;
-	}
-	
 	@ModelAttribute("container")
 	public Container container() {
 		return container;
@@ -124,7 +119,6 @@ public class ClientController {
 			list.addAll(ContainerApp.getInstance().findPorts(keywordForm.getKeyword().split(" ")));
 			
 		} catch (Exception e) {
-			findPortMessage(e.getMessage());
 			return "redirect:/clientview";
 		}
 		
