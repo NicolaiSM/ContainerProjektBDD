@@ -32,7 +32,6 @@ public class Journey implements Element {
 		attributes.put("destination",destination);
 		attributes.put("content",new StringAttribute(content));
 		attributes.put("user", user);
-//		attributes.compute("id", id)
 		attributes.put("id", new LongAttribute(JourneyID.newJourneyId()));
 		
 	}

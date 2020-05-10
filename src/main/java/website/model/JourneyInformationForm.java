@@ -19,7 +19,7 @@ public class JourneyInformationForm {
 	 
 	private List<Integer> pressures;
 	
-	private List<Integer> ListStringToListInteger(List<String> listString) {
+	private List<Integer> ListStringToListInteger(List<String> listString)  {
 		return listString.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
 	}
 	
@@ -46,7 +46,11 @@ public class JourneyInformationForm {
 	}
 
 	public void setTemperatures(String temperatures) {
-		this.temperatures = ListStringToListInteger(Arrays.asList(temperatures.split(" ")));
+		try {
+			this.temperatures = ListStringToListInteger(Arrays.asList(temperatures.split(" ")));
+		} catch(Exception e) {
+			this.temperatures = null;
+		}
 	}
 
 	public List<Integer> getHumidities() {
@@ -63,6 +67,13 @@ public class JourneyInformationForm {
 
 	public void setPressures(String pressures) {
 		this.pressures = ListStringToListInteger(Arrays.asList(pressures.split(" ")));
+	}
+	
+	public boolean hasError() {
+		if ( times != null & locations != null & temperatures != null & humidities != null & pressures != null && times.size() != locations.size() & locations.size() != temperatures.size() &  temperatures.size() != humidities.size() & humidities.size() != pressures.size() ) {
+			return true;
+		} 
+		return false;
 	}
 	
 	

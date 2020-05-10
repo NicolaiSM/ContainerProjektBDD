@@ -139,11 +139,17 @@ public class LogisticCompanyController {
 	@PostMapping("/updatejourney")
 	public String updateJourney(JourneyInformationForm journeyInformationForm, BindingResult result, Model model) {
 		
-		try {
-			ContainerApp.getInstance().updateJourney(container, journeyInformationForm.getTimes(), journeyInformationForm.getLocations(), journeyInformationForm.getTemperatures(), journeyInformationForm.getHumidities(), journeyInformationForm.getPressures());
-		} catch (Exception e) {
-			model.addAttribute("updatejourneymessage", e.getMessage());
+		if (journeyInformationForm.hasError()) {
+			model.addAttribute("updatejourneymessage", "the input format is wrong");
 			return "logisticcompanyview";
+		} else {
+		
+			try {
+				ContainerApp.getInstance().updateJourney(container, journeyInformationForm.getTimes(), journeyInformationForm.getLocations(), journeyInformationForm.getTemperatures(), journeyInformationForm.getHumidities(), journeyInformationForm.getPressures());
+			} catch (Exception e) {
+				model.addAttribute("updatejourneymessage", e.getMessage());
+				return "logisticcompanyview";
+			}
 		}
 		
 		return "redirect:/logisticcompanyview";
