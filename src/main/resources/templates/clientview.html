@@ -62,29 +62,30 @@
 	</table>
 	
 	<h2> Container Internal information</h2>
-
 	<table>
-	  <thead>
-	    <tr>
-	      <th>Time</th>
-	      <th>Locations</th>
-	      <th>Temperature</th>
-	      <th>Humidity</th>
-	      <th>Pressure</th>
-	    </tr>
-	  </thead>
-	  <div th:if="${container != null}">
-		  <tbody>	  
-		    <tr th:each="information : ${container.journey.information}">
-			<td th:text="${information.time}">
-			<td th:text="${information.location}">
-			<td th:text="${information.temperature}">
-			<td th:text="${information.humiditie}">
-			<td th:text="${information.pressure}">
-		    </tr>
-		  </tbody>
-	  </div>
-	</table>
+		<thead>
+			<tr>
+				<th>Time</th>
+				<th>Locations</th>
+				<th>Temperature</th>
+				<th>Humidity</th>
+				<th>Pressure</th>
+			</tr>
+		</thead>
+		<div th:if="${container?.journey != null}">
+		<tbody>
+        	<th:block th:each="time,count : ${container.journey.times}">
+        		<tr>
+        			<td th:text="${time}">
+        			<td th:text="${container.journey.locations.get(count.getCount()-1).port}">
+        			<td th:text="${container.journey.temperatures.get(count.getCount()-1)}">
+        			<td th:text="${container.journey.humidities.get(count.getCount()-1)}">
+        			<td th:text="${container.journey.pressures.get(count.getCount()-1)}">
+        		</tr>
+        	</th:block>
+        </tbody> 
+		</div>
+	</table> 
 	
 	
 	

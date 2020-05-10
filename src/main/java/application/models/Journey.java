@@ -14,15 +14,15 @@ public class Journey implements Element {
 
 	private Long id;
 
-	private List<String> times = new LinkedList<String>();
+	private List<String> times = new ArrayList<String>();
 	
-	private List<Port> locations = new LinkedList<Port>();
+	private List<Port> locations = new ArrayList<Port>();
 	
-	private List<Integer> temperatures = new LinkedList<Integer>();
+	private List<Integer> temperatures = new ArrayList<Integer>();
 	
-	private List<Integer> humidities = new LinkedList<Integer>();
+	private List<Integer> humidities = new ArrayList<Integer>();
 	 
-	private List<Integer> pressures = new LinkedList<Integer>();
+	private List<Integer> pressures = new ArrayList<Integer>();
 	
 	private Map<String, Element> attributes = new HashMap<>();
 	

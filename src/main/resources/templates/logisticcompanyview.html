@@ -107,38 +107,22 @@
 				<th>Pressure</th>
 			</tr>
 		</thead>
-		 <div th:if="${container != null}">
-		<tbody>	
-			<tr>
-			<table>
-			<tr th:each="time : ${container.journey.times}">
-			<td th:text="${time}">
-			</tr>
-			</table> 
-			<table>  
-			<tr th:each="location : ${container.journey.locations}">
-			<td th:text="${location.port}">
-			</tr>
-			</table> 
-			<table>  
-			<tr th:each="temperature : ${container.journey.temperatures}">
-			<td th:text="${temperature}">
-			</tr>
-			</table> 
-			<table>  
-			<tr th:each="humiditie : ${container.journey.humidities}">
-			<td th:text="${humiditie}">
-			</tr>
-			</table> 
-			<table>  
-			<tr th:each="pressure : ${container.journey.pressures}">
-			<td th:text="${pressure}">
-			</tr>
-			</table> 
-			</tr>
-		</tbody>
+		<div th:if="${container?.journey != null}">
+		<tbody>
+        	<th:block th:each="time,count : ${container.journey.times}">
+        		<tr>
+        			<td th:text="${time}">
+        			<td th:text="${container.journey.locations.get(count.getCount()-1).port}">
+        			<td th:text="${container.journey.temperatures.get(count.getCount()-1)}">
+        			<td th:text="${container.journey.humidities.get(count.getCount()-1)}">
+        			<td th:text="${container.journey.pressures.get(count.getCount()-1)}">
+        		</tr>
+        	</th:block>
+        </tbody> 
 		</div>
 	</table> 
+	
+	
 	 
 	 
 
