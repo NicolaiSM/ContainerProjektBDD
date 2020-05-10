@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.validation.Valid;
-import website.controllers.ActiveUser;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +21,7 @@ import application.models.Client;
 import application.models.Container;
 import application.models.Journey;
 import application.models.Port;
+import website.ActiveUser;
 import website.model.JourneyForm;
 import website.model.KeywordForm;
 import website.model.UserForm;

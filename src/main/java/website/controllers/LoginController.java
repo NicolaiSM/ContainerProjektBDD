@@ -13,6 +13,7 @@ import application.ContainerApp;
 import application.models.Client;
 import application.models.LogisticCompany;
 import application.models.User;
+import website.ActiveUser;
 import website.model.CredentialForm;
 import website.model.UserForm;
 

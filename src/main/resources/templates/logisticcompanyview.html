@@ -117,7 +117,7 @@
 			</table> 
 			<table>  
 			<tr th:each="location : ${container.journey.locations}">
-			<td th:text="${location}">
+			<td th:text="${location.port}">
 			</tr>
 			</table> 
 			<table>  
@@ -187,7 +187,8 @@
 	<h2>Register Client</h2>
 	<form th:action="@{/createclient}" method="post" th:object="${userForm}">
 		<p th:text="${createclientmessage}"></p>
-	  	<label> Client Name
+	  	<label> 
+	  	Client Name
       	<input type="text" name="clientName" th:field="*{clientName}"/>
       	</label>
       	<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}"></p>

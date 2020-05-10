@@ -1,4 +1,4 @@
-package website.controllers;
+package website;
 
 import application.models.Client;
 import application.models.User;
