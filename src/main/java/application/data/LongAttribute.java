@@ -25,6 +25,9 @@ public class LongAttribute implements Element {
 		
 	}
 	
+	public int hashCode() {
+		return attribute.hashCode();
+	}
 	
 
 }

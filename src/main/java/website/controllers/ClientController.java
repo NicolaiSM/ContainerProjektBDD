@@ -1,7 +1,6 @@
 package website.controllers;
 
 import java.util.Collection;
-import java.util.LinkedList;
 
 import javax.validation.Valid;
 
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import application.ContainerApp;
-import application.data.Element;
-import application.data.QueryHashSet;
 import application.data.QueryLinkedList;
 import application.models.Client;
 import application.models.Container;
@@ -25,29 +22,29 @@ import website.ActiveUser;
 import website.model.JourneyForm;
 import website.model.KeywordForm;
 import website.model.UserForm;
+import application.data.QueryHashSet;
 /**/
 @Controller
 public class ClientController {
 	
-	Collection<Port> list = (Collection<Port>) ContainerApp.getInstance().getPorts();
-	Collection<Container> list2 = ((Client) ActiveUser.getUser()).getClientContainers();
-	Collection<Journey> list3 = ((Client) ActiveUser.getUser()).getClientJourneys();
+	Collection<Port> ports = (Collection<Port>) ContainerApp.getInstance().getPorts();
+	Collection<Container> containers = ((Client) ActiveUser.getUser()).getClientContainers();
+	Collection<Journey> journeys = ((Client) ActiveUser.getUser()).getClientJourneys();
 	Container container = null;
 	
 	@ModelAttribute("userForm")
 	public UserForm populateUser() {
-	  UserForm userForm = new UserForm(ActiveUser.getUser().get("clientName"), ActiveUser.getUser().get("address"), ActiveUser.getUser().get("email"), ActiveUser.getUser().get("contactPerson"), ActiveUser.getUser().get("password"));
-	  return userForm;
+	  return new UserForm(ActiveUser.getUser().get("clientName"), ActiveUser.getUser().get("address"), ActiveUser.getUser().get("email"), ActiveUser.getUser().get("contactPerson"), ActiveUser.getUser().get("password"));
 	}
 	
 	@ModelAttribute("ports")
 	public Collection<Port> portList() {
-		return list;
+		return ports;
 	}
 	
 	@ModelAttribute("containers")
 	public Collection<Container> containerList() {
-		return list2;
+		return containers;
 	}
 	
 	@ModelAttribute("container")
@@ -67,10 +64,8 @@ public class ClientController {
 	
 	@ModelAttribute("journeys")
 	public Collection<Journey> journeys() {
-		return list3;
+		return journeys;
 	}
-	
-	
 	
 	
 	@GetMapping("/clientview")
@@ -107,24 +102,27 @@ public class ClientController {
 			e.printStackTrace();
 			return "clientview";
 		}
-		model.addAttribute("updateclientmessage", "Your information has been updated");
 		return "redirect:/clientview";
 		
 	}
 	
 	@PostMapping("/findport")
 	public String findPort( KeywordForm keywordForm, BindingResult result, Model model) {
-		
-		list = ContainerApp.getInstance().findPorts(keywordForm.getKeyword().split(" "));
-		
+		if (keywordForm.getKeyword() == null | keywordForm.getKeyword().isEmpty()) {
+			ports = (Collection<Port>) ContainerApp.getInstance().getPorts();
+		} else {
+			ports = ContainerApp.getInstance().findPorts(keywordForm.getKeyword().split(" "));
+		}
 		return "redirect:/clientview";
 	}
 	
 	@PostMapping("/findcontainer")
 	public String findContainer(KeywordForm keywordForm, BindingResult result, Model model) {
-		
-		list2 = ((QueryLinkedList<Container>) ((Client)ActiveUser.getUser()).getClientContainers()).findElements(keywordForm.getKeyword().split(" "));
-		
+		if (keywordForm.getKeyword() == null | keywordForm.getKeyword().isEmpty()) {
+			containers = (Collection<Container>) ContainerApp.getInstance().getContainers();
+		} else {
+			containers = ((QueryLinkedList<Container>) ((Client)ActiveUser.getUser()).getClientContainers()).findElements(keywordForm.getKeyword().split(" "));
+		}
 		return "redirect:/clientview";
 	}
 	
@@ -146,11 +144,11 @@ public class ClientController {
 	public String findJourney(KeywordForm keywordForm, BindingResult result, Model model) {
 		
 		if(keywordForm.getKeyword() == null | keywordForm.getKeyword().isEmpty()) {
-			list3 = ((Client) ActiveUser.getUser()).getClientJourneys();
+			journeys = ((Client) ActiveUser.getUser()).getClientJourneys();
 		} else {
 		
 			try {
-				list3 = ((QueryLinkedList<Journey>) ((Client) ActiveUser.getUser()).getClientJourneys()).findElements(keywordForm.getKeyword().split(" "));
+				journeys = ((QueryHashSet<Journey>) ((Client) ActiveUser.getUser()).getClientJourneys()).findElements(keywordForm.getKeyword().split(" "));
 			} catch (Exception e) {
 				model.addAttribute("findjourneymessage", e.getMessage());
 				return "clientview";

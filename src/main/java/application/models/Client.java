@@ -10,7 +10,7 @@ import application.data.QueryLinkedList;
 
 public class Client extends User {
 	private Collection<Container> clientContainers = new QueryLinkedList<Container>();
-	private Collection<Journey> clientJourneys = new HashSet<Journey>();
+	private Collection<Journey> clientJourneys = new QueryHashSet<Journey>();
 	
 	public Client() {
 		

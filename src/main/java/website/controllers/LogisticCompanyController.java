@@ -30,7 +30,7 @@ public class LogisticCompanyController {
 	Collection<User> list = (Collection<User>) ContainerApp.getInstance().getUsers();
 	Collection<Container> list2 = ContainerApp.getInstance().getContainers();
 	Container container = null;
-	Pair pair;
+	Pair<?,?> pair;
 
 	@ModelAttribute("clients")
 	public Collection<User> clientList() {
@@ -73,7 +73,7 @@ public class LogisticCompanyController {
 	}
 	
 	@ModelAttribute("pair")
-	public Pair pair() {
+	public Pair<?,?> pair() {
 		return pair;
 	}
 	

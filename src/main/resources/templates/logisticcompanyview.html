@@ -42,7 +42,7 @@
 	    <tr th:each="container : ${containers}">
 	    <td th:text="${container.getId().attribute}">
 	    <td th:text="${container.port.port}">
-	    <td th:text="${container?.journey?.id}">
+	    <td th:text="${container?.journey?.id?.attribute}">
 	    <td th:text="${container?.journey?.get('content')?.attribute}">
 	    <td th:text="${container?.journey?.get('portOfOrigin')?.port}">
 	    <td th:text="${container?.journey?.get('destination')?.port}">

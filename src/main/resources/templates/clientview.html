@@ -51,8 +51,8 @@
 	  <tbody>	  
 	    <tr th:each="container : ${containers}">
 	    <td th:text="${container.journey.get('content').attribute}">
-	    <td th:text="${container.getId().attribute}">
-	    <td th:text="${container.journey.id}">
+	    <td th:text="${container.id.attribute}">
+	    <td th:text="${container.journey.id.attribute}">
 	    <td th:text="${container.port.port}">
 	    <td th:text="${container.journey.get('portOfOrigin').port}">
 	    <td th:text="${container.journey.get('destination').port}">
@@ -160,12 +160,11 @@
 	      <th>Content</th>
 	      <th>Port of origin</th>
 	      <th>Destination</th>
-	      <th>view button</th>
 	    </tr>
 	  </thead>
 	  <tbody>	  
 	    <tr th:each="journey : ${journeys}">
-	    <td th:text="${journey.id}">
+	    <td th:text="${journey.id.attribute}">
 	    <td th:text="${journey.get('content').attribute}">
 	    <td th:text="${journey.get('portOfOrigin').port}">
 	    <td th:text="${journey.get('destination').port}">

@@ -4,15 +4,15 @@ import java.util.*;
 import javax.persistence.*;
 
 import application.data.Element;
+import application.data.LongAttribute;
 import application.data.StringAttribute;
+import application.models.id.ContainerId;
 import application.models.id.JourneyID;
 
 
 
 public class Journey implements Element {
 	
-
-	private Long id;
 
 	private List<String> times = new ArrayList<String>();
 	
@@ -33,8 +33,7 @@ public class Journey implements Element {
 		attributes.put("content",new StringAttribute(content));
 		attributes.put("user", user);
 //		attributes.compute("id", id)
-		
-		id = JourneyID.newJourneyId();
+		attributes.put("id", new LongAttribute(JourneyID.newJourneyId()));
 		
 	}
 	
@@ -77,8 +76,8 @@ public class Journey implements Element {
 		return pressures;
 	}
 
-	public Long getId() {
-		return id;
+	public Element getId() {
+		return attributes.get("id");
 	}
 	
 	public void update(List<String> times, List<Port> locations, List<Integer> temperatures, List<Integer> humidities, List<Integer> pressures) {
@@ -97,8 +96,6 @@ public class Journey implements Element {
 		int numberOfLocations = locations.size();
 		double distance = 0;
 		if (!(numberOfLocations<1)) {
-//			double x = locations.get(0).getXCoordinate()-portOfOrigin.getXCoordinate();
-//			double y = locations.get(0).getYCoordinate()-portOfOrigin.getYCoordinate();
 			double x = locations.get(0).getXCoordinate() - ((Port) attributes.get("portOfOrigin")).getXCoordinate();
 			double y = locations.get(0).getYCoordinate() - ((Port) attributes.get("portOfOrigin")).getYCoordinate();
 			distance+=Math.sqrt(x*x+y*y);
@@ -121,6 +118,6 @@ public class Journey implements Element {
 	
 	@Override
 	public int hashCode() {
-		return id.hashCode();
+		return getId().hashCode();
 	}
 }
