@@ -12,7 +12,7 @@ import application.models.id.JourneyID;
 public class Journey implements Element {
 	
 
-	private long id;
+	private Long id;
 
 	private List<String> times = new LinkedList<String>();
 	

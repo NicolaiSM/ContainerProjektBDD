@@ -50,16 +50,6 @@ public class Container implements Element {
 		return attributes.get("id");
 	}
 	
-	@Override
-	public boolean equals(Object object) {
-		return id.equals(((Container) object).getId());
-		
-	}
-	
-	@Override
-	public int hashCode() {
-		return id.hashCode();
-	}
 	
 	public boolean hasKeyword(String... keywords) {
 		for (Element e : attributes.values()) {
