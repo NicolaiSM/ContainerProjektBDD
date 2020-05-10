@@ -18,27 +18,7 @@ import application.models.User;
 public class ContainerApp {
 	
 	public ContainerApp() {
-		users.add(new LogisticCompany("admin", "admin"));
-		
-		try {
-			registerClient("a","a" ,"a","a@a.com","a");
-			registerClient("GuideUser","GuideStreet 13" ,"Group B","Guide@user.com","1234");
-			registerPort("a");
-			registerPort("b");
-			registerPort("c");
-			registerPort("Shanghai");
-			registerPort("Antwerp");
-			registerPort("Singapore");
-			createContainer("a");
-			createContainer("b");
-			createContainer("Shanghai");
-			createContainer("Antwerp");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+		users.add(new LogisticCompany("admin", "admin"));	
 	}
 	
 	

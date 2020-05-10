@@ -31,7 +31,7 @@ public class Client extends User {
 
 	private Collection<Container> clientContainers = new QueryHashSet<Container>();
 
-	public Collection<Journey> clientJourneys = new QueryLinkedList<Journey>();
+	private Collection<Journey> clientJourneys = new QueryLinkedList<Journey>();
 	
 	public Collection<Container> getClientContainers() {
 		return clientContainers;
